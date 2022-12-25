@@ -1,0 +1,2 @@
+class StocksCoef < ApplicationRecord
+end

@@ -1,0 +1,3 @@
+[submodule "plugins/stave"]
+	path = plugins/stave
+	url = git@github.com:red-mine/stave.git

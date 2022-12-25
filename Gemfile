@@ -1,4 +1,5 @@
-source 'https://rubygems.org'
+source 'https://rubygems.org/'
+
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.5'
@@ -17,6 +18,29 @@ gem 'webpacker', '~> 5.0'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
+
+#source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
+#source "https://gems.ruby-china.com/"
+
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem "sprockets-rails"
+# Use sqlite3 as the database for Active Record
+gem "sqlite3", "~> 1.4"
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
+# Build JSON APIs with ease [https://github.com/rails/jbuilder]
+
+gem "eps"
+gem "chartkick"
+gem "groupdate"
+gem "progress"
+gem "os"
+gem "stave", path: "plugins/stave"
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -54,3 +78,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# stave_gemfile = File.new("plugins/stave/Gemfile")
+# eval_gemfile stave_gemfile
