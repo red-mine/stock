@@ -89,6 +89,8 @@ namespace :stocks do
       files = Dir.entries(basedir)
       # puts files
       puts "This is a test".to_squawk
+
+      Stave::Stock.model_all
     end
 
     desc "stock"
