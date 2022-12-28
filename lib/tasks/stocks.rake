@@ -17,7 +17,11 @@ namespace :stocks do
 
   desc "import"
   task :import, [:stock] => :environment do |task, args|
-    file_path = "C:\\new_tdx\\vipdoc\\sz\\lday\\" + args.stock + ".day"
+    stock = args.stock
+    if stock == nil
+      stock = "sz003019"
+    end
+    file_path = "C:\\new_tdx\\vipdoc\\sz\\lday\\" + stock + ".day"
     file = File.open(file_path)
     while file.eof == false
       file_data = file.read(32)
@@ -31,9 +35,9 @@ namespace :stocks do
       real_price = price[6..7] + price[4..5] + price[2..3] + price[0..1]
       real_price = real_price.to_i(16).to_f / 100
 
-      if Stock.find_by(code: args.stock, date: real_date) == nil
-        stock = Stock.new(code: args.stock, date: real_date, price: real_price)
-        stock.save
+      if Stock.find_by(code: stock, date: real_date) == nil
+        stockdb = Stock.new(code: stock, date: real_date, price: real_price)
+        stockdb.save
       end
     end
   end
