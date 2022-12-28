@@ -87,7 +87,8 @@ namespace :stocks do
     task :all => :environment do
       basedir = "C:\\new_tdx\\vipdoc\\sz\\lday\\"
       files = Dir.entries(basedir)
-      p files
+      # puts files
+      puts "This is a test".to_squawk
     end
 
     desc "stock"

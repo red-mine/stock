@@ -1,5 +1,11 @@
+PATH
+  remote: ../plugins/stave
+  specs:
+    stave (0.1.0)
+      rails (>= 7.0.4)
+
 GEM
-  remote: https://rubygems.org/
+  remote: https://mirrors.tuna.tsinghua.edu.cn/rubygems/
   specs:
     actioncable (7.0.4)
       actionpack (= 7.0.4)
@@ -231,6 +237,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
+  stave!
   stimulus-rails
   turbo-rails
   tzinfo-data

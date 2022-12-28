@@ -1,4 +1,5 @@
-source "https://rubygems.org"
+source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
+
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.2"
@@ -31,6 +32,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 gem "eps"
+
+gem "stave", path: "../plugins/stave"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
