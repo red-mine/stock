@@ -1,3 +1,8 @@
+desc "stocks"
+task :stocks => :environment do
+  Stave::Stock.model_all
+end
+
 namespace :stocks do
   desc "fetch"
   task fetch: :environment do
