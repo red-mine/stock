@@ -53,18 +53,11 @@ namespace :stocks do
   
   desc "model"
   task :model, [:stock] => :environment do |task, args|
-    data = []
-    stock = Stock.where(code: args.stock)
-    stock.each_with_index do |stock, index|
-      date = stock.date.to_s
-      real_date = date[0,4] + date[5,2] + date[8,2]
-      stock = {index: index, price: stock.price}
-      data.push stock
+    if args.stock == nil
+      p "stock is nil"
+      exit
     end
-    # puts data
-    model = Eps::LinearRegression.new(data, target: :price, split: false)
-    puts model.summary
-    puts model.coefficients
+    Stave::Stock.model(args.stock)
   end
 
   namespace :model do
@@ -78,37 +71,22 @@ namespace :stocks do
 
     desc "all"
     task :all => :environment do
-      basedir = "C:\\new_tdx\\vipdoc\\sz\\lday\\"
-      files = Dir.entries(basedir)
-      # puts files
-      puts "This is a test".to_squawk
-
       Stave::Stock.model_all
     end
 
     desc "stock"
     task :stock, [:stock] => :environment do |task, args|
-      file_path = "C:\\new_tdx\\vipdoc\\sz\\lday\\" + args.stock + ".day"
-      file = File.open(file_path)
+      if args.stock == nil
+        p "stock is nil"
+        exit
+      end
       data = []
-      index = 0
-      while file.eof == false
-        file_data = file.read(32)
-        string = file_data.unpack("H*")[0]
-  
-        date = string[0,8]
-        real_date = date[6..7] + date[4..5] + date[2..3] + date[0..1]
-        real_date = real_date.to_i(16).to_s
-  
-        price = string[32,8]
-        real_price = price[6..7] + price[4..5] + price[2..3] + price[0..1]
-        real_price = real_price.to_i(16).to_f / 100
-
-        real_date = real_date[0,4] + real_date[5,2] + real_date[8,2]
-        stock = {index: index, price: real_price}
+      stock = Stock.where(code: args.stock)
+      stock.each_with_index do |stock, index|
+        date = stock.date.to_s
+        real_date = date[0,4] + date[5,2] + date[8,2]
+        stock = {index: index, price: stock.price}
         data.push stock
-
-        index = index + 1
       end
       # puts data
       model = Eps::LinearRegression.new(data, target: :price, split: false)
