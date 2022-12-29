@@ -1,9 +1,4 @@
-<h1>Stocks</h1>
+<h1>Stock</h1>
 
-<ul>
-  <% @stocks.each do |stock| %>
-    <li>
-      <%= stock.code %>
-    </li>
-  <% end %>
-</ul>
+<%= line_chart @stock %>
+

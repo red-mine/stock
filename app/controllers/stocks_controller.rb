@@ -1,5 +1,5 @@
 class StocksController < ApplicationController
   def index
-    @stocks = Stock.all
+    @stock = Stock.where(code: "sz003019").pluck(:date, :price)
   end
 end

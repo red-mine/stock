@@ -1,4 +1,4 @@
-source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
+source "https://rubygems.org/"
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -32,6 +32,10 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 gem "eps"
+
+gem "chartkick"
+
+gem "groupdate"
 
 gem "stave", path: "../plugins/stave"
 
