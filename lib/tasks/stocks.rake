@@ -25,6 +25,15 @@ namespace :stocks do
     Stave::Stock.import(args.stock, Stock)
   end
 
+  desc "data"
+  task :data, [:stock] => :environment do |task, args|
+    if args.stock == nil
+      p "stock is nil"
+      exit
+    end
+    p Stave::Stock.data(args.stock)
+  end
+
   namespace :import do
     desc "import all"
     task :all => :environment do
