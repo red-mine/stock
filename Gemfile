@@ -37,7 +37,7 @@ gem "chartkick"
 
 gem "groupdate"
 
-gem "stave", path: "../plugins/stave"
+gem "stave", path: "plugins/stave"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -82,3 +82,6 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# stave_gemfile = File.new("plugins/stave/Gemfile")
+# eval_gemfile stave_gemfile
