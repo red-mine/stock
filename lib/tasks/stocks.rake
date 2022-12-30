@@ -8,6 +8,11 @@ namespace :stocks do
   task fetch: :environment do
   end
 
+  desc "perfect"
+  task perfect: :environment do
+    Stave::Stock.perfect_model_all
+  end
+
   desc "find"
   task :find, [:code, :date] => :environment do |task, args|
     p Stock.find_by(code: args.code, date: args.date)

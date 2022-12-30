@@ -6,7 +6,7 @@ PATH
       rails (>= 7.0.4)
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://mirrors.tuna.tsinghua.edu.cn/rubygems/
   specs:
     actioncable (7.0.4)
       actionpack (= 7.0.4)
