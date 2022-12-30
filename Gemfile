@@ -37,6 +37,8 @@ gem "chartkick"
 
 gem "groupdate"
 
+gem "progress"
+
 gem "stave", path: "plugins/stave"
 
 # Use Redis adapter to run Action Cable in production
