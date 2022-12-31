@@ -89,5 +89,5 @@ group :test do
   gem "webdrivers"
 end
 
-stave_gemfile = File.new("plugins/stave/Gemfile")
-eval_gemfile stave_gemfile
+# stave_gemfile = File.new("plugins/stave/Gemfile")
+# eval_gemfile stave_gemfile
