@@ -1,0 +1,4 @@
+[submodule "plugins/stave"]
+	path = plugins/stave
+	url = git@github.com:uhuntu/stave.git
+    branch = plugin

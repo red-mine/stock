@@ -1,4 +1,5 @@
-source "https://rubygems.org/"
+#source "https://rubygems.org/"
+source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -37,7 +38,9 @@ gem "chartkick"
 
 gem "groupdate"
 
-gem "stave", path: "../plugins/stave"
+gem "progress"
+
+gem "stave", path: "plugins/stave"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -82,3 +85,6 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# stave_gemfile = File.new("plugins/stave/Gemfile")
+# eval_gemfile stave_gemfile
