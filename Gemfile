@@ -1,5 +1,6 @@
 #source "https://rubygems.org/"
 source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
+#source "https://gems.ruby-china.com/"
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
