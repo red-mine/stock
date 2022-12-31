@@ -100,6 +100,7 @@ GEM
       matrix
       nokogiri
     erubi (1.12.0)
+    ffi (1.15.5)
     ffi (1.15.5-x64-mingw-ucrt)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -144,6 +145,8 @@ GEM
       net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.10-x64-mingw-ucrt)
+      racc (~> 1.4)
+    nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -196,6 +199,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.5.4-x64-mingw-ucrt)
+    sqlite3 (1.5.4-x86_64-linux)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.2.1)
@@ -227,6 +231,7 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
