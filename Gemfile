@@ -41,6 +41,8 @@ gem "groupdate"
 
 gem "progress"
 
+gem "os"
+
 gem "stave", path: "plugins/stave"
 
 # Use Redis adapter to run Action Cable in production

@@ -1,6 +1,11 @@
 desc "stocks"
-task :stocks => :environment do
-  Stave::Stock.model_all
+task :stocks, [:area] => :environment do |task, args|
+  area = args.area
+  if area.nil?
+    puts "area is nil, presuming sz."
+    area = "sz"
+  end
+  Stave::Stock.model_all(area)
 end
 
 namespace :stocks do
