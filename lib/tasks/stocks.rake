@@ -44,7 +44,25 @@ namespace :stocks do
   desc "average"
   task :average, [:stock] => :environment do |task, args|
     stock = Stave::Stock.new("sz")
-    stock.good_data_average(args.stock)
+    stock.good_data_aver(args.stock)
+  end
+
+  desc "distance"
+  task :distance, [:stock] => :environment do |task, args|
+    stock = Stave::Stock.new("sz")
+    stock.good_data_dist(args.stock, 100)
+  end
+
+  desc "sqrt"
+  task :sqrt, [:stock] => :environment do |task, args|
+    stock = Stave::Stock.new("sz")
+    stock.good_data_sqrt(args.stock, 100)
+  end
+
+  desc "updn"
+  task :updn, [:stock] => :environment do |task, args|
+    stock = Stave::Stock.new("sz")
+    stock.good_data_updn(args.stock, 100, true)
   end
 
   namespace :import do

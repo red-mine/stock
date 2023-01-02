@@ -8,11 +8,16 @@ class StocksController < ApplicationController
   end
   def show
     stock = Stave::Stock.new("sz")
-    @stock_data   = stock.good_data_data(params[:stock]     ).pluck(:date, :price)
-    @stock_ma5    = stock.good_data_aver(params[:stock], 5  ).pluck(:date, :price)
-    @stock_ma10   = stock.good_data_aver(params[:stock], 10 ).pluck(:date, :price)
-    @stock_ma100  = stock.good_data_aver(params[:stock], 100).pluck(:date, :price)
-    @stocks = [{name: "ma10", data: @stock_ma10}, {name: "ma100", data: @stock_ma100}]
+    @stock_ma10   = stock.good_data_aver(params[:stock], 10 )
+    @stock_ma100  = stock.good_data_aver(params[:stock], 100)
+    @stock_mu100  = stock.good_data_updn(params[:stock], 100, true)
+    @stock_md100  = stock.good_data_updn(params[:stock], 100, false)
+    @stocks = [
+      {name: "ma10",  data: @stock_ma10}, 
+      {name: "ma100", data: @stock_ma100},
+      {name: "mu100", data: @stock_mu100},
+      {name: "md100", data: @stock_md100}
+    ]
     @stock_code = params[:stock]
   end
 end
