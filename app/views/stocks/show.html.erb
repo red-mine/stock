@@ -1,3 +1,16 @@
-<h1><%= @code %></h1>
+<h1><%= @stock_code %></h1>
 
-<%= line_chart @stock %>
+<%= line_chart @stocks.map {
+  |stock| {name: stock[:name], data: stock[:data]}
+},
+height: "600px",
+library: {
+  scales: {
+    y: {
+      ticks: {
+        stepSize: 50
+      }
+    }
+  }
+}
+%>

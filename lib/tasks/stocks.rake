@@ -41,6 +41,12 @@ namespace :stocks do
     p Stave::Stock.data(args.stock)
   end
 
+  desc "average"
+  task :average, [:stock] => :environment do |task, args|
+    stock = Stave::Stock.new("sz")
+    stock.good_data_average(args.stock)
+  end
+
   namespace :import do
     desc "import all"
     task :all => :environment do
