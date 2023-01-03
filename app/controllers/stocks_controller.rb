@@ -2,9 +2,7 @@ require "stave"
 
 class StocksController < ApplicationController
   def index
-    # stock_data = Stock.where(code: "sz003019").pluck(:date, :price)
-    # trend_line = 
-    # @stocks = 
+    @stocks = StocksCoef.all
   end
   def show
     stock = Stave::Stock.new("sz")

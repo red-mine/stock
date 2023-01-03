@@ -1,7 +1,9 @@
-<h1>Stock</h1>
+<h1>Stocks</h1>
 
-<%= line_chart @stock %>
-
-<%#= line_chart @stocks.map { |stock|
-    {name: stock.name, data: stock.data}
-} %>
+<ul>
+  <% @stocks.each do |stock| %>
+    <li>
+      <%= stock.stock %>
+    </li>
+  <% end %>
+</ul>
