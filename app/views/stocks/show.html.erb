@@ -3,3 +3,7 @@
 <%= line_chart @stocks.map {
   |stock| {name: stock[:name], data: stock[:data]}
 } %>
+
+<%= line_chart @staves.map {
+  |stave| {name: stave[:name], data: stave[:data]}
+} %>

@@ -10,11 +10,16 @@ class StocksController < ApplicationController
     @stock_ma100  = stock.good_data_aver(params[:stock], 100)
     @stock_mu100  = stock.good_data_updn(params[:stock], 100, true)
     @stock_md100  = stock.good_data_updn(params[:stock], 100, false)
+    @stave_trend  = stock.good_data_trend(params[:stock])
     @stocks = [
       {name: "ma10",  data: @stock_ma10}, 
       {name: "ma100", data: @stock_ma100},
       {name: "mu100", data: @stock_mu100},
       {name: "md100", data: @stock_md100}
+    ]
+    @staves = [
+      {name: "ma10",  data: @stock_ma10}, 
+      {name: "trend", data: @stave_trend}
     ]
     @stock_code = params[:stock]
   end
