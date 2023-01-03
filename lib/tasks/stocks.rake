@@ -2,7 +2,8 @@ desc "stocks"
 task :stocks, [:area] => :environment do |task, args|
   area = unless args.area.nil? then args.area else "sz" end
   stock = Stave::Stock.new(area)
-  stock.good_models_all
+  puts stock.good_models_all
+  stock.good_models_import(StocksCoef)
 end
 
 namespace :stocks do
