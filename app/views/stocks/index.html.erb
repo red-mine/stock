@@ -1,9 +1,18 @@
 <h1>Stocks</h1>
 
-<ul>
-  <% @stocks.each do |stock| %>
-    <li>
-      <%= stock.stock %>
-    </li>
-  <% end %>
-</ul>
+<table>
+<tr>
+  <th>stock</th>
+  <th>coefficient</th>
+  <th>intercept</th>
+  <th>price</th>
+</tr>
+<% @stocks.each do |stock| %>
+  <tr>
+    <td><%= stock.stock %></td>
+    <td><%= stock.coef  %></td>
+    <td><%= stock.inter %></td>
+    <td><%= stock.price %></td>
+  </tr>
+<% end %>
+</table>
