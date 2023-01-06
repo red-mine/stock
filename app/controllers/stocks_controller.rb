@@ -5,7 +5,7 @@ class StocksController < ApplicationController
     @stocks = StocksCoef.all
   end
   def show
-    stock = Stave::Stock.new("sz")
+    stock = Stave::Stock.new("sz", 875)
     @stock_ma10   = stock.good_data_aver(params[:stock], 10 )
     @stock_ma100  = stock.good_data_aver(params[:stock], 100)
     @stock_mu100  = stock.good_data_updn(params[:stock], 100, true)
