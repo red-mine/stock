@@ -1,9 +1,13 @@
+# desc "stocks"
+# task :stocks, [:area, :days] => :environment do |task, args|
+#   area = unless args.area.nil? then args.area else "sz" end
+#   days = unless args.days.nil? then args.days else 875  end
+#   stock = Stave::Stock.new(area, days)
+#   stock.good_import(StocksCoef)
+# end
+
 desc "stocks"
-task :stocks, [:area, :days] => :environment do |task, args|
-  area = unless args.area.nil? then args.area else "sz" end
-  days = unless args.days.nil? then args.days else 875  end
-  stock = Stave::Stock.new(area, days)
-  stock.good_import(StocksCoef)
+task :stocks => :environment do
 end
 
 namespace :stocks do
