@@ -5,16 +5,20 @@ class StocksController < ApplicationController
     @stocks = StocksCoef.all
   end
   def show
-    stock = Stave::Stock.new("sz", 875)
-    @stock_ma10   = stock.good_data_aver(params[:stock], 10 )
-    @stock_ma100  = stock.good_data_aver(params[:stock], 100)
-    @stock_mu100  = stock.good_data_updn(params[:stock], 100, true)
-    @stock_md100  = stock.good_data_updn(params[:stock], 100, false)
-    @stave_trend  = stock.good_data_trend(params[:stock])
-    @stave_up1    = stock.good_stave_updn(params[:stock], true,  1)
-    @stave_dn1    = stock.good_stave_updn(params[:stock], false, 1)
-    @stave_up2    = stock.good_stave_updn(params[:stock], true,  2)
-    @stave_dn2    = stock.good_stave_updn(params[:stock], false, 2)
+    stock = Stave::Stock.new("sz", 975)
+    @stock_ma10   = stock.good_aver(params[:stock], 10 ).slice!(90, 876)
+    @stock_ma100  = stock.good_aver(params[:stock], 100)
+    @stock_mu100  = stock.good_boll(params[:stock], 100, true)
+    @stock_md100  = stock.good_boll(params[:stock], 100, false)
+    @stave_trend  = stock.good_trend(params[:stock])
+    @stave_up1    = stock.good_stave(params[:stock], true,  1)
+    @stave_dn1    = stock.good_stave(params[:stock], false, 1)
+    @stave_up2    = stock.good_stave(params[:stock], true,  2)
+    @stave_dn2    = stock.good_stave(params[:stock], false, 2)
+
+    Rails.logger.info "@stock_ma10.size  = #{@stock_ma10.size}"
+    Rails.logger.info "@stave_trend.size = #{@stave_trend.size}"
+
     @stocks = [
       {name: "ma10",  data: @stock_ma10}, 
       {name: "ma100", data: @stock_ma100},
