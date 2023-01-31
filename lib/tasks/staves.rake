@@ -3,7 +3,7 @@ task :staves, [:area, :days] => :environment do |task, args|
   area = unless args.area.nil? then args.area else "sz" end
   days = unless args.days.nil? then args.days else 250  end
   stock = Stave::Stock.new(area, days)
-  stock.good_import(StocksCoefYear)
+  stock.good_import(StocksCoefsYear)
 end
 
 namespace :staves do
