@@ -6,10 +6,6 @@ task :stocks, [:area, :days] => :environment do |task, args|
   stock.good_import(StocksCoef)
 end
 
-# desc "stocks"
-# task :stocks => :environment do
-# end
-
 namespace :stocks do
   desc "fetch"
   task fetch: :environment do
