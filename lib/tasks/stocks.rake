@@ -1,7 +1,7 @@
 desc "stocks"
 task :stocks, [:area, :days] => :environment do |task, args|
   area = unless args.area.nil? then args.area else "sz" end
-  days = unless args.days.nil? then args.days else 875  end # 250 * 3.5 = 750 + 125 = 875
+  days = unless args.days.nil? then args.days else 875  end
   stock = Stave::Stock.new(area, days)
   stock.good_import(StocksCoef)
 end
