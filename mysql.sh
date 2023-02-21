@@ -1,0 +1,1 @@
+mysql -ubn_redmine -pc67d86f6d97eda12859c10df0edb77e6106f0409d17ff2021510bd6a45772b57
