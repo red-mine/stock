@@ -1,4 +1,4 @@
-class CreateStocksCoefsYears < ActiveRecord::Migration[7.0]
+class CreateStocksCoefsYears < ActiveRecord::Migration[6.1]
   def change
     create_table :stocks_coefs_years do |t|
       t.string :stock

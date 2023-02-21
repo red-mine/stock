@@ -13,8 +13,8 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: t00r
+  username: bn_redmine
+  password: "c67d86f6d97eda12859c10df0edb77e6106f0409d17ff2021510bd6a45772b57"
   host: localhost
 
 development:
@@ -51,5 +51,5 @@ test:
 production:
   <<: *default
   database: stock_production
-  username: stock
-  password: <%= ENV['STOCK_DATABASE_PASSWORD'] %>
+  username: bn_redmine
+  password: "c67d86f6d97eda12859c10df0edb77e6106f0409d17ff2021510bd6a45772b57"
