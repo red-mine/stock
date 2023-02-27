@@ -145,6 +145,7 @@ GEM
     nokogiri (1.14.2-x64-mingw-ucrt)
       racc (~> 1.4)
     os (1.1.4)
+    pg (1.4.6-x64-mingw-ucrt)
     progress (3.6.0)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -239,9 +240,10 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   os
+  pg (~> 1.1)
   progress
   puma (~> 5.0)
-  rails (~> 7.0.4)
+  rails (~> 7.0.4, >= 7.0.4.2)
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
