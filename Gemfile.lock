@@ -6,7 +6,7 @@ PATH
       rails (>= 7.0.4)
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://gems.ruby-china.com/
   specs:
     actioncable (7.0.4)
       actionpack (= 7.0.4)
@@ -100,7 +100,7 @@ GEM
       matrix
       nokogiri
     erubi (1.12.0)
-    ffi (1.15.5-x64-mingw-ucrt)
+    ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
     groupdate (6.1.0)
@@ -130,9 +130,9 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.1)
     minitest (5.16.3)
     msgpack (1.6.0)
-    mysql2 (0.5.4)
     net-imap (0.3.4)
       date
       net-protocol
@@ -143,7 +143,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.13.10-x64-mingw-ucrt)
+    nokogiri (1.13.10)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     os (1.1.4)
     progress (3.6.0)
@@ -197,7 +198,8 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.5.4-x64-mingw-ucrt)
+    sqlite3 (1.5.4)
+      mini_portile2 (~> 2.8.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.2.1)
@@ -239,7 +241,6 @@ DEPENDENCIES
   groupdate
   importmap-rails
   jbuilder
-  mysql2 (~> 0.5)
   os
   progress
   puma (~> 5.0)
@@ -255,7 +256,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.1p31
 
 BUNDLED WITH
    2.3.24
