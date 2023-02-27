@@ -1,0 +1,22 @@
+<h1>Stocks</h1>
+
+<table>
+<tr>
+  <th>stock</th>
+  <th>coefficient</th>
+  <th>intercept</th>
+  <th>price</th>
+</tr>
+<% @stocks.each do |stock| %>
+  <tr>
+    <td>
+      <a href="/stocks/<%= stock.stock %>">
+        <%= stock.stock %>
+      </a>
+    </td>
+    <td><%= stock.coef  %></td>
+    <td><%= stock.inter %></td>
+    <td><%= stock.price %></td>
+  </tr>
+<% end %>
+</table>

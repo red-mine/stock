@@ -1,0 +1,2 @@
+class StocksCoefsYear < ApplicationRecord
+end
