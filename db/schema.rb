@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_01_31_062603) do
-  create_table "stocks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "stocks", force: :cascade do |t|
     t.string "code"
     t.date "date"
     t.float "price"
@@ -19,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_062603) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "stocks_coefs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "stocks_coefs", force: :cascade do |t|
     t.string "stock"
     t.float "coef"
     t.float "inter"
@@ -28,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_062603) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "stocks_coefs_years", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "stocks_coefs_years", force: :cascade do |t|
     t.string "stock"
     t.float "coef"
     t.float "inter"
