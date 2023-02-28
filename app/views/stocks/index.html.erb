@@ -1,10 +1,8 @@
 <h1>Stocks</h1>
-
 <table>
 <tr>
   <th>stock</th>
-  <th>coefficient</th>
-  <th>intercept</th>
+  <th>coef</th>
   <th>price</th>
 </tr>
 <% @stocks.each do |stock| %>
@@ -14,8 +12,7 @@
         <%= stock.stock %>
       </a>
     </td>
-    <td><%= stock.coef  %></td>
-    <td><%= stock.inter %></td>
+    <td><%= stock.coef.round(Math.log10(@stave)) %></td>
     <td><%= stock.price %></td>
   </tr>
 <% end %>
