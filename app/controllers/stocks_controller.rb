@@ -3,7 +3,6 @@ require "stave"
 class StocksController < ApplicationController
   def index
     @stocks = StocksCoef.all
-    @stave = STAVE
   end
 
   STAVE = 100

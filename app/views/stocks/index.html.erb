@@ -12,7 +12,7 @@
         <%= stock.stock %>
       </a>
     </td>
-    <td><%= stock.coef.round(Math.log10(@stave)) %></td>
+    <td><%= stock.coef.round(2) %></td>
     <td><%= stock.price %></td>
   </tr>
 <% end %>
