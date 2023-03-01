@@ -28,23 +28,26 @@ module Stave
       @good_coefs.with_progress do |good_coef|
         good_stock = good_coef[:stock]
         Progress.note = good_stock
-        good_last  = good_coef[:price]
+        good_last   = good_coef[:price]
 
-        good_boll  = good_aver(good_stock, STAVE)
-        good_boll  = good_boll[-1][1]
+        good_boll   = good_aver(good_stock, STAVE)
+        good_boll   = good_boll[-1][1]
 
-        good_trend = good_trend(good_stock)
-        good_trend = good_trend[-1][1]
+        good_trend  = good_trend(good_stock)
+        good_trend  = good_trend[-1][1]
 
-        good_up1   = good_stave(good_stock, true, 1) # up1
-        good_up1   = good_up1[-1][1]
+        good_up1    = good_stave(good_stock, true, 1) # up1
+        good_up1    = good_up1[-1][1]
 
-        good_up2   = good_stave(good_stock, true, 2) # up2
-        good_up2   = good_up2[-1][1]
+        good_top    = good_stave(good_stock, true, 2) # up2
+        good_top    = good_top[-1][1]
+        good_date   = good_top[-1][0]
 
         good_price = good_last > good_trend && 
                      good_last > good_boll && 
-                     good_last > good_stave
+                     good_last > good_up1
+
+        good_stave = good_last > good_top
 
         if good_price
           good_stock = good_table.new(
@@ -52,7 +55,9 @@ module Stave
             coef:   good_coef[:coef], 
             inter:  good_coef[:inter], 
             price:  good_last,
-            good:   good_price
+            good:   good_price,
+            stave:  good_stave,
+            date:   good_date
           )
           good_stock.save
         end

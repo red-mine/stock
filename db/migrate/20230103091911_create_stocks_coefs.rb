@@ -6,7 +6,7 @@ class CreateStocksCoefs < ActiveRecord::Migration[7.0]
       t.float   :inter
       t.float   :price
       t.boolean :good
-      t.integer :stave
+      t.boolean :stave
       t.date    :date
 
       t.timestamps
