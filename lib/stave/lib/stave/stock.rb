@@ -27,19 +27,21 @@ module Stave
       puts "Importing..."
       @good_coefs.with_progress do |good_coef|
         good_stock = good_coef[:stock]
-        good_last  = good_coef[:price]
         Progress.note = good_stock
+        good_last  = good_coef[:price]
         good_trend = good_trend(good_stock)
         good_trend = good_trend[-1][1]
         good_price = good_last > good_trend
-        good_stock = good_table.new(
-          stock:  good_stock, 
-          coef:   good_coef[:coef], 
-          inter:  good_coef[:inter], 
-          price:  good_last,
-          good:   good_price
-        )
-        good_stock.save
+        if good_price
+          good_stock = good_table.new(
+            stock:  good_stock, 
+            coef:   good_coef[:coef], 
+            inter:  good_coef[:inter], 
+            price:  good_last,
+            good:   good_price
+          )
+          good_stock.save
+        end
       end
     end
 
