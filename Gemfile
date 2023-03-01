@@ -46,7 +46,7 @@ gem "progress"
 
 gem "os"
 
-gem "stave", path: "plugins/stave"
+gem "stave", path: "lib/stave"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -92,5 +92,5 @@ group :test do
   gem "webdrivers"
 end
 
-# stave_gemfile = File.new("plugins/stave/Gemfile")
+# stave_gemfile = File.new("lib/stave/Gemfile")
 # eval_gemfile stave_gemfile
