@@ -1,9 +1,9 @@
 module Stave
   class Stock
     def initialize(good_area, good_days)
-      @good_area = good_area
-      @good_days = good_days
-      @good_coefs = []
+      @good_area    = good_area
+      @good_days    = good_days
+      @good_models  = []
     end
 
     STAVE = 100
@@ -12,23 +12,25 @@ module Stave
       good_stocks = _good_stocks
       puts "Modeling..."
       good_stocks.with_progress do |good_stock|
-        Progress.note = good_stock
+        Progress.note = good_stock.upcase
         good_model = _good_model(good_stock)
         if good_model.empty?
           next
         end
-        @good_coefs.push good_model
+        @good_models.push good_model
       end
-      @good_coefs.sort_by! {|good_coef| -good_coef[:coef]}
+      @good_models.sort_by! {|good_model| -good_model[:coef]}
     end
 
     def good_import(good_table)
       good_table.delete_all
       puts "Importing..."
-      @good_coefs.with_progress do |good_coef|
-        good_stock = good_coef[:stock]
-        Progress.note = good_stock
-        good_last   = good_coef[:price]
+      @good_models.with_progress do |good_model|
+        good_stock  = good_model[:stock]
+        good_last   = good_model[:price]
+        good_date   = good_model[:date]
+
+        Progress.note = good_stock.upcase
 
         good_boll   = good_aver(good_stock, STAVE)
         good_boll   = good_boll[-1][1]
@@ -41,7 +43,6 @@ module Stave
 
         good_top    = good_stave(good_stock, true, 2) # up2
         good_top    = good_top[-1][1]
-        good_date   = good_top[-1][0]
 
         good_price = good_last > good_trend && 
                      good_last > good_boll && 
@@ -52,12 +53,12 @@ module Stave
         if good_price
           good_stock = good_table.new(
             stock:  good_stock, 
-            coef:   good_coef[:coef], 
-            inter:  good_coef[:inter], 
+            coef:   good_model[:coef], 
+            inter:  good_model[:inter], 
             price:  good_last,
             good:   good_price,
             stave:  good_stave,
-            date:   good_date
+            # date:   good_date
           )
           good_stock.save
         end
@@ -202,20 +203,22 @@ module Stave
       if good_data[-1][:price] > STAVE
         return {}
       end
-      good_index = good_data.pluck(:index)
-      good_price = good_data.pluck(:price)
-      good_model = Eps::LinearRegression.new(good_index, good_price, split: false)
-      good_coef = good_model.coefficients[:x0]
+      good_index  = good_data.pluck(:index)
+      good_price  = good_data.pluck(:price)
+      good_date   = good_data.pluck(:date)
+      good_model  = Eps::LinearRegression.new(good_index, good_price, split: false)
+      good_coef   = good_model.coefficients[:x0]
       if good_coef < 1.0 / STAVE
         return {}
       end
-      good_inter = good_model.coefficients[:_intercept]
-      good_last  = good_data[-1][:price]
-      good_model = { 
+      good_inter  = good_model.coefficients[:_intercept]
+      good_last   = good_data[-1][:price]
+      good_model  = { 
         stock:  good_stock, 
         coef:   good_coef, 
         inter:  good_inter, 
         price:  good_last,
+        date:   good_date
       }
       good_model
     end
