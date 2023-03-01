@@ -11,34 +11,37 @@ class StocksController < ApplicationController
   def show
     stock = Stave::Stock.new("sz", LOHAS + STAVE)
     
-    @stock_ma10   = stock.good_aver(params[:stock], 10).slice!(90, 876)
-    @stave_ma     = stock.good_aver(params[:stock], STAVE)
+    @stock_price  = stock.good_aver(params[:stock], 10).slice!(90, 876)
+    @stave_move   = stock.good_aver(params[:stock], STAVE)
     @stave_mu     = stock.good_boll(params[:stock], STAVE, true)
     @stave_md     = stock.good_boll(params[:stock], STAVE, false)
 
     @stave_trend  = stock.good_trend(params[:stock])
-    @stave_up1    = stock.good_stave(params[:stock], true,  1)
-    @stave_dn1    = stock.good_stave(params[:stock], false, 1)
-    @stave_up2    = stock.good_stave(params[:stock], true,  2)
-    @stave_dn2    = stock.good_stave(params[:stock], false, 2)
+    @stave_dn1    = stock.good_stave(params[:stock], true,  1)
+    @stave_up1    = stock.good_stave(params[:stock], false, 1)
+    @stave_dn2    = stock.good_stave(params[:stock], true,  2)
+    @stave_up2    = stock.good_stave(params[:stock], false, 2)
 
-    Rails.logger.info "@stock_ma10.size  = #{@stock_ma10.size}"
+    Rails.logger.info "@stock_price.size = #{@stock_price.size}"
     Rails.logger.info "@stave_trend.size = #{@stave_trend.size}"
 
+    Rails.logger.info "@stock_price[LOHAS] = #{@stock_price[LOHAS]}"
+    Rails.logger.info "@stave_trend[LOHAS] = #{@stave_trend[LOHAS]}"
+
     @stocks = [
-      {name: "ma10",  data: @stock_ma10}, 
-      {name: "ma",    data: @stave_ma},
-      {name: "mu",    data: @stave_mu},
-      {name: "md",    data: @stave_md}
+      {name: "price", data: @stock_price}, 
+      {name: "trend", data: @stave_move},
+      # {name: "up",    data: @stave_mu},
+      # {name: "dn",    data: @stave_md}
     ]
 
     @staves = [
-      {name: "ma10",  data: @stock_ma10}, 
+      {name: "price", data: @stock_price}, 
       {name: "trend", data: @stave_trend},
-      {name: "up1",   data: @stave_up1},
-      {name: "dn1",   data: @stave_dn1},
-      {name: "up2",   data: @stave_up2},
-      {name: "dn2",   data: @stave_dn2}
+      # {name: "up",   data: @stave_up1},
+      # {name: "dn",   data: @stave_dn1},
+      # {name: "top",   data: @stave_up2},
+      # {name: "bot",   data: @stave_dn2}
     ]
 
     @stock_code = params[:stock]
