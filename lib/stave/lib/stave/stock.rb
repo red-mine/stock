@@ -36,8 +36,11 @@ module Stave
         good_trend = good_trend(good_stock)
         good_trend = good_trend[-1][1]
 
-        good_stave = good_stave(good_stock, false, 1)
-        good_stave = good_stave[-1][1]
+        good_up1   = good_stave(good_stock, true, 1) # up1
+        good_up1   = good_up1[-1][1]
+
+        good_up2   = good_stave(good_stock, true, 2) # up2
+        good_up2   = good_up2[-1][1]
 
         good_price = good_last > good_trend && 
                      good_last > good_boll && 
@@ -74,9 +77,9 @@ module Stave
       good_data = good_trend(good_stock)
       good_sqrt = _good_sqrt(good_stock)
       if good_stave
-        good_data.map! { |good_date, good_price| [good_date, good_price - good_sqrt * good_multi] }
-      else
         good_data.map! { |good_date, good_price| [good_date, good_price + good_sqrt * good_multi] }
+      else
+        good_data.map! { |good_date, good_price| [good_date, good_price - good_sqrt * good_multi] }
       end
     end
 
@@ -145,10 +148,10 @@ module Stave
     end
 
     def _good_stave(good_stock)
-      good_data = _good_data(good_stock)
-      good_start = STAVE - 1
-      good_end = good_data.size - 1
-      good_data = good_data.slice!(good_start, good_end - good_start + 1)
+      good_data   = _good_data(good_stock)
+      good_start  = STAVE - 1
+      good_end    = good_data.size - 1
+      good_data   = good_data.slice!(good_start, good_end - good_start + 1)
       good_data
     end
 

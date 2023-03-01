@@ -18,10 +18,10 @@ class StocksController < ApplicationController
     @stave_mdn    = stock.good_boll(params[:stock], STAVE, false)
 
     @stave_trend  = stock.good_trend(params[:stock])
-    @stave_up1    = stock.good_stave(params[:stock], false, 1)
-    @stave_dn1    = stock.good_stave(params[:stock], true,  1)
-    @stave_top    = stock.good_stave(params[:stock], false, 2)
-    @stave_bot    = stock.good_stave(params[:stock], true,  2)
+    @stave_up1    = stock.good_stave(params[:stock], true,    1)
+    @stave_dn1    = stock.good_stave(params[:stock], false,   1)
+    @stave_top    = stock.good_stave(params[:stock], true,    2)
+    @stave_bot    = stock.good_stave(params[:stock], false,   2)
 
     @stocks = [
       {name: "Price", data: @stock_price}, 
