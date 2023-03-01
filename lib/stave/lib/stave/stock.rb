@@ -268,7 +268,7 @@ module Stave
     end
 
     def _good_base
-      good_base = "vipdoc/" + @good_area + "/lday/"
+      good_base = "storage/vipdoc/" + @good_area + "/lday/"
       good_base
     end
 

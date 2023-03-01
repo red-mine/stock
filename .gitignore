@@ -30,7 +30,7 @@
 !/tmp/storage/.keep
 
 /public/assets
-/vipdoc
+/storage/vipdoc
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
