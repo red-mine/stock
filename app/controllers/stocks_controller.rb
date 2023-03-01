@@ -24,19 +24,19 @@ class StocksController < ApplicationController
     @stave_bot    = stock.good_stave(params[:stock], true,  2)
 
     @stocks = [
-      {name: "price", data: @stock_price}, 
-      {name: "boll",  data: @stave_boll},
-      {name: "up",    data: @stave_mup},
-      {name: "dn",    data: @stave_mdn}
+      {name: "Price", data: @stock_price}, 
+      {name: "Boll",  data: @stave_boll},
+      {name: "Up",    data: @stave_mup},
+      {name: "Down",  data: @stave_mdn}
     ]
 
     @staves = [
-      {name: "price", data: @stock_price}, 
-      {name: "trend", data: @stave_trend},
-      {name: "up",    data: @stave_up1},
-      {name: "dn",    data: @stave_dn1},
-      {name: "top",   data: @stave_top},
-      {name: "bot",   data: @stave_bot}
+      {name: "Price", data: @stock_price}, 
+      {name: "Trend", data: @stave_trend},
+      {name: "Up",    data: @stave_up1},
+      {name: "Down",  data: @stave_dn1},
+      {name: "Top",   data: @stave_top},
+      {name: "Bottom",data: @stave_bot}
     ]
 
     @stock_code = params[:stock]

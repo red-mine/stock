@@ -1,21 +1,21 @@
 <h1>Stocks</h1>
-<table>
-<tr>
+<table border=1 cellspacing=0>
+<tr align=left>
   <th>stock</th>
   <th>coef</th>
   <th>price</th>
   <th>good</th>
 </tr>
 <% @stocks.each do |stock| %>
-  <tr>
-    <td>
-      <a href="/stocks/<%= stock.stock %>">
-        <%= stock.stock %>
-      </a>
-    </td>
-    <td><%= stock.coef.round(2) %></td>
-    <td><%= stock.price %></td>
-    <td><%= stock.good %></td>
-  </tr>
+<tr>
+  <td>
+    <a href="/stocks/<%= stock.stock %>">
+      <%= stock.stock.upcase %>
+    </a>
+  </td>
+  <td><%= stock.coef.round(2) %></td>
+  <td><%= stock.price %></td>
+  <td><%= stock.good %></td>
+</tr>
 <% end %>
 </table>
