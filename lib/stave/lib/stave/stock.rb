@@ -29,9 +29,20 @@ module Stave
         good_stock = good_coef[:stock]
         Progress.note = good_stock
         good_last  = good_coef[:price]
+
+        good_boll  = good_aver(good_stock, STAVE)
+        good_boll  = good_boll[-1][1]
+
         good_trend = good_trend(good_stock)
         good_trend = good_trend[-1][1]
-        good_price = good_last > good_trend
+
+        good_stave = good_stave(good_stock, false, 1)
+        good_stave = good_stave[-1][1]
+
+        good_price = good_last > good_trend && 
+                     good_last > good_boll && 
+                     good_last > good_stave
+
         if good_price
           good_stock = good_table.new(
             stock:  good_stock, 
