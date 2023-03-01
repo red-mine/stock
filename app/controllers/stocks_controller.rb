@@ -35,17 +35,17 @@ class StocksController < ApplicationController
     @stocks = [
       {name: "price", data: @stock_price}, 
       {name: "trend", data: @stave_move},
-      # {name: "up",    data: @stave_mu},
-      # {name: "dn",    data: @stave_md}
+      {name: "up",    data: @stave_mu},
+      {name: "dn",    data: @stave_md}
     ]
 
     @staves = [
       {name: "price", data: @stock_price}, 
       {name: "trend", data: @stave_trend},
-      # {name: "up",   data: @stave_up1},
-      # {name: "dn",   data: @stave_dn1},
-      # {name: "top",   data: @stave_up2},
-      # {name: "bot",   data: @stave_dn2}
+      {name: "up",   data: @stave_up1},
+      {name: "dn",   data: @stave_dn1},
+      {name: "top",   data: @stave_up2},
+      {name: "bot",   data: @stave_dn2}
     ]
 
     @stock_code = params[:stock]
