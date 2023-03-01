@@ -28,6 +28,10 @@ class StocksController < ApplicationController
     Rails.logger.info "@stock_price[LOHAS] = #{@stock_price[LOHAS]}"
     Rails.logger.info "@stave_trend[LOHAS] = #{@stave_trend[LOHAS]}"
 
+    if @stock_price[LOHAS][1] > @stave_trend[LOHAS][1]
+      Rails.logger.info "good stock"
+    end
+
     @stocks = [
       {name: "price", data: @stock_price}, 
       {name: "trend", data: @stave_move},
