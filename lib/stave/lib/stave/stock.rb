@@ -22,9 +22,9 @@ module Stave
       @good_models.sort_by! {|good_model| -good_model[:coef]}
     end
 
-    def good_import(good_table)
+    def good_staves(good_table)
       good_table.delete_all
-      puts "Importing..."
+      puts "Staveing..."
       @good_models.with_progress do |good_model|
         good_stock  = good_model[:stock]
         good_last   = good_model[:price]
