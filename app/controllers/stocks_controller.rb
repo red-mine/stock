@@ -6,9 +6,10 @@ class StocksController < ApplicationController
   end
 
   STAVE = 100
+  LOHAS = 875 # 3 * 250 + 125 = 875
 
   def show
-    stock = Stave::Stock.new("sz", 875 + STAVE)
+    stock = Stave::Stock.new("sz", LOHAS + STAVE)
     
     @stock_ma10   = stock.good_aver(params[:stock], 10).slice!(90, 876)
     @stave_ma     = stock.good_aver(params[:stock], STAVE)
