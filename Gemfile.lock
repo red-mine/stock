@@ -185,6 +185,8 @@ GEM
     reline (0.3.2)
       io-console (~> 0.5)
     rexml (3.2.5)
+    ruby-debug-ide (0.7.3)
+      rake (>= 0.8.1)
     rubyzip (2.3.2)
     selenium-webdriver (4.8.1)
       rexml (~> 3.2, >= 3.2.5)
@@ -244,6 +246,7 @@ DEPENDENCIES
   progress
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
+  ruby-debug-ide
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
