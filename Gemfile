@@ -48,7 +48,9 @@ gem "os"
 
 gem "stave", path: "lib/stave"
 
-gem "ruby-debug-ide"
+# gem "ruby-debug-ide"
+
+# gem "debase"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
