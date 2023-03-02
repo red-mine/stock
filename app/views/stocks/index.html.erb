@@ -1,5 +1,7 @@
 <h1>Stocks</h1>
+
 <table border=1 cellspacing=0>
+
 <tr align=left>
   <th>stock</th>
   <th>coef</th>
@@ -8,6 +10,7 @@
   <th>stave</th>
   <th>date</th>
 </tr>
+
 <% @stocks.each do |stock| %>
 <tr>
   <td>
@@ -22,4 +25,5 @@
   <td><%= stock.date %></td>
 </tr>
 <% end %>
+
 </table>
