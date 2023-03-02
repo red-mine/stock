@@ -1,4 +1,4 @@
-<h1>Stocks - <% @sotcks %></h1>
+<h1>Stocks - <%= @date %></h1>
 
 <table border=1 cellspacing=0>
 
@@ -7,7 +7,6 @@
   <th>coef</th>
   <th>price</th>
   <th>stave</th>
-  <th>date</th>
 </tr>
 
 <% @stocks.each do |stock| %>
@@ -20,7 +19,6 @@
   <td><%= stock.coef.round(2) %></td>
   <td><%= stock.price %></td>
   <td><%= stock.stave %></td>
-  <td><%= stock.date %></td>
 </tr>
 <% end %>
 

@@ -3,6 +3,8 @@ require "stave"
 class StocksController < ApplicationController
   def index
     @stocks = StocksCoef.all
+    stocks  = StocksCoef.arel_table
+    @date = @stocks.pluck(stocks[:date])[-1]
   end
 
   STAVE = 100 # 20 * WW(5) = 100
