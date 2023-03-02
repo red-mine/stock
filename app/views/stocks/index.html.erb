@@ -1,4 +1,4 @@
-<h1>Stocks</h1>
+<h1>Stocks - <% @sotcks %></h1>
 
 <table border=1 cellspacing=0>
 
@@ -6,7 +6,6 @@
   <th>stock</th>
   <th>coef</th>
   <th>price</th>
-  <th>good</th>
   <th>stave</th>
   <th>date</th>
 </tr>
@@ -20,7 +19,6 @@
   </td>
   <td><%= stock.coef.round(2) %></td>
   <td><%= stock.price %></td>
-  <td><%= stock.good %></td>
   <td><%= stock.stave %></td>
   <td><%= stock.date %></td>
 </tr>
