@@ -10,7 +10,7 @@ module Stave
 
     def good_models
       good_stocks = _good_stocks
-      puts "Modeling..."
+      puts "Stock'in..."
       good_stocks.with_progress do |good_stock|
         Progress.note = good_stock.upcase
         good_model  = _good_model(good_stock)
@@ -24,7 +24,7 @@ module Stave
 
     def good_staves(good_table)
       good_table.delete_all
-      puts "Staveing..."
+      puts "Stave'in..."
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
         good_stock  = good_model[:stock]
@@ -50,7 +50,7 @@ module Stave
             price:  good_last,
             good:   good_price,
             stave:  good_stave,
-            # date:   good_date
+            date:   good_date
           )
           good_stock.save
         end
@@ -201,7 +201,7 @@ module Stave
       end
       good_index  = good_data.pluck(:index)
       good_price  = good_data.pluck(:price)
-      good_date   = good_data.pluck(:date)
+      good_date   = good_data.pluck(:date)[-1]
       good_model  = Eps::LinearRegression.new(good_index, good_price, split: false)
       good_coef   = good_model.coefficients[:x0]
       if good_coef < 1.0 / STAVE
