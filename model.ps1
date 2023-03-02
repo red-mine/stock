@@ -1,6 +1,7 @@
 $db = ".\db\stock.sqlite3"
 if (Test-Path $db) {
-  rm -r -force $db
+  Remove-Item -r -force $db
 }
-
 rails db:migrate
+rails stocks
+rails server
