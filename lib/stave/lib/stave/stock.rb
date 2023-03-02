@@ -157,13 +157,13 @@ module Stave
       good_binary = good_file.read(32)
       good_string = good_binary.unpack("H*")[0]
       good_date   = good_string[0,8]
-      good_date   = good_date[6..7] + good_date[4..5] + good_date[2..3] + good_date[0..1]
+      good_date   = good_date[6..7]   + good_date[4..5]   + good_date[2..3]   + good_date[0..1]
       good_date   = good_date.to_i(16).to_s
       good_price  = good_string[32,8]
-      good_price  = good_price[6..7] + good_price[4..5] + good_price[2..3] + good_price[0..1]
+      good_price  = good_price[6..7]  + good_price[4..5]  + good_price[2..3]  + good_price[0..1]
       good_price  = good_price.to_i(16).to_f / STAVE
       good_stock  = {
-        date:   good_date.to_date, 
+        date:   good_date.to_date,
         price:  good_price, 
         index:  good_index
       }
@@ -201,7 +201,7 @@ module Stave
       end
       good_index  = good_data.pluck(:index)
       good_price  = good_data.pluck(:price)
-      good_date   = good_data.pluck(:date)     
+      good_date   = good_data.pluck(:date)
       good_model  = Eps::LinearRegression.new(good_index, good_price, split: false)
       good_coef   = good_model.coefficients[:x0]
       if good_coef < 1.0 / STAVE
