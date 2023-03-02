@@ -45,10 +45,6 @@ module Stave
 
         good_price  = good_last > good_trend && good_last > good_boll
 
-        good_stave  = if good_last > good_top
-          "sell"
-        end 
-
         if good_price
           good_stock = good_table.new(
             stock:  good_stock, 
