@@ -30,18 +30,25 @@ module Stave
         good_stock  = good_model[:stock]
         good_last   = good_model[:price]
         good_date   = good_model[:date]
+
         good_boll   = good_aver(good_stock, STAVE)
         good_boll   = good_boll[-1][1]
+
         good_trend  = good_trend(good_stock)
         good_trend  = good_trend[-1][1]
-        good_up1    = good_stave(good_stock, true, 1) # up1
+
+        good_up1    = good_stave(good_stock, true, 1)
         good_up1    = good_up1[-1][1]
-        good_top    = good_stave(good_stock, true, 2) # up2
+
+        good_top    = good_stave(good_stock, true, 2)
         good_top    = good_top[-1][1]
+
         good_price  = good_last > good_trend && 
                       good_last > good_boll && 
                       good_last > good_up1
+
         good_stave  = good_last > good_top
+
         if good_price
           good_stock = good_table.new(
             stock:  good_stock, 
