@@ -43,14 +43,10 @@ module Stave
         good_top    = good_stave(good_stock, true, 2)
         good_top    = good_top[-1][1]
 
-        good_price  = good_last > good_trend
+        good_price  = good_last > good_trend && good_last > good_boll
 
         good_stave  = if good_last > good_top
           "sell"
-        elsif good_last < good_up1
-          "buy"
-        else
-          "keep"
         end 
 
         if good_price
