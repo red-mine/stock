@@ -49,6 +49,12 @@ module Stave
 
         good_stave  = good_last > good_top
 
+        if good_stave
+          good_stave = "sell"
+        else
+          good_stave = "buy"
+        end
+
         if good_price
           good_stock = good_table.new(
             stock:  good_stock, 
