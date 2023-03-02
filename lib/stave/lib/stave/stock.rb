@@ -52,7 +52,7 @@ module Stave
             inter:  good_model[:inter], 
             price:  good_last,
             good:   good_price,
-            stave:  good_stave,
+            stave:  "",
             date:   good_date
           )
           good_stock.save
