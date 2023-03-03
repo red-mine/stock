@@ -10,10 +10,10 @@ class StocksController < ApplicationController
 
   def index
     years         = params[:years].to_i
-    coef          = if (years.eql?(LOHAS))
-      coef        = StocksCoefsLoha
-    else
+    coef          = if (years.eql?(YEAR))
       coef        = StocksCoefsYear
+    else
+      coef        = StocksCoefsLoha
     end
     @stocks       = coef.all
     stocks        = coef.arel_table
