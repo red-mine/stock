@@ -14,7 +14,7 @@
 <% @stocks.each do |stock| %>
 <tr>
   <td>
-    <a href="/stocks/<%= stock.stock %>">
+    <a href="/stocks/<%= stock.stock %>/<%= stock.years %>">
       <%= stock.stock.upcase %>
     </a>
   </td>
