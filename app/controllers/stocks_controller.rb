@@ -19,10 +19,14 @@ class StocksController < ApplicationController
   end
 
   def show
-    stocks        = Stave::Stock.new("sz", LOHAS + STAVE)
+    stocks        = Stave::Stock.new( "sz",   LOHAS + STAVE )
     stock         = params[:stock]
+    @stock        = stock
 
-    stock_price   = stocks.good_aver(stock, SMOOTH).slice!(STAVE - SMOOTH, LOHAS + 1)
+    stock_price   = stocks.good_aver( stock,  SMOOTH        )
+    stock_start   = STAVE - SMOOTH
+    stock_end     = LOHAS + 1
+    stock_price   = stock_price.slice!(stock_start, stock_end)
 
     @stave_boll   = stocks.good_aver( stock,  STAVE         )
     @stave_mup    = stocks.good_boll( stock,  STAVE,  true  )
@@ -49,8 +53,6 @@ class StocksController < ApplicationController
       {name: "Top",     data: @stave_top  },
       {name: "Bottom",  data: @stave_bot  }
     ]
-
-    @stock = stock
   end
 
 end
