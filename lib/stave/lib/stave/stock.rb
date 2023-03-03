@@ -57,7 +57,7 @@ module Stave
             good:   good_price,
             stave:  "",
             date:   good_date,
-            years:  good_years
+            years:  @good_years
           )
 
           good_stock.save
