@@ -1,14 +1,6 @@
 require "stave"
 
 class StocksController < ApplicationController
-  WEEK            = 5
-  YEAR            = 250
-  STAVE           = 20  * WEEK
-  LOHAS           = 3.5 * YEAR
-  SMOOTH          = 10
-  
-  def initialize
-  end
 
   def index
     @stocks       = StocksCoef.all
@@ -16,15 +8,18 @@ class StocksController < ApplicationController
     @date         = @stocks.pluck(stocks[:date])[-1]
   end
 
+  WEEK            = 5
+  YEAR            = 250
+  STAVE           = 20  * WEEK
+  LOHAS           = 3.5 * YEAR
+  SMOOTH          = 10
+  
   def show
     stocks        = Stave::Stock.new( "sz",   LOHAS + STAVE )
     stock         = params[:stock]
-    @stock        = stock
 
-    stock_price   = stocks.good_aver( stock,  SMOOTH        )
-    stock_start   = STAVE - SMOOTH
-    stock_end     = LOHAS + 1
-    stock_price   = stock_price.slice!(stock_start, stock_end)
+
+    stock_price   = stocks.good_aver( stock,  SMOOTH        ).slice!(STAVE - SMOOTH, LOHAS + 1)
 
     stave_boll    = stocks.good_aver( stock,  STAVE         )
     stave_mup     = stocks.good_boll( stock,  STAVE,  true  )
@@ -51,6 +46,7 @@ class StocksController < ApplicationController
       { name: "Top",    data: stave_top   },
       { name: "Bottom", data: stave_bot   }
     ]
+    @stock        = stock
   end
 
 end
