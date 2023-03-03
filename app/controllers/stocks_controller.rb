@@ -8,6 +8,12 @@ class StocksController < ApplicationController
     @date         = @stocks.pluck(stocks[:date])[-1]
   end
 
+  def stave
+    @staves       = StocksCoefsYear.all
+    staves        = StocksCoefsYear.arel_table
+    @date         = @staves.pluck(staves[:date])[-1]
+  end
+
   WEEK            = 5
   YEAR            = 250
   STAVE           = 20  * WEEK
@@ -16,7 +22,7 @@ class StocksController < ApplicationController
   
   def show
     stock         = params[:stock]
-    years         = params[:years]
+    years         = params[:years].to_i
 
     stocks        = Stave::Stock.new( "sz",   years + STAVE )
 
