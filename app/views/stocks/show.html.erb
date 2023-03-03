@@ -2,7 +2,7 @@
 
 <h2>Boll'in Bands</h2>
 
-<%= line_chart @stocks.map {
+<%= line_chart @boll.map {
   |stock| {
     name: stock[:name], 
     data: stock[:data]
@@ -11,7 +11,7 @@
 
 <h2>Lohas Staves</h2>
 
-<%= line_chart @staves.map {
+<%= line_chart @lohas.map {
   |stave| {
     name: stave[:name], 
     data: stave[:data]
