@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_062603) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "stocks_coefs", force: :cascade do |t|
+  create_table "stocks_coefs_lohas", force: :cascade do |t|
     t.string "stock"
     t.float "coef"
     t.float "inter"

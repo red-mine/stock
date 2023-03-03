@@ -17,7 +17,7 @@ class StocksController < ApplicationController
     end
     @stocks       = coef.all
     stocks        = coef.arel_table
-    @date         = @stocks.pluck(staves[:date])[-1]
+    @date         = @stocks.pluck(stocks[:date])[-1]
   end
 
   def show
