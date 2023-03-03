@@ -3,10 +3,13 @@ module Stave
     def initialize(good_area, good_days)
       @good_area    = good_area
       @good_days    = good_days
+      @good_years   = if @good_days > 365
+        LOHAS
+      else
+        YEAR
+      end
       @good_models  = []
     end
-
-    STAVE = 100
 
     def good_models
       good_stocks = _good_stocks
@@ -53,8 +56,10 @@ module Stave
             price:  good_last,
             good:   good_price,
             stave:  "",
-            date:   good_date
+            date:   good_date,
+            years:  good_years
           )
+
           good_stock.save
         end
       end
