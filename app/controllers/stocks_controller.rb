@@ -15,11 +15,13 @@ class StocksController < ApplicationController
   SMOOTH          = 10
   
   def show
-    stocks        = Stave::Stock.new( "sz",   LOHAS + STAVE )
     stock         = params[:stock]
+    years         = params[:years]
+
+    stocks        = Stave::Stock.new( "sz",   years + STAVE )
 
     start         = STAVE - SMOOTH
-    size          = LOHAS + 1
+    size          = years + 1
 
     stock_price   = stocks.good_aver( stock,  SMOOTH        )
     stock_price   = stock_price.slice(start,  size          )
