@@ -11,9 +11,9 @@ class StocksController < ApplicationController
   def index
     years         = params[:years].to_i
     coef          = if (years.eql?(YEAR))
-      coef        = StocksCoefsYear
+      StocksCoefsYear
     else
-      coef        = StocksCoefsLoha
+      StocksCoefsLoha
     end
     @stocks       = coef.all
     stocks        = coef.arel_table
@@ -23,7 +23,7 @@ class StocksController < ApplicationController
   def show
     stock         = params[:stock]
     years         = params[:years].to_i
-
+    
     stocks        = Stave::Stock.new( "sz",   years + STAVE )
 
     start         = STAVE - SMOOTH
