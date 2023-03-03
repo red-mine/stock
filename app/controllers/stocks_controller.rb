@@ -53,6 +53,7 @@ class StocksController < ApplicationController
       {name: "Top",     data: @stave_top  },
       {name: "Bottom",  data: @stave_bot  }
     ]
+
   end
 
 end
