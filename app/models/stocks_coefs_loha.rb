@@ -1,0 +1,2 @@
+class StocksCoefsLoha < ApplicationRecord
+end

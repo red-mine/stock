@@ -4,7 +4,7 @@ task :stocks, [:area, :days] => :environment do |task, args|
   days = unless args.days.nil? then args.days else 875 + 100 end
   stock = Stave::Stock.new(area, days)
   stock.good_models()
-  stock.good_staves(StocksCoef)
+  stock.good_staves(StocksCoefLoha)
 end
 
 namespace :stocks do

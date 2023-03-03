@@ -2,24 +2,24 @@ require "stave"
 
 class StocksController < ApplicationController
 
-  def index
-    @stocks       = StocksCoef.all
-    stocks        = StocksCoef.arel_table
-    @date         = @stocks.pluck(stocks[:date])[-1]
-  end
-
-  def stave
-    @staves       = StocksCoefsYear.all
-    staves        = StocksCoefsYear.arel_table
-    @date         = @staves.pluck(staves[:date])[-1]
-  end
-
   WEEK            = 5
   YEAR            = 250
   STAVE           = 20  * WEEK
   LOHAS           = 3   * YEAR + YEAR / 2
   SMOOTH          = 10
-  
+
+  def index
+    years         = params[:years].to_i
+    coef          = if (years.eql?(LOHAS))
+      coef        = StocksCoefsLoha
+    else
+      coef        = StocksCoefsYear
+    end
+    @stocks       = coef.all
+    stocks        = coef.arel_table
+    @date         = @stocks.pluck(staves[:date])[-1]
+  end
+
   def show
     stock         = params[:stock]
     years         = params[:years].to_i
@@ -57,6 +57,7 @@ class StocksController < ApplicationController
       { name: "Top",    data: stave_top   },
       { name: "Bottom", data: stave_bot   }
     ]
+
     @stock        = stock
   end
 

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class StocksCoefTest < ActiveSupport::TestCase
+class StocksCoefsLohaTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
