@@ -11,15 +11,18 @@ class StocksController < ApplicationController
   WEEK            = 5
   YEAR            = 250
   STAVE           = 20  * WEEK
-  LOHAS           = 3.5 * YEAR
+  LOHAS           = 3   * YEAR + YEAR / 2
   SMOOTH          = 10
   
   def show
     stocks        = Stave::Stock.new( "sz",   LOHAS + STAVE )
     stock         = params[:stock]
 
+    start         = STAVE - SMOOTH
+    size          = LOHAS + 1
 
-    stock_price   = stocks.good_aver( stock,  SMOOTH        ).slice!(STAVE - SMOOTH, LOHAS + 1)
+    stock_price   = stocks.good_aver( stock,  SMOOTH        )
+    stock_price   = stock_price.slice(start,  size          )
 
     stave_boll    = stocks.good_aver( stock,  STAVE         )
     stave_mup     = stocks.good_boll( stock,  STAVE,  true  )
