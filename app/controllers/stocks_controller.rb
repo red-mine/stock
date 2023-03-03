@@ -1,46 +1,56 @@
 require "stave"
 
 class StocksController < ApplicationController
-  def index
-    @stocks = StocksCoef.all
-    stocks  = StocksCoef.arel_table
-    @date = @stocks.pluck(stocks[:date])[-1]
+
+  WEEK            = 5
+  YEAR            = 250
+  STAVE           = 20  * WEEK
+  LOHAS           = 3.5 * YEAR
+  SMOOTH          = 10
+  
+  def initialize
+    Rails.logger.info "LOHAS = #{LOHAS}"
   end
 
-  STAVE = 100 # 20 * WW(5) = 100
-  LOHAS = 875
+  def index
+    @stocks       = StocksCoef.all
+    stocks        = StocksCoef.arel_table
+    @date         = @stocks.pluck(stocks[:date])[-1]
+  end
 
   def show
-    stock = Stave::Stock.new("sz", LOHAS + STAVE)
+    stocks        = Stave::Stock.new("sz", LOHAS + STAVE)
+    stock         = params[:stock]
 
-    @stock_price  = stock.good_aver(params[:stock], 10).slice!(STAVE - 10, LOHAS + 1)
+    stock_price   = stocks.good_aver(stock, SMOOTH).slice!(STAVE - SMOOTH, LOHAS + 1)
 
-    @stave_boll   = stock.good_aver(params[:stock], STAVE)
-    @stave_mup    = stock.good_boll(params[:stock], STAVE, true)
-    @stave_mdn    = stock.good_boll(params[:stock], STAVE, false)
+    @stave_boll   = stocks.good_aver( stock,  STAVE         )
+    @stave_mup    = stocks.good_boll( stock,  STAVE,  true  )
+    @stave_mdn    = stocks.good_boll( stock,  STAVE,  false )
 
-    @stave_trend  = stock.good_trend(params[:stock])
-    @stave_up1    = stock.good_stave(params[:stock], true,    1)
-    @stave_dn1    = stock.good_stave(params[:stock], false,   1)
-    @stave_top    = stock.good_stave(params[:stock], true,    2)
-    @stave_bot    = stock.good_stave(params[:stock], false,   2)
+    @stave_trend  = stocks.good_trend(stock                 )
+    @stave_up1    = stocks.good_stave(stock,  true,   1     )
+    @stave_dn1    = stocks.good_stave(stock,  false,  1     )
+    @stave_top    = stocks.good_stave(stock,  true,   2     )
+    @stave_bot    = stocks.good_stave(stock,  false,  2     )
 
     @stocks = [
-      {name: "Price", data: @stock_price}, 
-      {name: "Boll",  data: @stave_boll},
-      {name: "Up",    data: @stave_mup},
-      {name: "Down",  data: @stave_mdn}
+      {name: "Price",   data:  stock_price}, 
+      {name: "Boll",    data: @stave_boll },
+      {name: "Up",      data: @stave_mup  },
+      {name: "Down",    data: @stave_mdn  }
     ]
 
     @staves = [
-      {name: "Price", data: @stock_price}, 
-      {name: "Trend", data: @stave_trend},
-      {name: "Up",    data: @stave_up1},
-      {name: "Down",  data: @stave_dn1},
-      {name: "Top",   data: @stave_top},
-      {name: "Bottom",data: @stave_bot}
+      {name: "Price",   data:  stock_price}, 
+      {name: "Trend",   data: @stave_trend},
+      {name: "Up",      data: @stave_up1  },
+      {name: "Down",    data: @stave_dn1  },
+      {name: "Top",     data: @stave_top  },
+      {name: "Bottom",  data: @stave_bot  }
     ]
 
-    @stock_code = params[:stock]
+    @stock = stock
   end
+
 end
