@@ -1,3 +1,9 @@
+PATH
+  remote: extras/stave
+  specs:
+    stave (0.1.0)
+      rails (>= 7.0.4.2)
+
 GEM
   remote: https://gems.ruby-china.com/
   specs:
@@ -240,6 +246,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
+  stave!
   stimulus-rails
   turbo-rails
   tzinfo-data

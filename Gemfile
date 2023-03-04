@@ -46,7 +46,7 @@ gem "progress"
 
 gem "os"
 
-# gem "stave", path: "engines/stave"
+gem "stave", path: "extras/stave"
 
 # gem "ruby-debug-ide"
 
