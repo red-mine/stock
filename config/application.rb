@@ -7,6 +7,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 require "stock"
+require "stave"
 
 module Stock
   class Application < Rails::Application

@@ -1,5 +1,3 @@
-require "stave"
-
 class StocksController < ApplicationController
 
   WEEK            = 5
