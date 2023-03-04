@@ -7,6 +7,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 require "stave"
+# require "stock"
 
 module Stock
   class Application < Rails::Application
@@ -18,7 +19,7 @@ module Stock
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = "Central Time (US & Canada)"
-    config.eager_load_paths << Rails.root.join("extras")
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
   end
 end
