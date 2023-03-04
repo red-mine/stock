@@ -1,5 +1,5 @@
 PATH
-  remote: lib/stave
+  remote: engines/stave
   specs:
     stave (0.1.0)
       rails (>= 7.0.4.2)
