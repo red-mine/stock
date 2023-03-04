@@ -2,5 +2,5 @@ require "stock/version"
 require "stock/engine"
 
 module Stock
-  Your code goes here...
+  # Your code goes here...
 end
