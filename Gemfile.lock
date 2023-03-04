@@ -2,8 +2,7 @@ PATH
   remote: lib/stave
   specs:
     stave (0.1.0)
-      eps
-      rails (>= 7.0.4)
+      rails (>= 7.0.4.2)
 
 GEM
   remote: https://gems.ruby-china.com/
