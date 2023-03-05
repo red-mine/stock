@@ -1,10 +1,22 @@
+LOHA = 875
+YEAR = 250
+STAV = 100
+STOC = "sz"
+
 desc "stocks"
 task :stocks, [:area, :days] => :environment do |task, args|
-  area = unless args.area.nil? then args.area else "sz" end
-  days = unless args.days.nil? then args.days else 875 + 100 end
+  # Make sure which AREA
+  area = unless args.area.nil? then args.area else STOC end
+  # stocks - lohas
+  days = unless args.days.nil? then args.days else LOHA + STAV end
   stock = Stave::Stock.new(area, days)
   stock.good_models()
   stock.good_staves(StocksCoefsLoha)
+  # staves - years
+  days = unless args.days.nil? then args.days else YEAR + STAV end
+  stock = Stave::Stock.new(area, days)
+  stock.good_models()
+  stock.good_staves(StocksCoefsYear)
 end
 
 namespace :stocks do
