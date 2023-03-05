@@ -23,17 +23,17 @@ class StocksController < ApplicationController
     stock         = params[:stock]
     years         = params[:years].to_i
     
-    stocks        = Stave::Stock.new( "sz",   years + STAVE )
+    stocks        = Stave::Stock.new( "sz",   years + STAV )
 
-    start         = STAVE - SMOOTH
+    start         = STAV - SMOO
     size          = years + 1
 
-    stock_price   = stocks.good_aver( stock,  SMOOTH        )
+    stock_price   = stocks.good_aver( stock,  SMOO          )
     stock_price   = stock_price.slice(start,  size          )
 
-    stave_boll    = stocks.good_aver( stock,  STAVE         )
-    stave_mup     = stocks.good_boll( stock,  STAVE,  true  )
-    stave_mdn     = stocks.good_boll( stock,  STAVE,  false )
+    stave_boll    = stocks.good_aver( stock,  STAV          )
+    stave_mup     = stocks.good_boll( stock,  STAV,  true   )
+    stave_mdn     = stocks.good_boll( stock,  STAV,  false  )
 
     stave_trend   = stocks.good_trend(stock                 )
     stave_up1     = stocks.good_stave(stock,  true,   1     )
