@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 20230305) do
   create_table "stocks_coefs_stavs", force: :cascade do |t|
     t.string "stock"
     t.float "coef"
+    t.float "year"
     t.float "inter"
     t.float "price"
     t.boolean "good"
