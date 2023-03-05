@@ -7,21 +7,7 @@ module Stave
       @good_models  = []
     end
 
-    def good_models
-      good_stocks = _good_stocks
-      puts "Stock'in..."
-      good_stocks.with_progress do |good_stock|
-        Progress.note = good_stock.upcase
-        good_model  = _good_model(good_stock)
-        if good_model.empty?
-          next
-        end
-        @good_models.push good_model
-      end
-      @good_models.sort_by! {|good_model| -good_model[:coef]}
-    end
-
-    def good_lohas()
+    def self.good_lohas()
       StocksCoefsStav.delete_all
       puts "Lohas'in..."
       StocksCoefsLoha.all.with_progress do |stock_loha|
@@ -43,6 +29,20 @@ module Stave
           end
         end
       end
+    end
+
+    def good_models
+      good_stocks = _good_stocks
+      puts "Stock'in..."
+      good_stocks.with_progress do |good_stock|
+        Progress.note = good_stock.upcase
+        good_model  = _good_model(good_stock)
+        if good_model.empty?
+          next
+        end
+        @good_models.push good_model
+      end
+      @good_models.sort_by! {|good_model| -good_model[:coef]}
     end
 
     def good_staves(good_table)
@@ -271,11 +271,19 @@ module Stave
     end
 
     def _good_stocks
-      good_files  = _good_files
+      good_lohas  = StocksCoefsLoha.all
       good_stocks = []
-      good_files.each do |good_file|
-        good_stock = good_file[0,8]
-        good_stocks.push good_stock
+      if good_lohas.empty?
+        good_files  = _good_files
+        good_files.each do |good_file|
+          good_stock = good_file[0,8]
+          good_stocks.push good_stock
+        end
+      else
+        good_lohas.each do |good_loha|
+          good_stock = good_loha.stock
+          good_stocks.push good_stock
+        end
       end
       good_stocks
     end

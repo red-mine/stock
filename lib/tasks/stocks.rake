@@ -24,8 +24,7 @@ end
 
 desc "lohas"
 task lohas: :environment do
-  stock = Stave::Stock.new(STOC, LOHA)
-  stock.good_lohas()
+  Stave::Stock.good_lohas()
 end
 
 namespace :stocks do
