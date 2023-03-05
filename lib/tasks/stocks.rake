@@ -15,12 +15,18 @@ task :stocks, [:area, :days] => :environment do |task, args|
   stock.good_models()
   stock.good_staves(StocksCoefsLoha)
 
-  # staves - years
+  # stocks - years
   days = unless args.days.nil? then args.days else YEAR end
   stock = Stave::Stock.new(area, days)
   stock.good_models()
   stock.good_staves(StocksCoefsYear)
   
+  # stocks - stavs
+  # days = unless args.days.nil? then args.days else STAV end
+  # stock = Stave::Stock.new(area, days)
+  # stock.good_models()
+  # stock.good_staves(StocksCoefsStav)
+
 end
 
 namespace :stocks do
