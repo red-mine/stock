@@ -23,7 +23,7 @@ class StocksController < ApplicationController
     stock         = params[:stock]
     years         = params[:years].to_i
     
-    stocks        = Stave::Stock.new( "sz",   years + STAV )
+    stocks        = Stave::Stock.new( "sz",   years         )
 
     start         = STAV - SMOO
     size          = years + 1

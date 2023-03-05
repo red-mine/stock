@@ -2,12 +2,8 @@ module Stave
   class Stock
     def initialize(good_area, good_days)
       @good_area    = good_area
-      @good_days    = good_days
-      @good_years   = if @good_days > 365
-        LOHAS
-      else
-        YEAR
-      end
+      @good_years   = good_days
+      @good_days    = good_days + STAVE
       @good_models  = []
     end
 
