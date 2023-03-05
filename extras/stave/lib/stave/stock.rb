@@ -27,7 +27,7 @@ module Stave
       StocksCoefsLoha.all.with_progress do |stock_loha|
         Progress.note = stock_loha.stock.upcase
         StocksCoefsYear.all.each do |stock_year|
-          if stock_loha.stock == stock_year.stock_loha
+          if stock_loha.stock == stock_year.stock
             good_stock = StocksCoefsStav.new(
               stock:  stock_loha.stock, 
               coef:   stock_loha.coef, 
