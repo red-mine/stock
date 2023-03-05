@@ -2,10 +2,11 @@
 
 <h2>Date - STAVE - <%= @stavs_date %></h1>
 
-<img src="stave/stave.png" >
+<table>
+<tr>
 
+<td>
 <table border=1 cellspacing=0>
-
 <tr align=left>
   <th>Stock/SZ</th>
   <th>Loh</th>
@@ -13,7 +14,6 @@
   <th>Price</th>
   <th>STAVE</th>
 </tr>
-
 <% @stocks_stavs.each do |stock| %>
 <tr>
   <td><%= stock.stock.upcase %></td>
@@ -31,5 +31,12 @@
   <td><%= stock.stave %></td>
 </tr>
 <% end %>
+</table>
+</td>
 
+<td>
+<img src="stave/stave.png" style="max-width: 100%;">
+</td>
+
+</tr>
 </table>
