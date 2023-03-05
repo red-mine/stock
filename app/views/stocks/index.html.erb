@@ -6,21 +6,25 @@
 
 <tr align=left>
   <th>Stock/SZ</th>
-  <th>Loha</th>
-  <th>Year</th>
+  <th>Loh</th>
+  <th>One</th>
   <th>Price</th>
   <th>STAVE</th>
 </tr>
 
 <% @stocks_stavs.each do |stock| %>
 <tr>
+  <td><%= stock.stock.upcase %></td>
   <td>
-    <a href="/stocks/<%= stock.stock %>/<%= stock.years %>">
-      <%= stock.stock.upcase %>
+    <a href="/stocks/<%= stock.stock %>/<%= 857 %>">
+      <%= stock.coef.round(2) %>
     </a>
   </td>
-  <td><%= stock.coef.round(2) %></td>
-  <td><%= stock.year.round(2) %></td>
+  <td>
+    <a href="/stocks/<%= stock.stock %>/<%= 250 %>">
+      <%= stock.year.round(2) %>
+    </a>
+  </td>
   <td><%= stock.price %></td>
   <td><%= stock.stave %></td>
 </tr>
