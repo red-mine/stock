@@ -30,7 +30,8 @@ module Stave
           if stock_loha.stock == stock_year.stock
             good_stock = StocksCoefsStav.new(
               stock:  stock_loha.stock, 
-              coef:   stock_loha.coef, 
+              coef:   stock_loha.coef,
+              year:   stock_year.coef,
               inter:  stock_loha.inter, 
               price:  stock_loha.price,
               good:   stock_loha.good,
