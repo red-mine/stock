@@ -21,6 +21,29 @@ module Stave
       @good_models.sort_by! {|good_model| -good_model[:coef]}
     end
 
+    def good_lohas()
+      StocksCoefsStav.delete_all
+      puts "Lohas'in..."
+      StocksCoefsLoha.all.with_progress do |stock_loha|
+        Progress.note = stock_loha.stock.upcase
+        StocksCoefsYear.all.each do |stock_year|
+          if stock_loha.stock == stock_year.stock_loha
+            good_stock = StocksCoefsStav.new(
+              stock:  stock_loha.stock, 
+              coef:   stock_loha.coef, 
+              inter:  stock_loha.inter, 
+              price:  stock_loha.price,
+              good:   stock_loha.good,
+              stave:  stock_loha.stave,
+              date:   stock_loha.date,
+              years:  stock_loha.years
+            )
+            good_stock.save
+          end
+        end
+      end
+    end
+
     def good_staves(good_table)
       good_table.delete_all
       puts "Stave'in..."
