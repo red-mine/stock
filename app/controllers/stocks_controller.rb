@@ -2,20 +2,21 @@ class StocksController < ApplicationController
 
   WEEK            = 5
   YEAR            = 250
-  STAVE           = 20  * WEEK
-  LOHAS           = 3   * YEAR + YEAR / 2
-  SMOOTH          = 10
+  STAV            = 20  * WEEK
+  LOHA            = 3   * YEAR + YEAR / 2
+  SMOO            = 2   * WEEK
 
   def index
     years         = params[:years].to_i
-    coef          = if (years.eql?(YEAR))
-      StocksCoefsYear
-    else
-      StocksCoefsLoha
-    end
-    @stocks       = coef.all
-    stocks        = coef.arel_table
-    @date         = @stocks.pluck(stocks[:date])[-1]
+
+    @stocks_lohas = StocksCoefsLoha.all
+    @stocks_years = StocksCoefsYear.all
+
+    stocks_lohas  = StocksCoefsLoha.arel_table
+    stocks_years  = StocksCoefsYear.arel_table
+
+    @lohas_date   = @stocks_lohas.pluck(stocks_lohas[:date])[-1]
+    @years_date   = @stocks_years.pluck(stocks_years[:date])[-1]
   end
 
   def show

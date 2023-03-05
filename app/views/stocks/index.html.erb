@@ -1,6 +1,6 @@
 <h1>Stocks - SZ</h1>
 
-<h2>Date - <%= @date %></h1>
+<h2>Date - LOHAS - <%= @lohas_date %></h1>
 
 <table border=1 cellspacing=0>
 
@@ -11,7 +11,33 @@
   <th>STAVE</th>
 </tr>
 
-<% @stocks.each do |stock| %>
+<% @stocks_lohas.each do |stock| %>
+<tr>
+  <td>
+    <a href="/stocks/<%= stock.stock %>/<%= stock.years %>">
+      <%= stock.stock.upcase %>
+    </a>
+  </td>
+  <td><%= stock.coef.round(2) %></td>
+  <td><%= stock.price %></td>
+  <td><%= stock.stave %></td>
+</tr>
+<% end %>
+
+</table>
+
+<h2>Date - YEARS - <%= @years_date %></h1>
+
+<table border=1 cellspacing=0>
+
+<tr align=left>
+  <th>Stock/SZ</th>
+  <th>Coef</th>
+  <th>Price</th>
+  <th>STAVE</th>
+</tr>
+
+<% @stocks_years.each do |stock| %>
 <tr>
   <td>
     <a href="/stocks/<%= stock.stock %>/<%= stock.years %>">
