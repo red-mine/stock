@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_062603) do
+ActiveRecord::Schema[7.0].define(version: 20230305) do
   create_table "stocks", force: :cascade do |t|
     t.string "code"
     t.date "date"
@@ -20,6 +20,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_062603) do
   end
 
   create_table "stocks_coefs_lohas", force: :cascade do |t|
+    t.string "stock"
+    t.float "coef"
+    t.float "inter"
+    t.float "price"
+    t.boolean "good"
+    t.string "stave"
+    t.date "date"
+    t.integer "years"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stocks_coefs_stavs", force: :cascade do |t|
     t.string "stock"
     t.float "coef"
     t.float "inter"

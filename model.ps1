@@ -4,3 +4,4 @@ if (Test-Path $db) {
 }
 rails db:migrate
 rails stocks
+rails lohas
