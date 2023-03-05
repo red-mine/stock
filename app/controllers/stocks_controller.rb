@@ -11,12 +11,15 @@ class StocksController < ApplicationController
 
     @stocks_lohas = StocksCoefsLoha.all
     @stocks_years = StocksCoefsYear.all
+    @stocks_stavs = StocksCoefsStav.all
 
     stocks_lohas  = StocksCoefsLoha.arel_table
     stocks_years  = StocksCoefsYear.arel_table
+    stocks_stavs  = StocksCoefsStav.arel_table
 
     @lohas_date   = @stocks_lohas.pluck(stocks_lohas[:date])[-1]
     @years_date   = @stocks_years.pluck(stocks_years[:date])[-1]
+    @stavs_date   = @stocks_stavs.pluck(stocks_stavs[:date])[-1]
   end
 
   def show
