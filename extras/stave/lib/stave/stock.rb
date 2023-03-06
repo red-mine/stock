@@ -83,16 +83,14 @@ module Stave
         Progress.note = good_model[:stock].upcase
         good_price, good_stave = good_price(good_model)
         if good_price
-          good_last   = good_model[:price]
-          good_date   = good_model[:date]
           good_stock  = good_table.new(
-            stock:  good_stock, 
-            coef:   good_model[:coef], 
-            inter:  good_model[:inter], 
-            price:  good_last,
+            stock:  good_model[:stock],
+            coef:   good_model[:coef],
+            inter:  good_model[:inter],
+            price:  good_model[:price],
             good:   good_price,
             stave:  good_stave,
-            date:   good_date,
+            date:   good_model[:date],
             years:  @good_years
           )
           good_stock.save
