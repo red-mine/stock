@@ -15,15 +15,19 @@ module Stave
         StocksCoefsYear.all.each do |stock_year|
           if stock_loha.stock == stock_year.stock
             good_stock = StocksCoefsStav.new(
-              stock:  stock_loha.stock, 
-              coef:   stock_loha.coef,
+              stock:  stock_loha.stock,
+
+              loha:   stock_loha.coef,
               year:   stock_year.coef,
-              inter:  stock_loha.inter, 
+              
+              inter:  stock_loha.inter,
               price:  stock_loha.price,
               good:   stock_loha.good,
-              stave:  stock_year.stave,
+
+              lohas:  stock_loha.stave,
+              years:  stock_year.stave,
+
               date:   stock_loha.date,
-              years:  stock_loha.years
             )
             good_stock.save
           end

@@ -34,14 +34,14 @@ ActiveRecord::Schema[7.0].define(version: 20230305) do
 
   create_table "stocks_coefs_stavs", force: :cascade do |t|
     t.string "stock"
-    t.float "coef"
+    t.float "loha"
     t.float "year"
     t.float "inter"
     t.float "price"
     t.boolean "good"
-    t.string "stave"
+    t.string "lohas"
+    t.string "years"
     t.date "date"
-    t.integer "years"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
