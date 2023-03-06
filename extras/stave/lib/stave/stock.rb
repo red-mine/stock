@@ -33,7 +33,7 @@ module Stave
 
     def good_models
       good_stocks = _good_stocks
-      puts "Stock'in..."
+      puts "Stock'in... #{good_years}"
       good_stocks.with_progress do |good_stock|
         Progress.note = good_stock.upcase
         good_model  = _good_model(good_stock)
@@ -47,9 +47,10 @@ module Stave
 
     def good_staves(good_table)
       good_table.delete_all
-      puts "Stave'in..."
+      puts "Stave'in... #{good_years}"
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
+
         good_stock  = good_model[:stock]
         good_last   = good_model[:price]
         good_date   = good_model[:date]
@@ -57,16 +58,41 @@ module Stave
         good_boll   = good_aver(good_stock, STAVE)
         good_boll   = good_boll[-1][1]
 
+        good_mup    = good_boll(good_stock, STAVE, true)
+        good_mdn    = good_boll(good_stock, STAVE, false)
+
         good_trend  = good_trend(good_stock)
         good_trend  = good_trend[-1][1]
 
         good_up1    = good_stave(good_stock, true, 1)
         good_up1    = good_up1[-1][1]
 
+        good_dn1    = good_stave(good_stock, false, 1)
+        good_dn1    = good_dn1[-1][1]
+
         good_top    = good_stave(good_stock, true, 2)
         good_top    = good_top[-1][1]
 
         good_price  = good_last > good_trend && good_last > good_boll
+
+        good_s1     = good_last < good_dn1   && good_last < good_mdn
+        good_s2     = good_last > good_up1   && good_last > good_mup
+        good_s3     = good_last < good_dn1   && good_last < good_mdn
+        good_s4     = good_last < good_dn1   && good_last < good_mdn
+        good_s5     = good_last < good_dn1   && good_last < good_mdn
+        good_s6     = good_last < good_dn1   && good_last < good_mdn
+        good_s7     = good_last < good_dn1   && good_last < good_mdn
+        good_s8     = good_last < good_dn1   && good_last < good_mdn
+        good_s9     = good_last < good_dn1   && good_last < good_mdn
+        good_s10    = good_last < good_dn1   && good_last < good_mdn
+
+        if good_s1 then
+          good_stave = "s1"
+        end
+
+        if good_s2 then
+          good_stave = "s2"
+        end
 
         if good_price
           good_stock = good_table.new(
@@ -75,7 +101,7 @@ module Stave
             inter:  good_model[:inter], 
             price:  good_last,
             good:   good_price,
-            stave:  "",
+            stave:  good_stave,
             date:   good_date,
             years:  @good_years
           )
