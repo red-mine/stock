@@ -85,7 +85,7 @@ module Stave
       end
 
       if good_s2 then
-        good_stave = "SOAR"
+        good_stave = "SOX"
       end
 
       if good_s3 then
