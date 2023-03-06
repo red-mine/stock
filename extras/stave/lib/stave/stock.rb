@@ -80,49 +80,45 @@ module Stave
       good_s9         = good_dn2_bot    && good_mdn_bot   # WAIT - can not buy !
       good_s10        = good_s9                           # CHEAP- BUY !
 
-      good_stave = ""
-
       if good_s1 then
-        good_stave += "|1-SAFE"
+        good_stave = "1-SAFE"
       end
 
       if good_s2 then
-        good_stave += "|2-SOAR"
+        good_stave = "2-SOAR"
       end
 
       if good_s3 then
-        good_stave += "|3-SELL"
+        good_stave = "3-SELL"
       end
 
       if good_s4 then
-        good_stave += "|4-BUY"
+        good_stave = "4-BUY"
       end
 
       if good_s5 then
-        good_stave += "|5-BUY"
+        good_stave = "5-BUY"
       end
 
       if good_s6 then
-        good_stave += "|6-SELL"
+        good_stave = "6-SELL"
       end
 
       if good_s7 then
-        good_stave += "|7-SELL"
+        good_stave = "7-SELL"
       end
 
       if good_s8 then
-        good_stave += "|8-WAIT"
+        good_stave = "8-WAIT"
       end
 
       if good_s9 then
-        good_stave += "|9-WAIT"
+        good_stave = "9-WAIT"
       end
 
       if good_s10 then
-        good_stave += "|10-CHEAP"
+        good_stave = "10-CHEAP"
       end
-
-      good_stave += "|"
 
       return good_price, good_stave
     end
