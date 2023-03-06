@@ -75,7 +75,7 @@ module Stave
         end
 
         if good_s2 then
-          good_stave = "s2"
+          good_stave = "s2-keep"
         end
 
         if good_price
