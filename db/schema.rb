@@ -26,6 +26,8 @@ ActiveRecord::Schema[7.0].define(version: 20230305) do
     t.float "price"
     t.boolean "good"
     t.string "stave"
+    t.integer "boll"
+    t.integer "stav"
     t.date "date"
     t.integer "years"
     t.datetime "created_at", null: false
@@ -39,6 +41,8 @@ ActiveRecord::Schema[7.0].define(version: 20230305) do
     t.float "inter"
     t.float "price"
     t.boolean "good"
+    t.integer "boll"
+    t.integer "stave"
     t.string "lohas"
     t.string "years"
     t.date "date"
@@ -53,6 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 20230305) do
     t.float "price"
     t.boolean "good"
     t.string "stave"
+    t.integer "boll"
+    t.integer "stav"
     t.date "date"
     t.integer "years"
     t.datetime "created_at", null: false
