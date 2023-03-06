@@ -66,11 +66,11 @@ module Stave
       good_s2     = good_last > good_up1   && good_last > good_mup
 
       if good_s1 then
-        good_stave = "s1-buy"
+        good_stave = "1-buy"
       end
 
       if good_s2 then
-        good_stave = "s2-keep"
+        good_stave = "2-keep"
       end
 
       return good_price, good_stave
