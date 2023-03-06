@@ -81,43 +81,43 @@ module Stave
       good_s10        = good_s9                           # CHEAP- BUY !
 
       if good_s1 then
-        good_stave = "1-SAFE"
+        good_stave = "SAFE"
       end
 
       if good_s2 then
-        good_stave = "2-SOAR"
+        good_stave = "SOAR"
       end
 
       if good_s3 then
-        good_stave = "3-SELL"
+        good_stave = "SELL"
       end
 
       if good_s4 then
-        good_stave = "4-BUY"
+        good_stave = "BUY"
       end
 
       if good_s5 then
-        good_stave = "5-BUY"
+        good_stave = "BUY"
       end
 
       if good_s6 then
-        good_stave = "6-SELL"
+        good_stave = "SELL"
       end
 
       if good_s7 then
-        good_stave = "7-SELL"
+        good_stave = "SELL"
       end
 
       if good_s8 then
-        good_stave = "8-WAIT"
+        good_stave = "WAIT"
       end
 
       if good_s9 then
-        good_stave = "9-WAIT"
+        good_stave = "WAIT"
       end
 
       if good_s10 then
-        good_stave = "10-CHEAP"
+        good_stave = "CHEAP"
       end
 
       return good_price, good_stave
