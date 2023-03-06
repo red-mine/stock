@@ -31,6 +31,20 @@ module Stave
       end
     end
 
+    def good_models
+      good_stocks = _good_stocks
+      puts "Stock'in... #{@good_years}"
+      good_stocks.with_progress do |good_stock|
+        Progress.note = good_stock.upcase
+        good_model  = _good_model(good_stock)
+        if good_model.empty?
+          next
+        end
+        @good_models.push good_model
+      end
+      @good_models.sort_by! {|good_model| -good_model[:coef]}
+    end
+
     def good_price(good_model)
       good_stock  = good_model[:stock]
       good_last   = good_model[:price]
@@ -62,20 +76,6 @@ module Stave
       return good_price, good_stave
     end
 
-    def good_models
-      good_stocks = _good_stocks
-      puts "Stock'in... #{@good_years}"
-      good_stocks.with_progress do |good_stock|
-        Progress.note = good_stock.upcase
-        good_model  = _good_model(good_stock)
-        if good_model.empty?
-          next
-        end
-        @good_models.push good_model
-      end
-      @good_models.sort_by! {|good_model| -good_model[:coef]}
-    end
-
     def good_staves(good_table)
       good_table.delete_all
       puts "Stave'in... #{@good_years}"
@@ -83,7 +83,9 @@ module Stave
         Progress.note = good_model[:stock].upcase
         good_price, good_stave = good_price(good_model)
         if good_price
-          good_stock = good_table.new(
+          good_last   = good_model[:price]
+          good_date   = good_model[:date]
+          good_stock  = good_table.new(
             stock:  good_stock, 
             coef:   good_model[:coef], 
             inter:  good_model[:inter], 
