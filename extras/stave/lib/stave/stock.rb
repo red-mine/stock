@@ -83,11 +83,11 @@ module Stave
       good_mdn_boll   = good_last > good_mdn && good_last < good_boll
       good_mdn_bot    = good_last < good_mdn
 
-      good_boll       = +1 if good_mup_boll
-      good_boll       = +2 if good_mup_top
+      good_bol        = +1 if good_mup_boll
+      good_bol        = +2 if good_mup_top
 
-      good_boll       = -1 if good_mdn_boll
-      good_boll       = -2 if good_mdn_bot
+      good_bol        = -1 if good_mdn_boll
+      good_bol        = -2 if good_mdn_bot
 
       #stave
       good_stave      = "SAF-1" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
@@ -101,11 +101,11 @@ module Stave
       good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
       good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
 
-      return          good_price, good_stave, good_boll, good_stav
+      return          good_price, good_stave, good_bol, good_stav
     end
 
     def good_models
-      good_stocks = _good_stocks
+      good_stocks   = _good_stocks
       puts "Stock'in... #{@good_years}"
       good_stocks.with_progress do |good_stock|
         Progress.note = good_stock.upcase
@@ -160,9 +160,17 @@ module Stave
       good_data   = good_trend(good_stock)
       good_sqrt   = _good_sqrt(good_stock)
       if good_stave
-        good_data.map! { |good_date, good_price| [good_date, good_price + good_sqrt * good_multi] }
+        good_data.map! { |good_date, good_price| 
+          good_price  = good_price + good_sqrt * good_multi
+          good_result = [good_date, good_price.round(2)] 
+          good_result
+        }
       else
-        good_data.map! { |good_date, good_price| [good_date, good_price - good_sqrt * good_multi] }
+        good_data.map! { |good_date, good_price| 
+          good_price  = good_price - good_sqrt * good_multi
+          good_result = [good_date, good_price.round(2)] 
+          good_result
+        }
       end
       good_data
     end
@@ -312,7 +320,9 @@ module Stave
       good_stave  = _good_stave(good_stock)
       good_model  = _good_model(good_stock)
       good_stave.each_with_index do |good_data, good_index|
-        good_stave[good_index][:price] = good_model[:coef] * good_index + good_model[:inter]
+        good_price = good_stave[good_index][:price]
+        good_price = good_model[:coef] * good_index + good_model[:inter]
+        good_stave[good_index][:price] = good_price.round(2)
       end
       good_stave
     end

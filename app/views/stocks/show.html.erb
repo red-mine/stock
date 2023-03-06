@@ -1,9 +1,9 @@
 <h1><%= @stock.upcase %></h1>
 
-<h2>Boll'in Bands - <%= @boll[0][:name] %> = <%= @boll[0][:data][-1][1]%></h2>
-<h2>Boll'in Bands - <%= @boll[1][:name] %> = <%= @boll[1][:data][-1][1]%></h2>
-<h2>Boll'in Bands - <%= @boll[2][:name] %> = <%= @boll[2][:data][-1][1]%></h2>
-<h2>Boll'in Bands - <%= @boll[3][:name] %> = <%= @boll[3][:data][-1][1]%></h2>
+<h2>Boll'in Bands - <%= @boll[0][:name] %> = <%= @boll[0][:data][-1][1] %></h2>
+<h2>Boll'in Bands - <%= @boll[1][:name] %> = <%= @boll[1][:data][-1][1] %></h2>
+<h2>Boll'in Bands - <%= @boll[2][:name] %> = <%= @boll[2][:data][-1][1] %></h2>
+<h2>Boll'in Bands - <%= @boll[3][:name] %> = <%= @boll[3][:data][-1][1] %></h2>
 
 <%= line_chart @boll.map {
   |stock| {
@@ -12,9 +12,14 @@
   }
 } %>
 
-<h2>Lohas Staves</h2>
+<h2>Stock Staves - <%= @stave[0][:name] %> = <%= @stave[0][:data][-1][1] %></h2>
+<h2>Stock Staves - <%= @stave[1][:name] %> = <%= @stave[1][:data][-1][1] %></h2>
+<h2>Stock Staves - <%= @stave[2][:name] %> = <%= @stave[2][:data][-1][1] %></h2>
+<h2>Stock Staves - <%= @stave[3][:name] %> = <%= @stave[3][:data][-1][1] %></h2>
+<h2>Stock Staves - <%= @stave[4][:name] %> = <%= @stave[4][:data][-1][1] %></h2>
+<h2>Stock Staves - <%= @stave[5][:name] %> = <%= @stave[5][:data][-1][1] %></h2>
 
-<%= line_chart @lohas.map {
+<%= line_chart @stave.map {
   |stave| {
     name: stave[:name], 
     data: stave[:data]
