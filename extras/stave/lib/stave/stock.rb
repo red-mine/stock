@@ -36,19 +36,19 @@ module Stave
     end
 
     def good_price(good_model)
-      good_stock  = good_model[:stock]
-      good_last   = good_model[:price]
-      good_date   = good_model[:date]
+      good_stock      = good_model[:stock]
+      good_last       = good_model[:price]
+      good_date       = good_model[:date]
 
-      good_boll   = good_aver(good_stock, STAVE)[-1][1]
-      good_mup    = good_boll(good_stock, STAVE, true)[-1][1]
-      good_mdn    = good_boll(good_stock, STAVE, false)[-1][1]
+      good_boll       = good_aver(good_stock, STAVE)[-1][1]
+      good_mup        = good_boll(good_stock, STAVE, true)[-1][1]
+      good_mdn        = good_boll(good_stock, STAVE, false)[-1][1]
 
-      good_trend  = good_trend(good_stock)[-1][1]
-      good_up1    = good_stave(good_stock, true,  1)[-1][1]
-      good_dn1    = good_stave(good_stock, false, 1)[-1][1]
-      good_up2    = good_stave(good_stock, true,  2)[-1][1]
-      good_dn2    = good_stave(good_stock, false, 2)[-1][1]
+      good_trend      = good_trend(good_stock)[-1][1]
+      good_up1        = good_stave(good_stock, true,  1)[-1][1]
+      good_dn1        = good_stave(good_stock, false, 1)[-1][1]
+      good_up2        = good_stave(good_stock, true,  2)[-1][1]
+      good_dn2        = good_stave(good_stock, false, 2)[-1][1]
 
       # trend
       good_up1_trend  = good_last < good_up1 && good_last > good_trend
@@ -69,58 +69,18 @@ module Stave
       # price
       good_price      = good_last > good_trend && good_last > good_boll
 
-      good_s1         = good_dn1_dn2    && good_mdn_boll  # SAFE - BUY !
-      good_s2         = good_up1_up2    && good_mup_top   # SOAR - KEEP !!!
-      good_s3         = good_up1_up2    && good_mup_boll  # SELL - up2 -> up1
-      good_s4         = good_dn1_dn2    && good_mup_boll  # BUY  - boll up ?
-      good_s5         = good_up1_trend  && good_mup_boll  # BUY  - more - positive ?
-      good_s6         = good_s3                           # SELL - some
-      good_s7         = good_s3                           # SELL
-      good_s8         = good_s4                           # WAIT - boll dn ?
-      good_s9         = good_dn2_bot    && good_mdn_bot   # WAIT - can not buy !
-      good_s10        = good_s9                           # CHEAP- BUY !
+      good_stave      += "|SAF"  if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
+      good_stave      += "|SOX"  if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
+      good_stave      += "|SEL"  if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
+      good_stave      += "|BUY"  if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
+      good_stave      += "|BUY"  if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
+      good_stave      += "|SEL"  if good_up1_up2   && good_mup_boll  # 6. SELL - some
+      good_stave      += "|SEL"  if good_up1_up2   && good_mup_boll  # 7. SELL
+      good_stave      += "|WAT"  if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
+      good_stave      += "|WAT"  if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
+      good_stave      += "|CHP"  if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
 
-      if good_s1 then
-        good_stave = "SAFE"
-      end
-
-      if good_s2 then
-        good_stave = "SOX"
-      end
-
-      if good_s3 then
-        good_stave = "SELL"
-      end
-
-      if good_s4 then
-        good_stave = "BUY"
-      end
-
-      if good_s5 then
-        good_stave = "BUY"
-      end
-
-      if good_s6 then
-        good_stave = "SELL"
-      end
-
-      if good_s7 then
-        good_stave = "SELL"
-      end
-
-      if good_s8 then
-        good_stave = "WAIT"
-      end
-
-      if good_s9 then
-        good_stave = "WAIT"
-      end
-
-      if good_s10 then
-        good_stave = "CHEAP"
-      end
-
-      return good_price, good_stave
+      return          good_price, good_stave
     end
 
     def good_models
