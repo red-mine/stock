@@ -172,14 +172,16 @@ module Stave
       good_start  = good_aver.size - good_sqrt.size
       good_end    = good_aver.size - 1
       for good_index in good_start..good_end
+        good_result = good_aver[good_index][1]
         if good_boll
-          good_aver[good_index][1] += 2 * good_sqrt[good_index - good_start]
+          good_result += 2 * good_sqrt[good_index - good_start]
         else
-          good_aver[good_index][1] -= 2 * good_sqrt[good_index - good_start]
+          good_result -= 2 * good_sqrt[good_index - good_start]
         end
+        good_aver[good_index][1] = good_result.round(2)
       end
-      good_aver   = good_aver.slice!(good_start, good_end - good_start + 1)
-      good_aver
+      good_boll   = good_aver.slice!(good_start, good_end - good_start + 1)
+      good_boll
     end
 
     private
