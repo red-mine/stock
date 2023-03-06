@@ -47,21 +47,78 @@ module Stave
       good_trend  = good_trend(good_stock)[-1][1]
       good_up1    = good_stave(good_stock, true,  1)[-1][1]
       good_dn1    = good_stave(good_stock, false, 1)[-1][1]
-      good_top    = good_stave(good_stock, true,  2)[-1][1]
-      good_bot    = good_stave(good_stock, false, 2)[-1][1]
+      good_up2    = good_stave(good_stock, true,  2)[-1][1]
+      good_dn2    = good_stave(good_stock, false, 2)[-1][1]
 
-      good_price  = good_last > good_trend && good_last > good_boll
+      good_price  = good_last > good_trend  && good_last > good_boll
 
-      good_s1     = good_last < good_dn1   && good_last < good_mdn
-      good_s2     = good_last > good_up1   && good_last > good_mup
+    # 1. 股價在五線譜中跌到相對悲觀點（第二條線）以下，再查看樂活通道，此時股價正好剛剛回到通道內，是買進良機。
+    # 2. 股價在五線譜中上升觸及樂觀點（第五條線），但此時股價已經超出樂活通道上緣，正處於超漲的強勢階段，繼續持股，不賣出（不放空）。
+    # 3. 股價在五線譜中從上緣外側跌回樂觀點，而且也跌回樂活通道內，可賣出股票。
+    # 4. 股價在五線譜中跌到相對悲觀點，再查看樂活通道，此時股價沒有跌破通道，應買進。
+    # 5. 同上，可買進（加碼）。
+    # 6. 股價在五線譜中上升觸及相對樂觀點（第四條線），而且從樂活通道上緣外側回到通道內，可賣出部分持股。
+    # 7. 股價在超漲之後，從五線譜的樂觀點上方跌回樂觀點，此時股價也回到樂活通道內，應賣出。
+    # 8. 股價在五線譜中跌到相對悲觀點，而且沒有跌破樂活通道，此時通常的規則是要買進。
+    #    但是把微星的日 K 線圖調出來看一下最近兩個月的走勢，各均線呈現明顯下跌趨勢，所以往後幾天很有可能繼續跌，
+    #    跌落樂活通道下緣（事後來看的確如此），所以比較謹慎的人會選擇觀望，再等一等。
+    # 9. 股價果然跌落樂活通道下緣，不可買進。
+    # 10.股價還在五線譜的便宜區（樂觀點），而且才剛剛回到樂活通道內，應買進。
+
+      good_s1     = good_last < good_dn1  && good_last < good_mdn # BUY  - GOOD
+      good_s2     = good_last > good_up1  && good_last > good_mup # KEEP
+      good_s3     = good_last < good_up2  && good_last < good_mup # SELL
+      good_s4     = good_last < good_dn1  && good_last > good_mdn # BUY  - boll up ?
+      good_s5     = good_last > good_trend&& good_last > good_boll# BUY  - MORE - positive ?
+      good_s6     = good_last > good_up2  && good_last < good_mup # SELL - some
+      good_s7     = good_last < good_up2  && good_last < good_mup # SELL
+      good_s8     = good_last < good_dn1  && good_last > good_boll# WAIT - boll dn ? - ready to buy
+      good_s9     = good_last < good_dn2  && good_last < good_mdn # KEEP - can not buy !
+      good_s10    = good_last < good_dn2  && good_last < good_mdn # BUY  - BAD
+
+      good_stave = ""
 
       if good_s1 then
-        good_stave = "1-buy"
+        good_stave += "|1-buy"
       end
 
       if good_s2 then
-        good_stave = "2-keep"
+        good_stave += "|2-keep"
       end
+
+      if good_s3 then
+        good_stave += "|3-sell"
+      end
+
+      if good_s4 then
+        good_stave += "|4-buy"
+      end
+
+      if good_s5 then
+        good_stave += "|5-buy"
+      end
+
+      if good_s6 then
+        good_stave += "|6-sell"
+      end
+
+      if good_s7 then
+        good_stave += "|7-sell"
+      end
+
+      if good_s8 then
+        good_stave += "|8-wait"
+      end
+
+      if good_s9 then
+        good_stave += "|9-keep"
+      end
+
+      if good_s10 then
+        good_stave += "|10-buy"
+      end
+
+      good_stave += "|"
 
       return good_price, good_stave
     end
