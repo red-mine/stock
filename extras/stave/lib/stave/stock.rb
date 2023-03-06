@@ -68,14 +68,6 @@ module Stave
       good_dn1_dn2    = good_last < good_dn1 && good_last > good_dn2
       good_dn2_bot    = good_last < good_dn2
 
-      good_stav       = +1 if good_up1_trend
-      good_stav       = +2 if good_up1_up2
-      good_stav       = +3 if good_up2_top
-
-      good_stav       = -1 if good_dn1_trend
-      good_stav       = -2 if good_dn1_dn2
-      good_stav       = -3 if good_dn2_bot
-
       # boll
       good_mup_boll   = good_last < good_mup && good_last > good_boll
       good_mup_top    = good_last > good_mup
@@ -83,13 +75,7 @@ module Stave
       good_mdn_boll   = good_last > good_mdn && good_last < good_boll
       good_mdn_bot    = good_last < good_mdn
 
-      good_bol        = +1 if good_mup_boll
-      good_bol        = +2 if good_mup_top
-
-      good_bol        = -1 if good_mdn_boll
-      good_bol        = -2 if good_mdn_bot
-
-      #stave
+      # stave
       good_stave      = "SAF-1" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
       good_stave      = "SOX-2" if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
       good_stave      = "SEL-3" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
@@ -101,7 +87,23 @@ module Stave
       good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
       good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
 
-      return          good_price, good_stave, good_bol, good_stav
+      # boll
+      good_boll       = +1 if good_mup_boll
+      good_boll       = +2 if good_mup_top
+
+      good_boll       = -1 if good_mdn_boll
+      good_boll       = -2 if good_mdn_bot
+
+      # stave
+      good_stav       = +1 if good_up1_trend
+      good_stav       = +2 if good_up1_up2
+      good_stav       = +3 if good_up2_top
+
+      good_stav       = -1 if good_dn1_trend
+      good_stav       = -2 if good_dn1_dn2
+      good_stav       = -3 if good_dn2_bot
+
+      return          good_price, good_stave, good_boll, good_stav
     end
 
     def good_models
