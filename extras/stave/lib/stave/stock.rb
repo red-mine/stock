@@ -7,9 +7,9 @@ module Stave
       @good_models  = []
     end
 
-    def self.good_lohas()
+    def self.good_lohas
       StocksCoefsStav.delete_all
-      puts "Lohas'in..."
+      puts "Lohas'in... 100"
       StocksCoefsLoha.all.with_progress do |stock_loha|
         Progress.note = stock_loha.stock.upcase
         StocksCoefsYear.all.each do |stock_year|
@@ -31,6 +31,37 @@ module Stave
       end
     end
 
+    def good_price(good_model)
+      good_stock  = good_model[:stock]
+      good_last   = good_model[:price]
+      good_date   = good_model[:date]
+
+      good_boll   = good_aver(good_stock, STAVE)[-1][1]
+      good_mup    = good_boll(good_stock, STAVE, true)[-1][1]
+      good_mdn    = good_boll(good_stock, STAVE, false)[-1][1]
+
+      good_trend  = good_trend(good_stock)[-1][1]
+      good_up1    = good_stave(good_stock, true,  1)[-1][1]
+      good_dn1    = good_stave(good_stock, false, 1)[-1][1]
+      good_top    = good_stave(good_stock, true,  2)[-1][1]
+      good_bot    = good_stave(good_stock, false, 2)[-1][1]
+
+      good_price  = good_last > good_trend && good_last > good_boll
+
+      good_s1     = good_last < good_dn1   && good_last < good_mdn
+      good_s2     = good_last > good_up1   && good_last > good_mup
+
+      if good_s1 then
+        good_stave = "s1-buy"
+      end
+
+      if good_s2 then
+        good_stave = "s2-keep"
+      end
+
+      return good_price, good_stave
+    end
+
     def good_models
       good_stocks = _good_stocks
       puts "Stock'in... #{@good_years}"
@@ -50,34 +81,7 @@ module Stave
       puts "Stave'in... #{@good_years}"
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
-
-        good_stock  = good_model[:stock]
-        good_last   = good_model[:price]
-        good_date   = good_model[:date]
-
-        good_boll   = good_aver(good_stock, STAVE)[-1][1]
-        good_mup    = good_boll(good_stock, STAVE, true)[-1][1]
-        good_mdn    = good_boll(good_stock, STAVE, false)[-1][1]
-
-        good_trend  = good_trend(good_stock)[-1][1]
-        good_up1    = good_stave(good_stock, true,  1)[-1][1]
-        good_dn1    = good_stave(good_stock, false, 1)[-1][1]
-        good_top    = good_stave(good_stock, true,  2)[-1][1]
-        good_bot    = good_stave(good_stock, false, 2)[-1][1]
-
-        good_price  = good_last > good_trend && good_last > good_boll
-
-        good_s1     = good_last < good_dn1   && good_last < good_mdn
-        good_s2     = good_last > good_up1   && good_last > good_mup
-
-        if good_s1 then
-          good_stave = "s1"
-        end
-
-        if good_s2 then
-          good_stave = "s2-keep"
-        end
-
+        good_price, good_stave = good_price(good_model)
         if good_price
           good_stock = good_table.new(
             stock:  good_stock, 
@@ -89,7 +93,6 @@ module Stave
             date:   good_date,
             years:  @good_years
           )
-
           good_stock.save
         end
       end
