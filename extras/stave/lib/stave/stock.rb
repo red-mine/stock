@@ -21,7 +21,7 @@ module Stave
               inter:  stock_loha.inter, 
               price:  stock_loha.price,
               good:   stock_loha.good,
-              stave:  stock_loha.stave,
+              stave:  stock_year.stave,
               date:   stock_loha.date,
               years:  stock_loha.years
             )
@@ -31,7 +31,7 @@ module Stave
       end
     end
 
-    def good_stave(good_model)
+    def good_price(good_model)
       good_stock  = good_model[:stock]
       good_last   = good_model[:price]
       good_date   = good_model[:date]
@@ -81,7 +81,7 @@ module Stave
       puts "Stave'in... #{@good_years}"
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
-        good_price, good_stave = good_stave(good_model)
+        good_price, good_stave = good_price(good_model)
         if good_price
           good_stock  = good_table.new(
             stock:  good_model[:stock],
