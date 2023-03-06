@@ -24,6 +24,12 @@ module Stave
               price:  stock_loha.price,
               good:   stock_loha.good,
 
+              boll3:  stock_loha.boll,
+              stav3:  stock_loha.stav,
+
+              boll1:  stock_year.boll,
+              stav1:  stock_year.stav,
+
               lohas:  stock_loha.stave,
               years:  stock_year.stave,
 
@@ -50,6 +56,9 @@ module Stave
       good_up2        = good_stave(good_stock, true,  2)[-1][1]
       good_dn2        = good_stave(good_stock, false, 2)[-1][1]
 
+      # price
+      good_price      = good_last > good_trend && good_last > good_boll
+
       # trend
       good_up1_trend  = good_last < good_up1 && good_last > good_trend
       good_up1_up2    = good_last > good_up1 && good_last < good_up2
@@ -59,6 +68,14 @@ module Stave
       good_dn1_dn2    = good_last < good_dn1 && good_last > good_dn2
       good_dn2_bot    = good_last < good_dn2
 
+      good_stav       = +1 if good_up1_trend
+      good_stav       = +2 if good_up1_up2
+      good_stav       = +3 if good_up2_top
+
+      good_stav       = -1 if good_dn1_trend
+      good_stav       = -2 if good_dn1_dn2
+      good_stav       = -3 if good_dn2_bot
+
       # boll
       good_mup_boll   = good_last < good_mup && good_last > good_boll
       good_mup_top    = good_last > good_mup
@@ -66,9 +83,13 @@ module Stave
       good_mdn_boll   = good_last > good_mdn && good_last < good_boll
       good_mdn_bot    = good_last < good_mdn
 
-      # price
-      good_price      = good_last > good_trend && good_last > good_boll
+      good_boll       = +1 if good_mup_boll
+      good_boll       = +2 if good_mup_top
 
+      good_boll       = -1 if good_mdn_boll
+      good_boll       = -2 if good_mdn_bot
+
+      #stave
       good_stave      = "SAF"  if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
       good_stave      = "SOX"  if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
       good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
@@ -80,7 +101,7 @@ module Stave
       good_stave      = "WAT"  if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
       good_stave      = "CHP"  if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
 
-      return          good_price, good_stave
+      return          good_price, good_stave, good_boll, good_stav
     end
 
     def good_models
@@ -102,7 +123,7 @@ module Stave
       puts "Stave'in... #{@good_years}"
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
-        good_price, good_stave = good_price(good_model)
+        good_price, good_stave, good_boll, good_stav = good_price(good_model)
         if good_price
           good_stock  = good_table.new(
             stock:  good_model[:stock],
@@ -111,6 +132,10 @@ module Stave
             price:  good_model[:price],
             good:   good_price,
             stave:  good_stave,
+
+            boll:   good_boll,
+            stav:   good_stav,
+
             date:   good_model[:date],
             years:  @good_years
           )

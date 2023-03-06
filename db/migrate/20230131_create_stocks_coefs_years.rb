@@ -7,8 +7,10 @@ class CreateStocksCoefsYears < ActiveRecord::Migration[7.0]
       t.float   :price
       t.boolean :good
       t.string  :stave
+
       t.integer :boll
       t.integer :stav
+      
       t.date    :date
       t.integer :years
 

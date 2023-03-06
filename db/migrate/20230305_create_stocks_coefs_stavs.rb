@@ -10,8 +10,11 @@ class CreateStocksCoefsStavs < ActiveRecord::Migration[7.0]
       t.float   :price
       t.boolean :good
 
-      t.integer :boll
-      t.integer :stave
+      t.integer :boll3
+      t.integer :stav3
+
+      t.integer :boll1
+      t.integer :stav1
 
       t.string  :lohas
       t.string  :years
