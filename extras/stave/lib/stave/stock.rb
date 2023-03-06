@@ -90,7 +90,7 @@ module Stave
       good_boll       = -2 if good_mdn_bot
 
       #stave
-      good_stave      = "SAF"  if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
+      good_stave      = "SAFE" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
       good_stave      = "SOX"  if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
       good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
       good_stave      = "BUY"  if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
@@ -124,23 +124,21 @@ module Stave
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
         good_price, good_stave, good_boll, good_stav = good_price(good_model)
-        if good_price
-          good_stock  = good_table.new(
-            stock:  good_model[:stock],
-            coef:   good_model[:coef],
-            inter:  good_model[:inter],
-            price:  good_model[:price],
-            good:   good_price,
-            stave:  good_stave,
+        good_stock  = good_table.new(
+          stock:  good_model[:stock],
+          coef:   good_model[:coef],
+          inter:  good_model[:inter],
+          price:  good_model[:price],
+          good:   good_price,
+          stave:  good_stave,
 
-            boll:   good_boll,
-            stav:   good_stav,
+          boll:   good_boll,
+          stav:   good_stav,
 
-            date:   good_model[:date],
-            years:  @good_years
-          )
-          good_stock.save
-        end
+          date:   good_model[:date],
+          years:  @good_years
+        )
+        good_stock.save
       end
     end
 
