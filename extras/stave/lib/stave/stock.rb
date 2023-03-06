@@ -164,6 +164,7 @@ module Stave
       else
         good_data.map! { |good_date, good_price| [good_date, good_price - good_sqrt * good_multi] }
       end
+      good_data
     end
 
     def good_boll(good_stock, good_days, good_boll)
@@ -190,6 +191,7 @@ module Stave
       good_move   = good_price.each_cons(good_days).map { 
         |good_aver| good_aver.reduce(&:+).fdiv(good_days).round(2) 
       }
+      good_move
     end
 
     def _good_aver(good_stock, good_days)
