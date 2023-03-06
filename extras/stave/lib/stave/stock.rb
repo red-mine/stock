@@ -90,16 +90,16 @@ module Stave
       good_boll       = -2 if good_mdn_bot
 
       #stave
-      good_stave      = "SAFE" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
-      good_stave      = "SOX"  if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
-      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
-      good_stave      = "BUY"  if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
-      good_stave      = "BUY"  if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
-      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 6. SELL - some
-      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 7. SELL
-      good_stave      = "WAT"  if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
-      good_stave      = "WAT"  if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
-      good_stave      = "CHP"  if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
+      good_stave      = "SAF-1" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
+      good_stave      = "SOX-2" if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
+      good_stave      = "SEL-3" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
+      good_stave      = "BUY-4" if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
+      good_stave      = "BUY-5" if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
+      good_stave      = "SEL-6" if good_up1_up2   && good_mup_boll  # 6. SELL - some
+      good_stave      = "SEL-7" if good_up1_up2   && good_mup_boll  # 7. SELL
+      good_stave      = "WAT-8" if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
+      good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
+      good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
 
       return          good_price, good_stave, good_boll, good_stav
     end
@@ -217,7 +217,7 @@ module Stave
       good_dist.map! { |good_date, good_price| good_price }
       good_sqrt   = _good_move(good_dist, good_days)
       good_sqrt.each_with_index do |good_data, good_index|
-        good_sqrt[good_index] = Math.sqrt(good_data)
+        good_sqrt[good_index] = Math.sqrt(good_data).round(2)
       end
       good_sqrt
     end

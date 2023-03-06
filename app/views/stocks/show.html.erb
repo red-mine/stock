@@ -1,6 +1,9 @@
 <h1><%= @stock.upcase %></h1>
 
-<h2>Boll'in Bands</h2>
+<h2>Boll'in Bands - <%= @boll[0][:name] %> = <%= @boll[0][:data][-1][1]%></h2>
+<h2>Boll'in Bands - <%= @boll[1][:name] %> = <%= @boll[1][:data][-1][1]%></h2>
+<h2>Boll'in Bands - <%= @boll[2][:name] %> = <%= @boll[2][:data][-1][1]%></h2>
+<h2>Boll'in Bands - <%= @boll[3][:name] %> = <%= @boll[3][:data][-1][1]%></h2>
 
 <%= line_chart @boll.map {
   |stock| {
