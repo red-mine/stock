@@ -71,11 +71,11 @@ module Stave
 
       good_stave      = "SAF"  if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
       good_stave      = "SOX"  if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
-      good_stave      = "SEL"  if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
+      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
       good_stave      = "BUY"  if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
       good_stave      = "BUY"  if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
-      good_stave      = "SEL"  if good_up1_up2   && good_mup_boll  # 6. SELL - some
-      good_stave      = "SEL"  if good_up1_up2   && good_mup_boll  # 7. SELL
+      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 6. SELL - some
+      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 7. SELL
       good_stave      = "WAT"  if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
       good_stave      = "WAT"  if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
       good_stave      = "CHP"  if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
