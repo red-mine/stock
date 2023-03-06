@@ -22,7 +22,7 @@ task :staves, [:area, :days] => :environment do |task, args|
 end
 
 desc "lohass"
-task lohas: :environment do
+task lohass: :environment do
   Stave::Stock.good_lohas()
 end
 
