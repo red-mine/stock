@@ -15,12 +15,10 @@
     <th>Loh</th>
     <th>One</th>
     <th>Price</th>
-<!--
     <th>boll3</th>
     <th>stav3</th>
     <th>boll1</th>
     <th>stav1</th>
--->
     <th>STAVE</th>
   </tr>
   <% @stocks_stavs.each do |stock| %>
@@ -37,19 +35,17 @@
       </a>
     </td>
     <td><%= stock.price %></td>
-<!--
     <td align=right><%= stock.boll3 %></td>
     <td align=right><%= stock.stav3 %></td>
     <td align=right><%= stock.boll1 %></td>
     <td align=right><%= stock.stav1 %></td>
--->
     <td><%= stock.lohas %></td>
   </tr>
   <% end %>
 </table></td>
 
 <td valign=top align=left>
-  <img src="stave/stave.png" style="max-width: 75%;">
+  <img src="stave/stave.png" style="max-width: 88%;">
 </td>
 
 </tr>
