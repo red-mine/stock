@@ -51,7 +51,7 @@ class StocksController < ApplicationController
       { name: "Down",   data: stave_mdn   }
     ]
 
-    @lohas = [
+    @stave = [
       { name: "Price",  data: stock_price }, 
       { name: "Trend",  data: stave_trend },
       { name: "Up",     data: stave_up1   },

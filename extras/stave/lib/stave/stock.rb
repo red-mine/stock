@@ -68,6 +68,33 @@ module Stave
       good_dn1_dn2    = good_last < good_dn1 && good_last > good_dn2
       good_dn2_bot    = good_last < good_dn2
 
+      # boll
+      good_mup_boll   = good_last < good_mup && good_last > good_boll
+      good_mup_top    = good_last > good_mup
+
+      good_mdn_boll   = good_last > good_mdn && good_last < good_boll
+      good_mdn_bot    = good_last < good_mdn
+
+      # stave
+      good_stave      = "SAF-1" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
+      good_stave      = "SOX-2" if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
+      good_stave      = "SEL-3" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
+      good_stave      = "BUY-4" if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
+      good_stave      = "BUY-5" if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
+      good_stave      = "SEL-6" if good_up1_up2   && good_mup_boll  # 6. SELL - some
+      good_stave      = "SEL-7" if good_up1_up2   && good_mup_boll  # 7. SELL
+      good_stave      = "WAT-8" if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
+      good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
+      good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
+
+      # boll
+      good_boll       = +1 if good_mup_boll
+      good_boll       = +2 if good_mup_top
+
+      good_boll       = -1 if good_mdn_boll
+      good_boll       = -2 if good_mdn_bot
+
+      # stave
       good_stav       = +1 if good_up1_trend
       good_stav       = +2 if good_up1_up2
       good_stav       = +3 if good_up2_top
@@ -76,36 +103,11 @@ module Stave
       good_stav       = -2 if good_dn1_dn2
       good_stav       = -3 if good_dn2_bot
 
-      # boll
-      good_mup_boll   = good_last < good_mup && good_last > good_boll
-      good_mup_top    = good_last > good_mup
-
-      good_mdn_boll   = good_last > good_mdn && good_last < good_boll
-      good_mdn_bot    = good_last < good_mdn
-
-      good_boll       = +1 if good_mup_boll
-      good_boll       = +2 if good_mup_top
-
-      good_boll       = -1 if good_mdn_boll
-      good_boll       = -2 if good_mdn_bot
-
-      #stave
-      good_stave      = "SAF"  if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
-      good_stave      = "SOX"  if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
-      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
-      good_stave      = "BUY"  if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
-      good_stave      = "BUY"  if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
-      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 6. SELL - some
-      good_stave      = "SELL" if good_up1_up2   && good_mup_boll  # 7. SELL
-      good_stave      = "WAT"  if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
-      good_stave      = "WAT"  if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
-      good_stave      = "CHP"  if good_dn2_bot   && good_mdn_bot   # 10.CHIP - BUY !
-
       return          good_price, good_stave, good_boll, good_stav
     end
 
     def good_models
-      good_stocks = _good_stocks
+      good_stocks   = _good_stocks
       puts "Stock'in... #{@good_years}"
       good_stocks.with_progress do |good_stock|
         Progress.note = good_stock.upcase
@@ -124,23 +126,21 @@ module Stave
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
         good_price, good_stave, good_boll, good_stav = good_price(good_model)
-        if good_price
-          good_stock  = good_table.new(
-            stock:  good_model[:stock],
-            coef:   good_model[:coef],
-            inter:  good_model[:inter],
-            price:  good_model[:price],
-            good:   good_price,
-            stave:  good_stave,
+        good_stock  = good_table.new(
+          stock:  good_model[:stock],
+          coef:   good_model[:coef],
+          inter:  good_model[:inter],
+          price:  good_model[:price],
+          good:   good_price,
+          stave:  good_stave,
 
-            boll:   good_boll,
-            stav:   good_stav,
+          boll:   good_boll,
+          stav:   good_stav,
 
-            date:   good_model[:date],
-            years:  @good_years
-          )
-          good_stock.save
-        end
+          date:   good_model[:date],
+          years:  @good_years
+        )
+        good_stock.save
       end
     end
 
@@ -162,10 +162,19 @@ module Stave
       good_data   = good_trend(good_stock)
       good_sqrt   = _good_sqrt(good_stock)
       if good_stave
-        good_data.map! { |good_date, good_price| [good_date, good_price + good_sqrt * good_multi] }
+        good_data.map! { |good_date, good_price| 
+          good_price  = good_price + good_sqrt * good_multi
+          good_result = [good_date, good_price.round(2)] 
+          good_result
+        }
       else
-        good_data.map! { |good_date, good_price| [good_date, good_price - good_sqrt * good_multi] }
+        good_data.map! { |good_date, good_price| 
+          good_price  = good_price - good_sqrt * good_multi
+          good_result = [good_date, good_price.round(2)] 
+          good_result
+        }
       end
+      good_data
     end
 
     def good_boll(good_stock, good_days, good_boll)
@@ -174,14 +183,16 @@ module Stave
       good_start  = good_aver.size - good_sqrt.size
       good_end    = good_aver.size - 1
       for good_index in good_start..good_end
+        good_result = good_aver[good_index][1]
         if good_boll
-          good_aver[good_index][1] += 2 * good_sqrt[good_index - good_start]
+          good_result += 2 * good_sqrt[good_index - good_start]
         else
-          good_aver[good_index][1] -= 2 * good_sqrt[good_index - good_start]
+          good_result -= 2 * good_sqrt[good_index - good_start]
         end
+        good_aver[good_index][1] = good_result.round(2)
       end
-      good_aver   = good_aver.slice!(good_start, good_end - good_start + 1)
-      good_aver
+      good_boll   = good_aver.slice!(good_start, good_end - good_start + 1)
+      good_boll
     end
 
     private
@@ -190,6 +201,7 @@ module Stave
       good_move   = good_price.each_cons(good_days).map { 
         |good_aver| good_aver.reduce(&:+).fdiv(good_days).round(2) 
       }
+      good_move
     end
 
     def _good_aver(good_stock, good_days)
@@ -219,7 +231,7 @@ module Stave
       good_dist.map! { |good_date, good_price| good_price }
       good_sqrt   = _good_move(good_dist, good_days)
       good_sqrt.each_with_index do |good_data, good_index|
-        good_sqrt[good_index] = Math.sqrt(good_data)
+        good_sqrt[good_index] = Math.sqrt(good_data).round(2)
       end
       good_sqrt
     end
@@ -310,7 +322,9 @@ module Stave
       good_stave  = _good_stave(good_stock)
       good_model  = _good_model(good_stock)
       good_stave.each_with_index do |good_data, good_index|
-        good_stave[good_index][:price] = good_model[:coef] * good_index + good_model[:inter]
+        good_price = good_stave[good_index][:price]
+        good_price = good_model[:coef] * good_index + good_model[:inter]
+        good_stave[good_index][:price] = good_price.round(2)
       end
       good_stave
     end
