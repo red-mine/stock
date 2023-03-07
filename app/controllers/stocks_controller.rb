@@ -13,10 +13,15 @@ class StocksController < ApplicationController
   end
 
   def show
-    stock         = params[:stock]
+    @stock        = params[:stock]
     years         = params[:years].to_i
+    @boll, @stave = single(@stock, years)
+  end
 
-    @boll, @stave, @stock = single(stock, years)
+  def both
+    @stock        = params[:stock]
+    @bol3, @stave = single(@stock, 875  )
+    @bol1, @years = single(@stock, 250  )
   end
 
   def single(stock, years)
@@ -54,7 +59,7 @@ class StocksController < ApplicationController
       { name: "Bottom", data: stave_bot   }
     ]
 
-    return boll, stave, stock
+    return boll, stave
   end
 
 end
