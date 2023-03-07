@@ -1,9 +1,16 @@
 <h1>Stocks - SZ</h1>
 
-<h2>Date - STAVE - <%= @stavs_date %></h1>
+<table>
 
-<table border=1 cellspacing=0>
-  <tr align=left>
+<tr align=left>
+<th><%= @stavs_date %></th>
+<th>操作实战</th>
+</tr>
+
+<tr>
+
+<td><table border=1 cellspacing=0>
+  <tr>
     <th>Stock/SZ</th>
     <th>Loh</th>
     <th>One</th>
@@ -12,10 +19,8 @@
     <th>stav3</th>
     <th>boll1</th>
     <th>stav1</th>
-    <th>Loha</th>
-    <th>Year</th>
+    <th>STAVE</th>
   </tr>
-
   <% @stocks_stavs.each do |stock| %>
   <tr>
     <td><%= stock.stock.upcase %></td>
@@ -35,19 +40,14 @@
     <td align=right><%= stock.boll1 %></td>
     <td align=right><%= stock.stav1 %></td>
     <td><%= stock.lohas %></td>
-    <td><%= stock.years %></td>
   </tr>
   <% end %>
+</table></td>
 
-</table>
+<td valign=top align=left>
+  <img src="stave/stave.png" style="max-width: 88%;">
+</td>
 
-<table>
-  <tr>
-    <%# <th>操作实战</th> %>
-  </tr>
-  <tr>
-    <td>
-      <%# <img src="stave/stave.png" style="max-width: 100%;"> %>
-    </td>
-  </tr>
+</tr>
+
 </table>
