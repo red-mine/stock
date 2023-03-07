@@ -15,7 +15,11 @@ class StocksController < ApplicationController
   def show
     stock         = params[:stock]
     years         = params[:years].to_i
-    
+
+    @boll, @stave, @stock = single(stock, years)
+  end
+
+  def single(stock, years)
     stocks        = Stave::Stock.new( "sz",   years         )
 
     start         = STAV - SMOO
@@ -34,14 +38,14 @@ class StocksController < ApplicationController
     stave_top     = stocks.good_stave(stock,  true,   2     )
     stave_bot     = stocks.good_stave(stock,  false,  2     )
 
-    @boll = [
+    boll = [
       { name: "Price",  data: stock_price }, 
       { name: "Boll",   data: stave_boll  },
       { name: "Up",     data: stave_mup   },
       { name: "Down",   data: stave_mdn   }
     ]
 
-    @stave = [
+    stave = [
       { name: "Price",  data: stock_price }, 
       { name: "Trend",  data: stave_trend },
       { name: "Up",     data: stave_up1   },
@@ -50,7 +54,7 @@ class StocksController < ApplicationController
       { name: "Bottom", data: stave_bot   }
     ]
 
-    @stock        = stock
+    return boll, stave, stock
   end
 
 end

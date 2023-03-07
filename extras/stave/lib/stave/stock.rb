@@ -9,7 +9,7 @@ module Stave
 
     def self.good_lohas
       StocksCoefsStav.delete_all
-      puts "Lohas'in... 100"
+      puts "Lohas'in... #{STAVE}"
       StocksCoefsLoha.all.with_progress do |stock_loha|
         Progress.note = stock_loha.stock.upcase
         StocksCoefsYear.all.each do |stock_year|
