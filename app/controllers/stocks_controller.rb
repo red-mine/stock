@@ -16,11 +16,7 @@ class StocksController < ApplicationController
     @stock        = params[:stock]
     years         = params[:years].to_i
     @boll, @stave = single(@stock, years)
-  end
-
-  def both
-    @stock        = params[:stock]
-    @bol3, @stave = single(@stock, 875  )
+    @bol3, @lohas = single(@stock, 875  )
     @bol1, @years = single(@stock, 250  )
   end
 

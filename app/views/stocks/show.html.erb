@@ -1,35 +1,37 @@
 <h1><%= @stock.upcase %></h1>
 
-<h2>Stock Staves
+<h2>Stave Lohas
 <% if device == "desktop" %>
-- <%= @stave[0][:name] %> = <%= @stave[0][:data][-1][1] %>
-- <%= @stave[1][:name] %> = <%= @stave[1][:data][-1][1] %>
-- <%= @stave[2][:name] %> = <%= @stave[2][:data][-1][1] %>
-- <%= @stave[3][:name] %> = <%= @stave[3][:data][-1][1] %>
-- <%= @stave[4][:name] %> = <%= @stave[4][:data][-1][1] %>
-- <%= @stave[5][:name] %> = <%= @stave[5][:data][-1][1] %>
+- <%= @lohas[0][:name] %> = <%= @lohas[0][:data][-1][1] %>
+- <%= @lohas[1][:name] %> = <%= @lohas[1][:data][-1][1] %>
+- <%= @lohas[2][:name] %> = <%= @lohas[2][:data][-1][1] %>
+- <%= @lohas[3][:name] %> = <%= @lohas[3][:data][-1][1] %>
+- <%= @lohas[4][:name] %> = <%= @lohas[4][:data][-1][1] %>
+- <%= @lohas[5][:name] %> = <%= @lohas[5][:data][-1][1] %>
 <% end %>
 </h2>
 
-<%= line_chart @stave.map {
-  |stave| {
-    name: stave[:name], 
-    data: stave[:data]
+<%= line_chart @lohas.map {
+  |lohas| {
+    name: lohas[:name], 
+    data: lohas[:data]
   }
 } %>
 
-<h2>Boll'in Bands
+<h2>Stave Years
 <% if device == "desktop" %>
-- <%= @boll[0][:name] %> = <%= @boll[0][:data][-1][1] %>
-- <%= @boll[1][:name] %> = <%= @boll[1][:data][-1][1] %>
-- <%= @boll[2][:name] %> = <%= @boll[2][:data][-1][1] %>
-- <%= @boll[3][:name] %> = <%= @boll[3][:data][-1][1] %>
+- <%= @years[0][:name] %> = <%= @years[0][:data][-1][1] %>
+- <%= @years[1][:name] %> = <%= @years[1][:data][-1][1] %>
+- <%= @years[2][:name] %> = <%= @years[2][:data][-1][1] %>
+- <%= @years[3][:name] %> = <%= @years[3][:data][-1][1] %>
+- <%= @years[4][:name] %> = <%= @years[4][:data][-1][1] %>
+- <%= @years[5][:name] %> = <%= @years[5][:data][-1][1] %>
 <% end %>
 </h2>
 
-<%= line_chart @boll.map {
-  |stock| {
-    name: stock[:name], 
-    data: stock[:data]
+<%= line_chart @years.map {
+  |years| {
+    name: years[:name], 
+    data: years[:data]
   }
 } %>
