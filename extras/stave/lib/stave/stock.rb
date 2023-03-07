@@ -87,14 +87,6 @@ module Stave
       good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
       good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 0. CHIP - BUY !
 
-      if good_stave == "BUY-5"
-        puts "good_up1_trend = #{good_up1_trend}"
-        puts "good_mup_boll = #{good_mup_boll}"
-        puts "good_last = #{good_last}"
-        puts "good_mup = #{good_mup}"
-        puts "good_boll = #{good_boll}"
-      end
-
       # boll
       good_boll       = +1 if good_mup_boll
       good_boll       = +2 if good_mup_top
