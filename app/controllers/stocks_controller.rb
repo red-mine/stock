@@ -40,21 +40,6 @@ class StocksController < ApplicationController
 
 private
 
-  def smooth(stuffs)
-    length = stuffs.size
-    stuffs.each_with_index do |stuff, index|
-      nexts = if index < length - 1
-        stuffs[index + 1]
-      else
-        {}
-      end
-      stuff[:date]
-      stuff[:price]
-      if nexts.empty?
-      end
-    end
-  end
-
   def single(stock, years)
     stocks        = Stave::Stock.new( "sz",   years         )
 
