@@ -4,6 +4,7 @@ class StocksController < ApplicationController
 
   def index
     stock         = params[:stock]
+    commit        = params[:commit]
 
     stocks_stavs  = StocksCoefsStav.arel_table
     @stocks_stavs = if stock.nil?
@@ -11,18 +12,21 @@ class StocksController < ApplicationController
     elsif stock.empty?
       StocksCoefsStav.all
     else
-      StocksCoefsStav.where(stocks_stavs[:stock].matches_any(["%" + stock.downcase + "%"]))
+      StocksCoefsStav.where(stocks_stavs[:stock].matches_any(["%" + stock + "%"]))
     end
     @stavs_date   = @stocks_stavs.pluck(stocks_stavs[:date])[-1]
   end
 
   def show
-    @stock    = params[:stock].lowcase
+    stock     = params[:stock]
     years     = params[:years]
+
+    @stock    = stock
 
     if !years.nil?
       years   = years.to_i
       stocks  = Stave::Stock.new("sz", years)
+      Rails.logger.info "stock1 = #{stock}"
       @stave  = _stave(stocks, years)
       @boll   =  _boll(stocks, years)
     else
@@ -96,17 +100,19 @@ private
     good_smooth
   end
 
-  def _price(years)
+  def _price(stocks, years)
     start         = Stave::STAVE - SMOOTH
     length        = years + 1
 
-    stock_price   = @stocks.good_aver(@stock,  SMOOTH).slice(start, length)
+    stock         = @stock
+
+    stock_price   = stocks.good_aver(stock,  SMOOTH).slice(start, length)
 
     stock_price
   end
 
   def _stave(stocks, years)
-    stock_price   = _price(years)
+    stock_price   = _price(stocks, years)
 
     stock         = @stock
 
@@ -143,7 +149,7 @@ private
   end
 
   def _boll(stocks, years)
-    stock_price   = _price(years)
+    stock_price   = _price(stocks, years)
 
     stock         = @stock
 
