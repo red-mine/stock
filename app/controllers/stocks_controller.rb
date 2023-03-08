@@ -8,15 +8,13 @@ class StocksController < ApplicationController
 
   def index
     stock         = params[:stock]
-    stave         = params[:stave]
     commit        = params[:commit]
 
     stocks_stavs  = StocksCoefsStav.arel_table
 
     @stocks_stavs = if !stock.nil?
-      StocksCoefsStav.where(stocks_stavs[:stock].include?(stock.downcase))
-    elsif !stave.nil?
-      StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
+      StocksCoefsStav.where(stocks_stavs[:stock].matches_any(["%" + stock.downcase + "%"]))
+      # StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
     else
       StocksCoefsStav.all
     end
