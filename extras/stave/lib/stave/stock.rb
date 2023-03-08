@@ -270,22 +270,30 @@ module Stave
     end
 
     def _good_data(good_stock) 
-      good_file   = _good_file(good_stock)
-      if good_file.nil?
-        return []
-      end
-      good_data   = []
-      good_index  = 0
+      good_file = _good_file(good_stock)
+      return [] if good_file.nil?
+      
       good_file.pos = good_file.size - 1 * 32
-      good_stock  = _good_stock(good_file, good_index)
-      if good_stock[:price] > STAVE
-        return []
-      end
+      good_stock = _good_stock(good_file, -1)
+      return [] if good_stock[:price] > STAVE
+      
+      good_index  = 0
+      prev_stock  = {}
+      good_data   = []
       good_file.pos = good_file.size - @good_days * 32
-      while good_file.eof == false
-        good_stock  = _good_stock(good_file, good_index)
+      while !good_file.eof?
+        good_stock = _good_stock(good_file, good_index)
         good_data.push good_stock
-        good_index  += 1
+        if !prev_stock.empty?
+          prev_date = prev_stock[:date]
+          good_date = good_stock[:date]
+          good_days = good_date - prev_date
+          if good_days != 1
+            puts "good_days = #{good_days}"
+          end
+        end
+        prev_stock = good_stock
+        good_index += 1
       end
       good_data
     end
