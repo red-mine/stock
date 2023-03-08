@@ -7,16 +7,23 @@ class StocksController < ApplicationController
   SMOO            = 2   * WEEK
 
   def index
+    stock         = params[:stock]
+    commit        = params[:commit]
+
     stocks_stavs  = StocksCoefsStav.arel_table
-    @stocks_stavs = StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
+
+    if stock.nil?
+      @stocks_stavs = StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
+    else
+      @stocks_stavs = StocksCoefsStav.where(stocks_stavs[:stock].eq(stock.downcase))
+    end
+
     @stavs_date   = @stocks_stavs.pluck(stocks_stavs[:date])[-1]
   end
 
   def show
     stock         = params[:stock]
     years         = params[:years]
-    commit        = params[:commit]
-    query         = params[:q]
 
     if stock.nil?
       stock       = query.lowcase
