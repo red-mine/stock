@@ -1,10 +1,17 @@
-<h1>Stocks - SZ</h1>
+<h1 align=center>Stock Stave</h1>
 
-<h2><%= @stavs_date %></h2>
+<table align=center border=1 cellspacing=0>
 
-<table>
+  <tr>
+    <td colspan=7 align=center>
+        <%= form_tag("/stocks", method: "get") do %>
+          <%= label_tag(:stock, "Stocks/SZ=") %>
+          <%= text_field_tag(:stock) %>
+          <%= submit_tag("Stave") %>
+        <% end %>
+    </td>
+  </tr>
 
-<td><table border=1 cellspacing=0>
   <tr>
     <th>Stock/SZ</th>
     <th>Loh</th>
@@ -14,6 +21,7 @@
     <th>stav3</th>
     <th>STAVE</th>
   </tr>
+
   <% @stocks_stavs.each do |stock| %>
   <tr>
     <td>
@@ -41,12 +49,7 @@
     </td>
   </tr>
   <% end %>
-</table></td>
-
-<% if device == "desktop" %>
-<td valign=top align=left>
-  <%# <img src="/assets/stave/stave.png" style="max-width: 88%;"> %>
-</td>
-<% end %>
 
 </table>
+
+<h4 align=center><%= @stavs_date %></h4>

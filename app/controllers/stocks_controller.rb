@@ -13,15 +13,24 @@ class StocksController < ApplicationController
   end
 
   def show
-    @stock        = params[:stock]
+    stock         = params[:stock]
     years         = params[:years]
+    commit        = params[:commit]
+    query         = params[:q]
+
+    if stock.nil?
+      stock       = query.lowcase
+    end
+
     if !years.nil?
       years = years.to_i
-      @boll, @stave = single(@stock, years)
+      @boll, @stave = single(stock, years)
     else
-      @bol3, @stave = single(@stock, 875  )
-      @bol1, @years = single(@stock, 250  )
+      @bol3, @stave = single(stock, 875  )
+      @bol1, @years = single(stock, 250  )
     end
+
+    @stock        = stock
   end
 
   def single(stock, years)
