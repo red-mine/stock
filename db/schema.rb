@@ -38,15 +38,14 @@ ActiveRecord::Schema[7.0].define(version: 20230305) do
     t.string "stock"
     t.float "loha"
     t.float "year"
-    t.float "inter"
     t.float "price"
     t.boolean "good"
+    t.string "lohas"
+    t.string "years"
     t.integer "boll3"
     t.integer "stav3"
     t.integer "boll1"
     t.integer "stav1"
-    t.string "lohas"
-    t.string "years"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
