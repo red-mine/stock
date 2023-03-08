@@ -59,9 +59,9 @@ private
     stocks        = Stave::Stock.new( "sz",   years         )
 
     start         = Stave::STAVE - SMOOTH
-    size          = years + 1
+    length        = years + 1
 
-    stock_price   = stocks.good_aver( stock,  SMOOTH).slice(start, size)
+    stock_price   = stocks.good_aver( stock,  SMOOTH).slice(start, length)
 
     stave_boll    = stocks.good_aver( stock,  Stave::STAVE         )
     stave_mup     = stocks.good_boll( stock,  Stave::STAVE,  true  )
