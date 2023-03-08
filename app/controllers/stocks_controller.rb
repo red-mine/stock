@@ -1,9 +1,6 @@
 class StocksController < ApplicationController
 
-  WEEK            = 5
-  YEAR            = 250
-  STAV            = 20  * WEEK
-  SMOO            = 2   * WEEK
+  SMOOTH = 2 * Stave::WEEKS
 
   def index
     stock         = params[:stock]
@@ -61,14 +58,14 @@ private
   def single(stock, years)
     stocks        = Stave::Stock.new( "sz",   years         )
 
-    start         = STAV - SMOO
+    start         = Stave::STAVE - SMOOTH
     size          = years + 1
 
-    stock_price   = stocks.good_aver( stock,  SMOO).slice(start, size)
+    stock_price   = stocks.good_aver( stock,  SMOOTH).slice(start, size)
 
-    stave_boll    = stocks.good_aver( stock,  STAV          )
-    stave_mup     = stocks.good_boll( stock,  STAV,  true   )
-    stave_mdn     = stocks.good_boll( stock,  STAV,  false  )
+    stave_boll    = stocks.good_aver( stock,  Stave::STAVE         )
+    stave_mup     = stocks.good_boll( stock,  Stave::STAVE,  true  )
+    stave_mdn     = stocks.good_boll( stock,  Stave::STAVE,  false )
 
     stave_trend   = stocks.good_trend(stock                 )
     stave_up1     = stocks.good_stave(stock,  true,   1     )

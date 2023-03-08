@@ -6,7 +6,8 @@ require "stave/engine"
 
 module Stave
   STOCK = "sz"
+  WEEKS = 5
   YEARS = 250
-  STAVE = 100
-  LOHAS = 3 * YEARS + YEARS / 2
+  STAVE = 20  * WEEKS
+  LOHAS = 3   * YEARS + YEARS / 2
 end
