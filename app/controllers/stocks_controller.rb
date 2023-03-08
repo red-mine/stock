@@ -8,14 +8,17 @@ class StocksController < ApplicationController
 
   def index
     stock         = params[:stock]
+    stave         = params[:stave]
     commit        = params[:commit]
 
     stocks_stavs  = StocksCoefsStav.arel_table
 
-    if stock.nil?
-      @stocks_stavs = StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
+    @stocks_stavs = if !stock.nil?
+      StocksCoefsStav.where(stocks_stavs[:stock].include?(stock.downcase))
+    elsif !stave.nil?
+      StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
     else
-      @stocks_stavs = StocksCoefsStav.where(stocks_stavs[:stock].eq(stock.downcase))
+      StocksCoefsStav.all
     end
 
     @stavs_date   = @stocks_stavs.pluck(stocks_stavs[:date])[-1]
