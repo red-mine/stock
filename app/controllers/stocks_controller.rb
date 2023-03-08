@@ -33,9 +33,9 @@ class StocksController < ApplicationController
 
     if !years.nil?
       years = years.to_i
-      @boll, @lohas = single(stock, years)
+      @boll, @stave = single(stock, years)
     else
-      @bol3, @lohas = single(stock, 875  )
+      @bol3, @stave = single(stock, 875  )
       @bol1, @years = single(stock, 250  )
     end
 
