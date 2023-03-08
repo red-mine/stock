@@ -41,71 +41,6 @@ module Stave
       end
     end
 
-    def good_price(good_model)
-      good_stock      = good_model[:stock]
-      good_last       = good_model[:price]
-      good_date       = good_model[:date]
-
-      good_boll       = good_aver(good_stock, STAVE)[-1][1]
-      good_mup        = good_boll(good_stock, STAVE, true)[-1][1]
-      good_mdn        = good_boll(good_stock, STAVE, false)[-1][1]
-
-      good_trend      = good_trend(good_stock)[-1][1]
-      good_up1        = good_stave(good_stock, true,  1)[-1][1]
-      good_dn1        = good_stave(good_stock, false, 1)[-1][1]
-      good_up2        = good_stave(good_stock, true,  2)[-1][1]
-      good_dn2        = good_stave(good_stock, false, 2)[-1][1]
-
-      # price
-      good_price      = good_last > good_trend && good_last > good_boll
-
-      # trend
-      good_up1_trend  = good_last < good_up1 && good_last > good_trend
-      good_up1_up2    = good_last > good_up1 && good_last < good_up2
-      good_up2_top    = good_last > good_up2
-
-      good_dn1_trend  = good_last > good_dn1 && good_last < good_trend
-      good_dn1_dn2    = good_last < good_dn1 && good_last > good_dn2
-      good_dn2_bot    = good_last < good_dn2
-
-      # boll
-      good_mup_boll   = good_last < good_mup && good_last > good_boll
-      good_mup_top    = good_last > good_mup
-
-      good_mdn_boll   = good_last > good_mdn && good_last < good_boll
-      good_mdn_bot    = good_last < good_mdn
-
-      # stave
-      good_stave      = "SAF-1" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
-      good_stave      = "SOX-2" if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
-      good_stave      = "SEL-3" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
-      good_stave      = "BUY-4" if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
-      good_stave      = "BUY-5" if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
-      good_stave      = "SEL-6" if good_up1_up2   && good_mup_boll  # 6. SELL - some
-      good_stave      = "SEL-7" if good_up1_up2   && good_mup_boll  # 7. SELL
-      good_stave      = "WAT-8" if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
-      good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
-      good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 0. CHIP - BUY !
-
-      # boll
-      good_boll       = +1 if good_mup_boll
-      good_boll       = +2 if good_mup_top
-
-      good_boll       = -1 if good_mdn_boll
-      good_boll       = -2 if good_mdn_bot
-
-      # stave
-      good_stav       = +1 if good_up1_trend
-      good_stav       = +2 if good_up1_up2
-      good_stav       = +3 if good_up2_top
-
-      good_stav       = -1 if good_dn1_trend
-      good_stav       = -2 if good_dn1_dn2
-      good_stav       = -3 if good_dn2_bot
-
-      return          good_price, good_stave, good_boll, good_stav
-    end
-
     def good_models
       good_stocks   = _good_stocks
       puts "Stock'in... #{@good_years}"
@@ -125,7 +60,7 @@ module Stave
       puts "Stave'in... #{@good_years}"
       @good_models.with_progress do |good_model|
         Progress.note = good_model[:stock].upcase
-        good_price, good_stave, good_boll, good_stav = good_price(good_model)
+        good_price, good_stave, good_boll, good_stav = _good_price(good_model)
         good_stock  = good_table.new(
           stock:  good_model[:stock],
           coef:   good_model[:coef],
@@ -196,6 +131,71 @@ module Stave
     end
 
     private
+
+    def _good_price(good_model)
+      good_stock      = good_model[:stock]
+      good_last       = good_model[:price]
+      good_date       = good_model[:date]
+
+      good_boll       = good_aver(good_stock, STAVE)[-1][1]
+      good_mup        = good_boll(good_stock, STAVE, true)[-1][1]
+      good_mdn        = good_boll(good_stock, STAVE, false)[-1][1]
+
+      good_trend      = good_trend(good_stock)[-1][1]
+      good_up1        = good_stave(good_stock, true,  1)[-1][1]
+      good_dn1        = good_stave(good_stock, false, 1)[-1][1]
+      good_up2        = good_stave(good_stock, true,  2)[-1][1]
+      good_dn2        = good_stave(good_stock, false, 2)[-1][1]
+
+      # price
+      good_price      = good_last > good_trend && good_last > good_boll
+
+      # trend
+      good_up1_trend  = good_last < good_up1 && good_last > good_trend
+      good_up1_up2    = good_last > good_up1 && good_last < good_up2
+      good_up2_top    = good_last > good_up2
+
+      good_dn1_trend  = good_last > good_dn1 && good_last < good_trend
+      good_dn1_dn2    = good_last < good_dn1 && good_last > good_dn2
+      good_dn2_bot    = good_last < good_dn2
+
+      # boll
+      good_mup_boll   = good_last < good_mup && good_last > good_boll
+      good_mup_top    = good_last > good_mup
+
+      good_mdn_boll   = good_last > good_mdn && good_last < good_boll
+      good_mdn_bot    = good_last < good_mdn
+
+      # stave
+      good_stave      = "SAF-1" if good_dn1_dn2   && good_mdn_boll  # 1. SAFE - BUY !
+      good_stave      = "SOX-2" if good_up1_up2   && good_mup_top   # 2. SOAR - KEEP !!!
+      good_stave      = "SEL-3" if good_up1_up2   && good_mup_boll  # 3. SELL - up2 -> up1
+      good_stave      = "BUY-4" if good_dn1_dn2   && good_mup_boll  # 4. BUY  - boll up ?
+      good_stave      = "BUY-5" if good_up1_trend && good_mup_boll  # 5. BUY  - more - positive ?
+      good_stave      = "SEL-6" if good_up1_up2   && good_mup_boll  # 6. SELL - some
+      good_stave      = "SEL-7" if good_up1_up2   && good_mup_boll  # 7. SELL
+      good_stave      = "WAT-8" if good_dn1_dn2   && good_mup_boll  # 8. WAIT - boll dn ?
+      good_stave      = "WAT-9" if good_dn2_bot   && good_mdn_bot   # 9. WAIT - can not buy !
+      good_stave      = "CHP-0" if good_dn2_bot   && good_mdn_bot   # 0. CHIP - BUY !
+
+      # boll
+      good_boll       = +1 if good_mup_boll
+      good_boll       = +2 if good_mup_top
+
+      good_boll       = -1 if good_mdn_boll
+      good_boll       = -2 if good_mdn_bot
+
+      # stave
+      good_stav       = +1 if good_up1_trend
+      good_stav       = +2 if good_up1_up2
+      good_stav       = +3 if good_up2_top
+
+      good_stav       = -1 if good_dn1_trend
+      good_stav       = -2 if good_dn1_dn2
+      good_stav       = -3 if good_dn2_bot
+
+      return          good_price, good_stave, good_boll, good_stav
+    end
 
     def _good_move(good_price, good_days)
       good_move   = good_price.each_cons(good_days).map { 
