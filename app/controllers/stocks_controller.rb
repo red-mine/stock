@@ -3,7 +3,6 @@ class StocksController < ApplicationController
   WEEK            = 5
   YEAR            = 250
   STAV            = 20  * WEEK
-  LOHA            = 3   * YEAR + YEAR / 2
   SMOO            = 2   * WEEK
 
   def index
@@ -32,7 +31,7 @@ class StocksController < ApplicationController
     end
 
     if !years.nil?
-      years = years.to_i
+      years       = years.to_i
       @boll, @stave = single(stock, years)
     else
       @bol3, @stave = single(stock, 875  )
@@ -42,14 +41,30 @@ class StocksController < ApplicationController
     @stock        = stock
   end
 
+private
+
+  def smooth(stuffs)
+    length = stuffs.size
+    stuffs.each_with_index do |stuff, index|
+      nexts = if index < length - 1
+        stuffs[index + 1]
+      else
+        {}
+      end
+      stuff[:date]
+      stuff[:price]
+      if nexts.empty?
+      end
+    end
+  end
+
   def single(stock, years)
     stocks        = Stave::Stock.new( "sz",   years         )
 
     start         = STAV - SMOO
     size          = years + 1
 
-    stock_price   = stocks.good_aver( stock,  SMOO          )
-    stock_price   = stock_price.slice(start,  size          )
+    stock_price   = stocks.good_aver( stock,  SMOO).slice(start, size)
 
     stave_boll    = stocks.good_aver( stock,  STAV          )
     stave_mup     = stocks.good_boll( stock,  STAV,  true   )

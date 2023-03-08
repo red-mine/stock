@@ -1,12 +1,11 @@
 require "stave/version"
 require "stave/railtie"
 require "stave/core_ext"
-require "stave/origin"
-require "stave/stave"
-require "stave/model"
 require "stave/stock"
 require "stave/engine"
 
 module Stave
-  # Your code goes here...
+  YEARS = 250
+  STAVE = 100
+  LOHAS = 3 * YEARS + YEARS / 2
 end
