@@ -24,7 +24,7 @@ module Stave
 
         StocksCoefsYear.all.each do |stock_year|
 
-          if stock_loha.stock.eq(stock_year.stock)
+          if stock_loha.stock == stock_year.stock
 
             good_stock = StocksCoefsStav.new(
 
