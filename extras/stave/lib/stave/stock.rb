@@ -20,18 +20,18 @@ module Stave
               loha:   stock_loha.coef,
               year:   stock_year.coef,
               
-              inter:  stock_loha.inter,
               price:  stock_loha.price,
+
               good:   stock_loha.good,
+              
+              lohas:  stock_loha.stave,
+              years:  stock_year.stave,
 
               boll3:  stock_loha.boll,
               stav3:  stock_loha.stav,
 
               boll1:  stock_year.boll,
               stav1:  stock_year.stav,
-
-              lohas:  stock_loha.stave,
-              years:  stock_year.stave,
 
               date:   stock_loha.date,
             )

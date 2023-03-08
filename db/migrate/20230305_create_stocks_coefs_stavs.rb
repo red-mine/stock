@@ -6,9 +6,12 @@ class CreateStocksCoefsStavs < ActiveRecord::Migration[7.0]
       t.float   :loha
       t.float   :year
 
-      t.float   :inter
       t.float   :price
+
       t.boolean :good
+
+      t.string  :lohas
+      t.string  :years
 
       t.integer :boll3
       t.integer :stav3
@@ -16,8 +19,6 @@ class CreateStocksCoefsStavs < ActiveRecord::Migration[7.0]
       t.integer :boll1
       t.integer :stav1
 
-      t.string  :lohas
-      t.string  :years
       t.date    :date
 
       t.timestamps
