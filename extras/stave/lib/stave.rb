@@ -5,6 +5,7 @@ require "stave/stock"
 require "stave/engine"
 
 module Stave
+  STOCK = "sz"
   YEARS = 250
   STAVE = 100
   LOHAS = 3 * YEARS + YEARS / 2
