@@ -12,11 +12,12 @@ class StocksController < ApplicationController
 
     stocks_stavs  = StocksCoefsStav.arel_table
 
-    @stocks_stavs = if !stock.nil?
-      StocksCoefsStav.where(stocks_stavs[:stock].matches_any(["%" + stock.downcase + "%"]))
-      # StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
-    else
+    @stocks_stavs = if stock.nil?
+      StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
+    elsif stock.empty?
       StocksCoefsStav.all
+    else
+      StocksCoefsStav.where(stocks_stavs[:stock].matches_any(["%" + stock.downcase + "%"]))
     end
 
     @stavs_date   = @stocks_stavs.pluck(stocks_stavs[:date])[-1]
