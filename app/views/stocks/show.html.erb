@@ -1,11 +1,11 @@
 <h1><%= @stock.upcase %></h1>
 
-<h2>Stock Stave</h2>
+<h2>Lohas Stave</h2>
 
-<%= line_chart @stave.map {
-  |stave| {
-    name: stave[:name], 
-    data: stave[:data]
+<%= line_chart @lohas.map {
+  |lohas| {
+    name: lohas[:name], 
+    data: lohas[:data]
   }
 } %>
 
