@@ -384,7 +384,7 @@ module Stave
     end
 
     def _good_base
-      good_base   = "storage/stave/" + @good_area + "/lday/"
+      good_base   = "storage/stave/" + @good_area + "/"
       good_base
     end
   end
