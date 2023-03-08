@@ -44,6 +44,30 @@ class StocksController < ApplicationController
 
 private
 
+  def _week(good_stave)
+    good_week = []
+    good_stave.each do |_good_stave|
+      good_date = _good_stave[0]
+      good_wday = good_date.wday
+      if good_wday == 1
+        good_week.push _good_stave
+      end
+    end
+    good_week
+  end
+
+  def _month(good_stave)
+    good_month = []
+    good_stave.each do |_good_stave|
+      good_date = _good_stave[0]
+      good_mday = good_date.mday
+      if good_mday == 1
+        good_month.push _good_stave
+      end
+    end
+    good_month
+  end
+
   def _smooth(good_stave)
     good_smooth = []
     prev_date   = nil
@@ -90,12 +114,12 @@ private
     stave_top     = stocks.good_stave(stock,  true,   2     )
     stave_bot     = stocks.good_stave(stock,  false,  2     )
 
-    stock_price   = _smooth(stock_price)
-    stave_trend   = _smooth(stave_trend)
-    stave_up1     = _smooth(stave_up1)
-    stave_dn1     = _smooth(stave_dn1)
-    stave_top     = _smooth(stave_top)
-    stave_bot     = _smooth(stave_bot)
+    stock_price   = _month(stock_price)
+    stave_trend   = _month(stave_trend)
+    stave_up1     = _month(stave_up1)
+    stave_dn1     = _month(stave_dn1)
+    stave_top     = _month(stave_top)
+    stave_bot     = _month(stave_bot)
 
     stave = [
       { name: "Price",  data: stock_price }, 
@@ -118,10 +142,10 @@ private
     stave_mup     = stocks.good_boll( stock,  Stave::STAVE,  true  )
     stave_mdn     = stocks.good_boll( stock,  Stave::STAVE,  false )
 
-    stock_price   = _smooth(stock_price)
-    stave_boll    = _smooth(stave_boll)
-    stave_mup     = _smooth(stave_mup)
-    stave_mdn     = _smooth(stave_mdn)
+    stock_price   = _month(stock_price)
+    stave_boll    = _month(stave_boll)
+    stave_mup     = _month(stave_mup)
+    stave_mdn     = _month(stave_mdn)
 
     boll = [
       { name: "Price",  data: stock_price }, 
