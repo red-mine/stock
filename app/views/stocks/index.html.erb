@@ -34,14 +34,18 @@
     <td><%= stock.price %></td>
     <td align=right><%= stock.boll3 %></td>
     <td align=right><%= stock.stav3 %></td>
-    <td><%= stock.lohas %></td>
+    <td>
+      <a href="/assets/stave/stave.png">
+        <%= stock.lohas %>
+      </a>
+    </td>
   </tr>
   <% end %>
 </table></td>
 
 <% if device == "desktop" %>
 <td valign=top align=left>
-  <img src="/assets/stave/stave.png" style="max-width: 88%;">
+  <%# <img src="/assets/stave/stave.png" style="max-width: 88%;"> %>
 </td>
 <% end %>
 
