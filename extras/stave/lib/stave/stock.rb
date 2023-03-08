@@ -287,9 +287,7 @@ module Stave
         if !prev_stock.empty?
           prev_date = prev_stock[:date]
           good_date = good_stock[:date]
-          good_days = good_date - prev_date
-          if good_days != 1
-            puts "good_days = #{good_days}"
+          if good_date - 1 != prev_date
           end
         end
         prev_stock = good_stock
