@@ -4,10 +4,8 @@ class StocksController < ApplicationController
 
   def index
     stock         = params[:stock]
-    commit        = params[:commit]
 
     stocks_stavs  = StocksCoefsStav.arel_table
-
     @stocks_stavs = if stock.nil?
       StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
     elsif stock.empty?
@@ -15,31 +13,24 @@ class StocksController < ApplicationController
     else
       StocksCoefsStav.where(stocks_stavs[:stock].matches_any(["%" + stock.downcase + "%"]))
     end
-
     @stavs_date   = @stocks_stavs.pluck(stocks_stavs[:date])[-1]
   end
 
   def show
-    stock     = params[:stock]
+    @stock    = params[:stock].lowcase
     years     = params[:years]
-
-    if stock.nil?
-      stock   = query.lowcase
-    end
 
     if !years.nil?
       years   = years.to_i
-      @stocks = Stave::Stock.new("sz", years)
-      @stave  = _stave(stock, years)
-      @boll   =  _boll(stock, years)
+      stocks  = Stave::Stock.new("sz", years)
+      @stave  = _stave(stocks, years)
+      @boll   =  _boll(stocks, years)
     else
-      @stocks = Stave::Stock.new("sz", 875)
-      @stave  = _stave(stock, 875  )
-      @stocks = Stave::Stock.new("sz", 250)
-      @years  = _stave(stock, 250  )
+      stocks = Stave::Stock.new("sz",  Stave::LOHAS)
+      @stave  = _stave(stocks, Stave::LOHAS)
+      stocks = Stave::Stock.new("sz",  Stave::YEARS)
+      @years  = _stave(stocks, Stave::YEARS)
     end
-
-    @stock    = stock
   end
 
 private
@@ -68,6 +59,17 @@ private
     good_month
   end
 
+  def _quarter(good_stave)
+    good_quarter = []
+    good_stave.each do |_good_stave|
+      good_date = _good_stave[0]
+      if good_date == good_date.beginning_of_quarter
+        good_quarter.push _good_stave
+      end
+    end
+    good_quarter
+  end
+
   def _smooth(good_stave)
     good_smooth = []
     prev_date   = nil
@@ -94,32 +96,39 @@ private
     good_smooth
   end
 
-  def _price(stock, years)
+  def _price(years)
     start         = Stave::STAVE - SMOOTH
     length        = years + 1
 
-    stock_price   = @stocks.good_aver( stock,  SMOOTH).slice(start, length)
+    stock_price   = @stocks.good_aver(@stock,  SMOOTH).slice(start, length)
 
     stock_price
   end
 
-  def _stave(stock, years)
-    stocks        = @stocks
+  def _stave(stocks, years)
+    stock_price   = _price(years)
 
-    stock_price   = _price(stock, years)
+    stock         = @stock
 
-    stave_trend   = stocks.good_trend(stock                 )
-    stave_up1     = stocks.good_stave(stock,  true,   1     )
-    stave_dn1     = stocks.good_stave(stock,  false,  1     )
-    stave_top     = stocks.good_stave(stock,  true,   2     )
-    stave_bot     = stocks.good_stave(stock,  false,  2     )
+    stave_trend   = stocks.good_trend(stock             )
+    stave_up1     = stocks.good_stave(stock,  true,   1 )
+    stave_dn1     = stocks.good_stave(stock,  false,  1 )
+    stave_top     = stocks.good_stave(stock,  true,   2 )
+    stave_bot     = stocks.good_stave(stock,  false,  2 )
 
-    stock_price   = _month(stock_price)
-    stave_trend   = _month(stave_trend)
-    stave_up1     = _month(stave_up1)
-    stave_dn1     = _month(stave_dn1)
-    stave_top     = _month(stave_top)
-    stave_bot     = _month(stave_bot)
+    stock_price   = _smooth(stock_price )
+    stave_trend   = _smooth(stave_trend )
+    stave_up1     = _smooth(stave_up1   )
+    stave_dn1     = _smooth(stave_dn1   )
+    stave_top     = _smooth(stave_top   )
+    stave_bot     = _smooth(stave_bot   )
+
+    stock_price   = _quarter(stock_price)
+    stave_trend   = _quarter(stave_trend)
+    stave_up1     = _quarter(stave_up1  )
+    stave_dn1     = _quarter(stave_dn1  )
+    stave_top     = _quarter(stave_top  )
+    stave_bot     = _quarter(stave_bot  )
 
     stave = [
       { name: "Price",  data: stock_price }, 
@@ -133,19 +142,24 @@ private
     return stave
   end
 
-  def _boll(stock, years)
-    stocks        = @stocks
+  def _boll(stocks, years)
+    stock_price   = _price(years)
 
-    stock_price   = _price(stock, years)
+    stock         = @stock
 
-    stave_boll    = stocks.good_aver( stock,  Stave::STAVE         )
-    stave_mup     = stocks.good_boll( stock,  Stave::STAVE,  true  )
-    stave_mdn     = stocks.good_boll( stock,  Stave::STAVE,  false )
+    stave_boll    = stocks.good_aver(stock, Stave::STAVE        )
+    stave_mup     = stocks.good_boll(stock, Stave::STAVE, true  )
+    stave_mdn     = stocks.good_boll(stock, Stave::STAVE, false )
 
-    stock_price   = _month(stock_price)
-    stave_boll    = _month(stave_boll)
-    stave_mup     = _month(stave_mup)
-    stave_mdn     = _month(stave_mdn)
+    stock_price   = _smooth(stock_price )
+    stave_boll    = _smooth(stave_boll  )
+    stave_mup     = _smooth(stave_mup   )
+    stave_mdn     = _smooth(stave_mdn   )
+
+    stock_price   = _quarter(stock_price)
+    stave_boll    = _quarter(stave_boll )
+    stave_mup     = _quarter(stave_mup  )
+    stave_mdn     = _quarter(stave_mdn  )
 
     boll = [
       { name: "Price",  data: stock_price }, 
