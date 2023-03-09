@@ -5,7 +5,6 @@ class StocksController < ApplicationController
   def index
     stock         = params[:stock]
     commit        = params[:commit]
-
     stocks_stavs  = StocksCoefsStav.arel_table
     @stocks_stavs = if stock.nil?
       StocksCoefsStav.where(stocks_stavs[:lohas].not_eq(""))
@@ -20,9 +19,7 @@ class StocksController < ApplicationController
   def show
     stock     = params[:stock]
     years     = params[:years]
-
     @stock    = stock
-
     if !years.nil?
       years   = years.to_i
       stocks  = Stave::Stock.new("sz", years)
@@ -39,102 +36,102 @@ class StocksController < ApplicationController
 
 private
 
-  def _week(good_stave)
-    good_week = []
-    good_stave.each do |_good_stave|
-      good_date = _good_stave[0]
-      good_wday = good_date.wday
-      if good_wday == 1
-        good_week.push _good_stave
+  def _week(stave)
+    week    = []
+    stave.each do |_stave|
+      date  = _stave[0]
+      wday  = date.wday
+      if wday == 1
+        week.push _stave
       end
     end
-    good_week
+    week
   end
 
-  def _month(good_stave)
-    good_month = []
-    good_stave.each do |_good_stave|
-      good_date = _good_stave[0]
-      good_mday = good_date.mday
-      if good_mday == 1
-        good_month.push _good_stave
+  def _month(stave)
+    month   = []
+    stave.each do |_stave|
+      date  = _stave[0]
+      mday  = date.mday
+      if mday == 1
+        month.push _stave
       end
     end
-    good_month
+    month
   end
 
-  def _quarter(good_stave)
-    good_quarter = []
-    good_stave.each do |_good_stave|
-      good_date = _good_stave[0]
-      if good_date == good_date.beginning_of_quarter
-        good_quarter.push _good_stave
+  def _quarter(stave)
+    quarter = []
+    stave.each do |_stave|
+      date  = _stave[0]
+      if date == date.beginning_of_quarter
+        quarter.push _stave
       end
     end
-    good_quarter
+    quarter
   end
 
-  def _smooth(good_stave)
-    good_smooth = []
-    prev_date   = nil
-    prev_price  = 0
-    good_stave.each do |_good_stave|
-      good_date   = _good_stave[0]
-      good_price  = _good_stave[1]
-      if !prev_date.nil?
-        good_days   = (good_date - prev_date).numerator
-        dist_price  = (good_price - prev_price) / good_days
-        if good_days  != 1
-          good_days   = good_days - 1
-          while good_days != 0
-            good_day  = [good_date - good_days, good_price - dist_price * good_days]
-            good_smooth.push good_day
-            good_days = good_days - 1
+  def _smooth(stave)
+    smooth  = []
+    _date   = nil
+    _price  = 0
+    stave.each do |_stave|
+      date  = _stave[0]
+      price = _stave[1]
+      if !_date.nil?
+        days  = (date   - _date).numerator
+        dist  = (price  - _price) / days
+        if days != 1
+          days  = days - 1
+          while days != 0
+            day   = [date - days, price - dist * days]
+            smooth.push day
+            days  = days - 1
           end
         end
       end
-      prev_date   = good_date
-      prev_price  = good_price
-      good_smooth.push _good_stave
+      _date   = date
+      _price  = price
+      smooth.push _stave
     end
-    good_smooth
+    smooth
+  end
+
+  def _better(stave, years)
+    smooth = _smooth(stave)
+    better = if years == Stave::LOHAS
+      _quarter(smooth)
+    else
+      _month(smooth)
+    end
+    better
   end
 
   def _price(stocks, years)
+    stock         = @stock
     start         = Stave::STAVE - SMOOTH
     length        = years + 1
-
-    stock         = @stock
-
-    stock_price   = stocks.good_aver(stock,  SMOOTH).slice(start, length)
-
-    stock_price
+    price         = stocks.good_aver(stock,  SMOOTH).slice(start, length)
+    price
   end
 
   def _stave(stocks, years)
-    stock_price   = _price(stocks, years)
-
     stock         = @stock
 
+    stock_price   = _price(stocks, years)
+    
     stave_trend   = stocks.good_trend(stock             )
     stave_up1     = stocks.good_stave(stock,  true,   1 )
     stave_dn1     = stocks.good_stave(stock,  false,  1 )
     stave_top     = stocks.good_stave(stock,  true,   2 )
     stave_bot     = stocks.good_stave(stock,  false,  2 )
 
-    stock_price   = _smooth(stock_price )
-    stave_trend   = _smooth(stave_trend )
-    stave_up1     = _smooth(stave_up1   )
-    stave_dn1     = _smooth(stave_dn1   )
-    stave_top     = _smooth(stave_top   )
-    stave_bot     = _smooth(stave_bot   )
-
-    stock_price   = _quarter(stock_price)
-    stave_trend   = _quarter(stave_trend)
-    stave_up1     = _quarter(stave_up1  )
-    stave_dn1     = _quarter(stave_dn1  )
-    stave_top     = _quarter(stave_top  )
-    stave_bot     = _quarter(stave_bot  )
+    stock_price   = _better(stock_price,  years )
+    stave_trend   = _better(stave_trend,  years )
+    stave_up1     = _better(stave_up1,    years )
+    stave_dn1     = _better(stave_dn1,    years )
+    stave_top     = _better(stave_top,    years )
+    stave_bot     = _better(stave_bot,    years )
 
     stave = [
       { name: "Price",  data: stock_price }, 
@@ -145,27 +142,22 @@ private
       { name: "Bottom", data: stave_bot   }
     ]
 
-    return stave
+    stave
   end
 
   def _boll(stocks, years)
-    stock_price   = _price(stocks, years)
-
     stock         = @stock
 
+    stock_price   = _price(stocks, years)
+    
     stave_boll    = stocks.good_aver(stock, Stave::STAVE        )
     stave_mup     = stocks.good_boll(stock, Stave::STAVE, true  )
     stave_mdn     = stocks.good_boll(stock, Stave::STAVE, false )
 
-    stock_price   = _smooth(stock_price )
-    stave_boll    = _smooth(stave_boll  )
-    stave_mup     = _smooth(stave_mup   )
-    stave_mdn     = _smooth(stave_mdn   )
-
-    stock_price   = _quarter(stock_price)
-    stave_boll    = _quarter(stave_boll )
-    stave_mup     = _quarter(stave_mup  )
-    stave_mdn     = _quarter(stave_mdn  )
+    stock_price   = _better(stock_price,  years )
+    stave_boll    = _better(stave_boll,   years )
+    stave_mup     = _better(stave_mup,    years )
+    stave_mdn     = _better(stave_mdn,    years )
 
     boll = [
       { name: "Price",  data: stock_price }, 
@@ -174,7 +166,7 @@ private
       { name: "Down",   data: stave_mdn   }
     ]
 
-    return boll
+    boll
   end
 
 end
