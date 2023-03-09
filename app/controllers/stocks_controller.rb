@@ -29,10 +29,10 @@ class StocksController < ApplicationController
 
     if !years.nil?
       years       = years.to_i
-      @boll, @stave = single(stock, years)
+      @boll, @stave = _single(stock, years)
     else
-      @bol3, @stave = single(stock, 875  )
-      @bol1, @years = single(stock, 250  )
+      @bol3, @stave = _single(stock, 875  )
+      @bol1, @years = _single(stock, 250  )
     end
 
     @stock        = stock
@@ -40,7 +40,12 @@ class StocksController < ApplicationController
 
 private
 
-  def single(stock, years)
+  def _smooth(good_smooth)
+    Rails.logger.info "good_smooth = #{good_smooth}"
+    good_smooth
+  end
+
+  def _single(stock, years)
     stocks        = Stave::Stock.new( "sz",   years         )
 
     start         = Stave::STAVE - SMOOTH
@@ -59,19 +64,19 @@ private
     stave_bot     = stocks.good_stave(stock,  false,  2     )
 
     boll = [
-      { name: "Price",  data: stock_price }, 
-      { name: "Boll",   data: stave_boll  },
-      { name: "Up",     data: stave_mup   },
-      { name: "Down",   data: stave_mdn   }
+      { name: "Price",  data: _smooth(stock_price) }, 
+      { name: "Boll",   data: _smooth(stave_boll)  },
+      { name: "Up",     data: _smooth(stave_mup)   },
+      { name: "Down",   data: _smooth(stave_mdn)   }
     ]
 
     stave = [
-      { name: "Price",  data: stock_price }, 
-      { name: "Trend",  data: stave_trend },
-      { name: "Up",     data: stave_up1   },
-      { name: "Down",   data: stave_dn1   },
-      { name: "Top",    data: stave_top   },
-      { name: "Bottom", data: stave_bot   }
+      { name: "Price",  data: _smooth(stock_price) }, 
+      { name: "Trend",  data: _smooth(stave_trend) },
+      { name: "Up",     data: _smooth(stave_up1)   },
+      { name: "Down",   data: _smooth(stave_dn1)   },
+      { name: "Top",    data: _smooth(stave_top)   },
+      { name: "Bottom", data: _smooth(stave_bot)   }
     ]
 
     return boll, stave

@@ -20,8 +20,6 @@ class CreateStocksCoefsStavs < ActiveRecord::Migration[7.0]
       t.integer :stav1
 
       t.date    :date
-
-      t.timestamps
     end
   end
 end
