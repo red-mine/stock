@@ -134,12 +134,12 @@ private
     stave_bot     = _better(stave_bot,    years )
 
     stave = [
-      { name: "Price",  data: stock_price }, 
-      { name: "Trend",  data: stave_trend },
-      { name: "Up",     data: stave_up1   },
-      { name: "Down",   data: stave_dn1   },
-      { name: "Top",    data: stave_top   },
-      { name: "Bottom", data: stave_bot   }
+      { name: "Pr", data: stock_price }, 
+      { name: "Tr", data: stave_trend },
+      { name: "Up", data: stave_up1   },
+      { name: "Dn", data: stave_dn1   },
+      { name: "To", data: stave_top   },
+      { name: "Bo", data: stave_bot   }
     ]
 
     stave
@@ -160,10 +160,10 @@ private
     stave_mdn     = _better(stave_mdn,    years )
 
     boll = [
-      { name: "Price",  data: stock_price }, 
-      { name: "Boll",   data: stave_boll  },
-      { name: "Up",     data: stave_mup   },
-      { name: "Down",   data: stave_mdn   }
+      { name: "Pr", data: stock_price }, 
+      { name: "Bl", data: stave_boll  },
+      { name: "Up", data: stave_mup   },
+      { name: "Dn", data: stave_mdn   }
     ]
 
     boll
