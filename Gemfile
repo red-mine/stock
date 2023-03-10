@@ -46,7 +46,7 @@ gem "progress"
 
 gem "os"
 
-gem "stave", path: "extras/stave"
+gem "stave", path: "stave"
 
 # gem "ruby-debug-ide"
 
@@ -96,5 +96,5 @@ group :test do
   gem "webdrivers"
 end
 
-# stave_gemfile = File.new("lib/stave/Gemfile")
+# stave_gemfile = File.new("stave/Gemfile")
 # eval_gemfile stave_gemfile
