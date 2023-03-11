@@ -1,0 +1,2 @@
+class StocksStav < ApplicationRecord
+end
