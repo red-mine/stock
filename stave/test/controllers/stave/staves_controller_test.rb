@@ -20,7 +20,14 @@ module Stave
 
     test "should create stafe" do
       assert_difference("Stave.count") do
-        post staves_url, params: { stafe: { date: @stafe.date, price: @stafe.price, stock: @stafe.stock } }
+        post staves_url, params: { 
+          stafe: { 
+            date: @stafe.date, 
+            price: @stafe.price, 
+            stock: @stafe.stock, 
+            years: @stafe.years 
+          } 
+        }
       end
 
       assert_redirected_to stafe_url(Stave.last)
@@ -37,7 +44,14 @@ module Stave
     end
 
     test "should update stafe" do
-      patch stafe_url(@stafe), params: { stafe: { date: @stafe.date, price: @stafe.price, stock: @stafe.stock } }
+      patch stafe_url(@stafe), params: { 
+        stafe: { 
+          date: @stafe.date, 
+          price: @stafe.price, 
+          stock: @stafe.stock,
+          years: @stafe.years 
+        } 
+      }
       assert_redirected_to stafe_url(@stafe)
     end
 
