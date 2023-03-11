@@ -1,6 +1,6 @@
 class StocksController < ApplicationController
 
-  SMOOTH = 2 * Stave::WEEKS
+  SMOOTH  = 2 * Stave::WEEKS
 
   def index
     stock         = params[:stock]
@@ -22,18 +22,23 @@ class StocksController < ApplicationController
     @stock    = stock
     if !years.nil?
       years   = years.to_i
-      stocks  = Stave::Stock.new("sz", years)
+      stocks  = _engine(Stave::STOCK, years)
       @stave  = _stave(stocks, years)
-      @boll   =  _boll(stocks, years)
+      @boll   = _boll(stocks, years)
     else
-      stocks = Stave::Stock.new("sz",  Stave::LOHAS)
+      stocks  = _engine(Stave::STOCK,  Stave::LOHAS)
       @stave  = _stave(stocks, Stave::LOHAS)
-      stocks = Stave::Stock.new("sz",  Stave::YEARS)
+      stocks  = _engine(Stave::STOCK,  Stave::YEARS)
       @years  = _stave(stocks, Stave::YEARS)
     end
   end
 
 private
+
+  def _engine(area, years)
+    engine  = Stave::Stock.new(area, years)
+    engine
+  end
 
   def _week(stave)
     week    = []
