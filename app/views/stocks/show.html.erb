@@ -1,0 +1,34 @@
+<h1><%= @stock.upcase %></h1>
+
+<h2>Stock Stave</h2>
+
+<%= line_chart @stave.map {
+  |stave| {
+    name: stave[:name], 
+    data: stave[:data]
+  }
+} %>
+
+<% if !@years.nil? %>
+
+<h2>Stave Years</h2>
+
+<%= line_chart @years.map {
+  |years| {
+    name: years[:name], 
+    data: years[:data]
+  }
+} %>
+
+<% else %>
+
+<h2>Boll'in Bands</h2>
+
+<%= line_chart @boll.map {
+  |boll| {
+    name: boll[:name], 
+    data: boll[:data]
+  }
+} %>
+
+<% end %>

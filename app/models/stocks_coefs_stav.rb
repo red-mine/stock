@@ -1,0 +1,2 @@
+class StocksCoefsStav < ApplicationRecord
+end
