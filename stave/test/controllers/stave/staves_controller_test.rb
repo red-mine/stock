@@ -5,7 +5,7 @@ module Stave
     include Engine.routes.url_helpers
 
     setup do
-      @stafe = stave_staves(:one)
+      @stave = stave_staves(:one)
     end
 
     test "should get index" do
@@ -14,50 +14,50 @@ module Stave
     end
 
     test "should get new" do
-      get new_stafe_url
+      get new_stave_url
       assert_response :success
     end
 
-    test "should create stafe" do
+    test "should create stave" do
       assert_difference("Stave.count") do
         post staves_url, params: { 
-          stafe: { 
-            date: @stafe.date, 
-            price: @stafe.price, 
-            stock: @stafe.stock, 
-            years: @stafe.years 
+          stave: { 
+            date: @stave.date, 
+            price: @stave.price, 
+            stock: @stave.stock, 
+            years: @stave.years 
           } 
         }
       end
 
-      assert_redirected_to stafe_url(Stave.last)
+      assert_redirected_to stave_url(Stave.last)
     end
 
-    test "should show stafe" do
-      get stafe_url(@stafe)
+    test "should show stave" do
+      get stave_url(@stave)
       assert_response :success
     end
 
     test "should get edit" do
-      get edit_stafe_url(@stafe)
+      get edit_stave_url(@stave)
       assert_response :success
     end
 
-    test "should update stafe" do
-      patch stafe_url(@stafe), params: { 
-        stafe: { 
-          date: @stafe.date, 
-          price: @stafe.price, 
-          stock: @stafe.stock,
-          years: @stafe.years 
+    test "should update stave" do
+      patch stave_url(@stave), params: { 
+        stave: { 
+          date: @stave.date, 
+          price: @stave.price, 
+          stock: @stave.stock,
+          years: @stave.years 
         } 
       }
-      assert_redirected_to stafe_url(@stafe)
+      assert_redirected_to stave_url(@stave)
     end
 
-    test "should destroy stafe" do
+    test "should destroy stave" do
       assert_difference("Stave.count", -1) do
-        delete stafe_url(@stafe)
+        delete stave_url(@stave)
       end
 
       assert_redirected_to staves_url
