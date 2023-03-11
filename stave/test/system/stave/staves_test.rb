@@ -3,7 +3,7 @@ require "application_system_test_case"
 module Stave
   class StavesTest < ApplicationSystemTestCase
     setup do
-      @stave = stave_staves(:one)
+      @stafe = stave_staves(:one)
     end
 
     test "visiting the index" do
@@ -15,10 +15,10 @@ module Stave
       visit staves_url
       click_on "New stave"
 
-      fill_in "Date", with: @stave.date
-      fill_in "Price", with: @stave.price
-      fill_in "Stock", with: @stave.stock
-      fill_in "Years", with: @stave.years
+      fill_in "Date", with: @stafe.date
+      fill_in "Price", with: @stafe.price
+      fill_in "Stock", with: @stafe.stock
+      fill_in "Years", with: @stafe.years
       click_on "Create Stave"
 
       assert_text "Stave was successfully created"
@@ -26,13 +26,13 @@ module Stave
     end
 
     test "should update Stave" do
-      visit stave_url(@stave)
+      visit stafe_url(@stafe)
       click_on "Edit this stave", match: :first
 
-      fill_in "Date", with: @stave.date
-      fill_in "Price", with: @stave.price
-      fill_in "Stock", with: @stave.stock
-      fill_in "Years", with: @stave.years
+      fill_in "Date", with: @stafe.date
+      fill_in "Price", with: @stafe.price
+      fill_in "Stock", with: @stafe.stock
+      fill_in "Years", with: @stafe.years
       click_on "Update Stave"
 
       assert_text "Stave was successfully updated"
@@ -40,7 +40,7 @@ module Stave
     end
 
     test "should destroy Stave" do
-      visit stave_url(@stave)
+      visit stafe_url(@stafe)
       click_on "Destroy this stave", match: :first
 
       assert_text "Stave was successfully destroyed"
