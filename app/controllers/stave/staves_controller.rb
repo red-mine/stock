@@ -1,6 +1,6 @@
 module Stave
   class StavesController < ApplicationController
-    before_action :set_stave, only: %i[ show edit update destroy ]
+    before_action :set_stafe, only: %i[ show edit update destroy ]
 
     # GET /staves
     def index
@@ -13,7 +13,7 @@ module Stave
 
     # GET /staves/new
     def new
-      @stave = Stave.new
+      @stafe = Stave.new
     end
 
     # GET /staves/1/edit
@@ -22,10 +22,10 @@ module Stave
 
     # POST /staves
     def create
-      @stave = Stave.new(stave_params)
+      @stafe = Stave.new(stafe_params)
 
-      if @stave.save
-        redirect_to @stave, notice: "Stave was successfully created."
+      if @stafe.save
+        redirect_to @stafe, notice: "Stave was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
@@ -33,8 +33,8 @@ module Stave
 
     # PATCH/PUT /staves/1
     def update
-      if @stave.update(stave_params)
-        redirect_to @stave, notice: "Stave was successfully updated."
+      if @stafe.update(stafe_params)
+        redirect_to @stafe, notice: "Stave was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -42,19 +42,19 @@ module Stave
 
     # DELETE /staves/1
     def destroy
-      @stave.destroy
+      @stafe.destroy
       redirect_to staves_url, notice: "Stave was successfully destroyed."
     end
 
     private
       # Use callbacks to share common setup or constraints between actions.
-      def set_stave
-        @stave = Stave.find(params[:id])
+      def set_stafe
+        @stafe = Stave.find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.
-      def stave_params
-        params.require(:stave).permit(:stock, :price, :date, :years)
+      def stafe_params
+        params.require(:stafe).permit(:stock, :price, :date, :years)
       end
   end
 end
