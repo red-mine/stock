@@ -23,7 +23,6 @@ class StocksController < ApplicationController
     if !years.nil?
       years   = years.to_i
       stocks  = Stave::Stock.new("sz", years)
-      Rails.logger.info "stock1 = #{stock}"
       @stave  = _stave(stocks, years)
       @boll   =  _boll(stocks, years)
     else
