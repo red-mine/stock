@@ -54,7 +54,7 @@ module Stave
 
       # Only allow a list of trusted parameters through.
       def stafe_params
-        params.require(:stafe).permit(:stock, :price, :date, :years)
+        params.require(:stave).permit(:stock, :price, :date, :years)
       end
   end
 end
