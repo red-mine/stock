@@ -1,0 +1,2 @@
+class StocksStaveLoha < ApplicationRecord
+end

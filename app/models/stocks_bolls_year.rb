@@ -1,0 +1,2 @@
+class StocksBollsYear < ApplicationRecord
+end

@@ -1,2 +1,0 @@
-class StocksBoll < ApplicationRecord
-end
