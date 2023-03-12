@@ -1,39 +1,5 @@
 module Stave  
   class Stave
-
-    def good_index(good_stock, good_commit)
-      staves_arel   = StocksCoefsStav.arel_table
-
-      stocks_stavs  = if good_stock.nil?
-        StocksCoefsStav.where(staves_arel[:lohas].not_eq(""))
-      elsif good_stock.empty?
-        StocksCoefsStav.all
-      else
-        StocksCoefsStav.where(staves_arel[:stock].matches_any(["%" + good_stock + "%"]))
-      end
-
-      stavs_date    = stocks_stavs.pluck(staves_arel[:date])[-1]
-
-      return stocks_stavs, stavs_date
-    end
-  
-    def good_show(good_stock, good_years)
-      @stock = good_stock
-      if !good_years.nil?
-        good_years  = good_years.to_i
-        good_stocks = _engine(  STOCK, good_years)
-        good_stave  = _stave(   good_stocks,  good_years)
-        good_boll   = _boll(    good_stocks,  good_years)
-        good_years  = nil
-      else
-        good_stocks = _engine(  STOCK, LOHAS)
-        good_stave  = _stave(   good_stocks,  LOHAS)
-        good_stocks = _engine(  STOCK, YEARS)
-        good_years  = _stave(   good_stocks,  YEARS)
-        good_boll   = nil
-      end
-      return good_stave, good_boll, good_years
-    end
   
     def initialize(good_area, good_years, good_stock)
       @good_area    = good_area
@@ -41,9 +7,79 @@ module Stave
       @good_stock   = good_stock
     end
 
+    def self.good_stave
+      StocksStav.delete_all
+      puts "Stave'in... #{STAVE}"
+      StocksStav.all.with_progress do |stock_stav|
+        Progress.note = stock_stav.stock.upcase
+        good_stave    = StocksStav.new(
+          stock:      stock_stav.stock,
+          price:      stock_stav.price,
+          date:       stock_stav.date,
+          years:      stock_stav.years
+        )
+        good_stave.save
+      end
+    end
+
+    def good_staves(good_table, good_stave, good_stock)
+      good_table.delete_all
+      puts "Stave'in... #{good_stock}"
+      good_stave.with_progress do |good_stave_|
+        Progress.note   = good_stave_[0]
+        good_stock      = good_table.new(
+          stock:        good_stock,
+          price:        good_stave_[1],
+          date:         good_stave_[0],
+          years:        good_years
+        )
+        good_stock.save
+      end
+    end
+
+    def good_stave(good_stock, good_years)
+      good_lohas, good_years, good_stave, good_bolls = good_show(good_stock, good_years)
+      good_staves(StocksLoha, good_lohas, good_stock, good_years)
+      good_staves(StocksYear, good_years, good_stock, good_years)
+      good_staves(StocksStav, good_stave, good_stock, good_years)
+      good_staves(StocksBoll, good_bolls, good_stock, good_years)
+    end
+
+    def good_index(good_stock, good_commit)
+      staves_arel   = StocksCoefsStav.arel_table
+      stocks_stavs  = if good_stock.nil?
+        StocksCoefsStav.where(staves_arel[:lohas].not_eq(""))
+      elsif good_stock.empty?
+        StocksCoefsStav.all
+      else
+        StocksCoefsStav.where(staves_arel[:stock].matches_any(["%" + good_stock + "%"]))
+      end
+      stavs_date    = stocks_stavs.pluck(staves_arel[:date])[-1]
+      return stocks_stavs, stavs_date
+    end
+  
+    def good_show(good_stock, good_years)
+      if good_years.nil?
+        good_lohas  = _engin(SZSTK, LOHAS)
+        good_years  = _engin(SZSTK, YEARS)
+        good_lohas  = _stave(good_lohas, LOHAS, good_stock)
+        good_years  = _stave(good_years, YEARS, good_stock)
+        good_bolls  = nil
+        good_stave  = nil
+      else
+        good_years  = good_years.to_i
+        good_engin  = _engin(SZSTK, good_years)
+        good_stave  = _stave(good_engin, good_years, good_stock)
+        good_bolls  = _bolls(good_engin, good_years, good_stock)
+        good_years  = nil
+        good_lohas  = nil
+      end
+      return good_lohas, good_years, good_stave, good_bolls
+    end
+
     private
   
-    def _engine(area, years)
+    def _engin(area, years)
       engine  = Stock.new(area, years)
       engine
     end
@@ -119,16 +155,14 @@ module Stave
       better
     end
   
-    def _price(stocks, years)
-      stock         = @stock
+    def _price(stocks, years, stock)
       start         = STAVE - SMUTH
       length        = years + 1
       price         = stocks.good_aver(stock, SMUTH).slice(start, length)
       price
     end
   
-    def _stave(stocks, years)
-      stock         = @stock
+    def _stave(stocks, years, stock)
       stock_price   = _price(stocks, years)
       stave_trend   = stocks.good_trend(stock             )
       stave_up1     = stocks.good_stave(stock,  true,   1 )
@@ -152,8 +186,7 @@ module Stave
       stave
     end
   
-    def _boll(stocks, years)
-      stock         = @stock
+    def _boll(stocks, years, stock)
       stock_price   = _price(stocks, years)
       stave_boll    = stocks.good_aver(stock, STAVE        )
       stave_mup     = stocks.good_boll(stock, STAVE, true  )
