@@ -32,9 +32,9 @@ module Stave
       return good_stave, good_boll, good_years
     end
   
-    def initialize(good_area, good_days, good_stock)
+    def initialize(good_area, good_years, good_stock)
       @good_area    = good_area
-      @good_years   = good_days
+      @good_years   = good_years
       @good_stock   = good_stock
     end
 
