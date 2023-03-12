@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20230313) do
+ActiveRecord::Schema[7.0].define(version: 20230314) do
   create_table "stave_staves", force: :cascade do |t|
     t.string "stock"
     t.float "price"
@@ -22,6 +22,20 @@ ActiveRecord::Schema[7.0].define(version: 20230313) do
     t.string "stock"
     t.float "price"
     t.date "date"
+  end
+
+  create_table "stocks_bolls_lohas", force: :cascade do |t|
+    t.string "stock"
+    t.float "price"
+    t.date "date"
+    t.integer "years"
+  end
+
+  create_table "stocks_bolls_years", force: :cascade do |t|
+    t.string "stock"
+    t.float "price"
+    t.date "date"
+    t.integer "years"
   end
 
   create_table "stocks_coefs_lohas", force: :cascade do |t|
@@ -65,20 +79,14 @@ ActiveRecord::Schema[7.0].define(version: 20230313) do
     t.integer "years"
   end
 
-  create_table "stocks_lohas", force: :cascade do |t|
+  create_table "stocks_stave_lohas", force: :cascade do |t|
     t.string "stock"
     t.float "price"
     t.date "date"
     t.integer "years"
   end
 
-  create_table "stocks_stavs", force: :cascade do |t|
-    t.string "stock"
-    t.float "price"
-    t.date "date"
-  end
-
-  create_table "stocks_years", force: :cascade do |t|
+  create_table "stocks_stave_years", force: :cascade do |t|
     t.string "stock"
     t.float "price"
     t.date "date"
