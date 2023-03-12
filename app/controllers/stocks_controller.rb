@@ -1,19 +1,23 @@
 class StocksController < ApplicationController
-  before_action :set_stock, only: %i[ show edit update destroy ]
+  # before_action :set_stock, only: %i[ show edit update destroy ]
 
   # GET /stocks or /stocks.json
   def index
     # @stocks = Stock.all
     stock   = params[:stock]
     commit  = params[:commit]
-    stave_index(stock, commit)
+    @stock  = stock
+    stave   = Stave::Stave.new(Stave::STOCK, nil, stock)
+    @stocks_stavs, @stavs_date = stave_index(stock, commit)
   end
 
   # GET /stocks/1 or /stocks/1.json
   def show
     stock   = params[:stock]
     years   = params[:years]
-    stave_show(stock, years)
+    @stock  = stock
+    stave   = Stave::Stave.new(Stave::STOCK, years, stock)
+    @stave, @boll, @years = stave.good_show(stock, years)
   end
 
   # GET /stocks/new
@@ -72,17 +76,6 @@ class StocksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def stock_params
       params.require(:stock).permit(:stock, :price, :date)
-    end
-
-    def stave_index(stock, commit)
-      stave   = Stave::Stave.new(Stave::STOCK, nil, stock)
-      @stocks_stavs, @stavs_date = stave.good_index(stock, commit)
-    end
-  
-    def stave_show(stock, years)
-      @stock  = stock
-      stave   = Stave::Stave.new(Stave::STOCK, years, stock)
-      @stave, @boll, @years = stave.good_show(stock, years)
     end
 
   end
