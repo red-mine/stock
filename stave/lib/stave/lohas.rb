@@ -20,14 +20,14 @@ module Stave
     def good_show(good_stock, good_years)
       if !good_years.nil?
         good_years  = good_years.to_i
-        good_stocks = _engine(  Stave::STOCK, good_years)
+        good_stocks = _engine(  STOCK, good_years)
         good_stave  = _stave(   good_stocks,  good_years)
         good_boll   = _boll(    good_stocks,  good_years)
       else
-        good_stocks = _engine(  Stave::STOCK, Stave::LOHAS)
-        good_stave  = _stave(   good_stocks,  Stave::LOHAS)
-        good_stocks = _engine(  Stave::STOCK, Stave::YEARS)
-        good_years  = _stave(   good_stocks,  Stave::YEARS)
+        good_stocks = _engine(  STOCK, LOHAS)
+        good_stave  = _stave(   good_stocks,  LOHAS)
+        good_stocks = _engine(  STOCK, YEARS)
+        good_years  = _stave(   good_stocks,  YEARS)
       end
       return good_stave, good_boll, good_years
     end
@@ -41,7 +41,7 @@ module Stave
     private
   
     def _engine(area, years)
-      engine  = Stave::Stock.new(area, years)
+      engine  = Stock.new(area, years)
       engine
     end
   
@@ -108,7 +108,7 @@ module Stave
   
     def _better(stave, years)
       smooth = _smooth(stave)
-      better = if years == Stave::LOHAS
+      better = if years == LOHAS
         _quarter(smooth)
       else
         _month(smooth)
@@ -118,9 +118,9 @@ module Stave
   
     def _price(stocks, years)
       stock         = @stock
-      start         = Stave::STAVE - Stave::SMUTH
+      start         = STAVE - SMUTH
       length        = years + 1
-      price         = stocks.good_aver(stock, Stave::SMUTH).slice(start, length)
+      price         = stocks.good_aver(stock, SMUTH).slice(start, length)
       price
     end
   
@@ -152,9 +152,9 @@ module Stave
     def _boll(stocks, years)
       stock         = @stock
       stock_price   = _price(stocks, years)
-      stave_boll    = stocks.good_aver(stock, Stave::STAVE        )
-      stave_mup     = stocks.good_boll(stock, Stave::STAVE, true  )
-      stave_mdn     = stocks.good_boll(stock, Stave::STAVE, false )
+      stave_boll    = stocks.good_aver(stock, STAVE        )
+      stave_mup     = stocks.good_boll(stock, STAVE, true  )
+      stave_mdn     = stocks.good_boll(stock, STAVE, false )
       stock_price   = _better(stock_price,  years )
       stave_boll    = _better(stave_boll,   years )
       stave_mup     = _better(stave_mup,    years )
