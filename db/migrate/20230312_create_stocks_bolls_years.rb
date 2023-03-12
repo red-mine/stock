@@ -4,7 +4,7 @@ class CreateStocksBollsYears < ActiveRecord::Migration[7.0]
       t.string  :stock
       t.float   :price
       t.date    :date
-      t.integer :years
+      t.string  :years
     end
   end
 end
