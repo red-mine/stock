@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :stocks
   mount Stave::Engine => "/stave"
   root  "stocks#index"
   get   "/stocks",                to: "stocks#index"
