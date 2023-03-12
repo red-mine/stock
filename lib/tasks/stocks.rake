@@ -17,7 +17,9 @@ task :years, [:area, :days] => :environment do |task, args|
 end
 
 desc "stave"
-task :stave => :environment do
-  Stave::Stock.good_stave()
-  Stave::Stave.good_stave()
+task :stave, [:area, :days] => :environment do |task, args|
+  stock = Stave::Stock.new(area, days)
+  stave = Stave::Stave.new(area, days)
+  stock.good_stave()
+  stave.good_stave()
 end

@@ -1,40 +1,31 @@
 module Stave  
   class Stave
   
-    def initialize(good_area, good_years, good_stock)
+    def initialize(good_area, good_years)
       @good_area    = good_area
       @good_years   = good_years
-      @good_stock   = good_stock
     end
 
-    def self.good_stave
-      StocksStav.delete_all
+    def good_result
       puts "Stave'in... #{STAVE}"
       StocksCoefsStav.all.with_progress do |stock_stav|
         good_stock    = stock_stav.stock
         Progress.note = good_stock.upcase
-        good_stave(good_stock)
+        stave_lohas, stave_years, bolls_lohas, bolls_years = good_show(good_stock)
+        good_staves(StocksStaveLoha, stave_lohas, good_stock, good_years)
+        good_staves(StocksStaveYear, stave_years, good_stock, good_years)
+        good_staves(StocksBollsLoha, lohas_bolls, good_stock, good_years)
+        good_staves(StocksBollsLoha, years_bolls, good_stock, good_years)
       end
-    end
-
-    def good_stave(good_stock)
-      stave_lohas, stave_years, bolls_lohas, bolls_years = good_show(good_stock)
-
-      good_staves(StocksStaveLoha, stave_lohas, good_stock, good_years)
-      good_staves(StocksStaveYear, stave_years, good_stock, good_years)
-      good_staves(StocksBollsLoha, lohas_bolls, good_stock, good_years)
-      good_staves(StocksBollsLoha, years_bolls, good_stock, good_years)
     end
   
     def good_show(good_stock)
       loha_engine  = _engin(SZSTK, LOHAS)
       year_engine  = _engin(SZSTK, YEARS)
-
       stave_lohas  = _stave(loha_engine, LOHAS, good_stock)
       stave_years  = _stave(year_engine, YEARS, good_stock)
       bolls_lohas  = _bolls(loha_engine, LOHAS, good_stock)
       bolls_years  = _bolls(year_engine, YEARS, good_stock)
-
       return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
 

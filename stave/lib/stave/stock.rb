@@ -1,14 +1,14 @@
 module Stave
   class Stock
 
-    def initialize(good_area, good_days)
+    def initialize(good_area, good_years)
       @good_area    = good_area
-      @good_years   = good_days
-      @good_days    = good_days + STAVE
+      @good_years   = good_years
+      @good_days    = good_years + STAVE
       @good_models  = []
     end
 
-    def self.good_stave
+    def good_result
       StocksCoefsStav.delete_all
       puts "Stave'in... #{STAVE}"
       StocksCoefsLoha.all.with_progress do |stock_loha|
