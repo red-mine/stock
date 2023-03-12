@@ -8,7 +8,7 @@ class StocksController < ApplicationController
     commit  = params[:commit]
     @stock  = stock
     stave   = Stave::Stave.new(Stave::STOCK, nil, stock)
-    @stocks_stavs, @stavs_date = stave_index(stock, commit)
+    @stocks_stavs, @stavs_date = stave.good_index(stock, commit)
   end
 
   # GET /stocks/1 or /stocks/1.json
