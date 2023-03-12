@@ -32,9 +32,7 @@ module Stave
     end
 
     def good_staves(good_table, good_stave, good_stock)
-      puts "Stave'in... #{good_table}"
-      good_stave.with_progress do |good_stave_|
-        Progress.note   = good_stave_[0]
+      good_stave.each do |good_stave_|
         good_stock      = good_table.new(
           stock:        good_stock,
           price:        good_stave_[1],
