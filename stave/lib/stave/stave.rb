@@ -47,10 +47,10 @@ module Stave
       loha_engine  = _engin(SZSTK, LOHAS)
       year_engine  = _engin(SZSTK, YEARS)
       
-      stave_lohas  = _stave(loha_engine, LOHAS, good_stock)
-      stave_years  = _stave(year_engine, YEARS, good_stock)
-      bolls_lohas  = _bolls(loha_engine, LOHAS, good_stock)
-      bolls_years  = _bolls(year_engine, YEARS, good_stock)
+      stave_lohas  = _stave_show(loha_engine, LOHAS, good_stock)
+      stave_years  = _stave_show(year_engine, YEARS, good_stock)
+      bolls_lohas  = _bolls_show(loha_engine, LOHAS, good_stock)
+      bolls_years  = _bolls_show(year_engine, YEARS, good_stock)
       
       return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
@@ -153,20 +153,10 @@ module Stave
       price
     end
   
-    def _stave(stocks, years, stock)
-      stock_price   = _price(stocks, years, stock)
-      stave_trend   = stocks.good_trend(stock             )
-      stave_up1     = stocks.good_stave(stock,  true,   1 )
-      stave_dn1     = stocks.good_stave(stock,  false,  1 )
-      stave_top     = stocks.good_stave(stock,  true,   2 )
-      stave_bot     = stocks.good_stave(stock,  false,  2 )
-      stock_price   = _better(stock_price,  years )
-      stave_trend   = _better(stave_trend,  years )
-      stave_up1     = _better(stave_up1,    years )
-      stave_dn1     = _better(stave_dn1,    years )
-      stave_top     = _better(stave_top,    years )
-      stave_bot     = _better(stave_bot,    years )
-      stave = [
+    def _stave_show(stocks, years, stock)
+      stock_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot = _stave(stocks, years, stock)
+
+      stave_show = [
         { name: "P", data: stock_price }, 
         { name: "T", data: stave_trend },
         { name: "U", data: stave_up1   },
@@ -174,25 +164,55 @@ module Stave
         { name: "T", data: stave_top   },
         { name: "B", data: stave_bot   }
       ]
-      stave
+
+      stave_show
+    end
+
+    def _stave(stocks, years, stock)
+      stock_price   = _price(stocks, years, stock)
+
+      stave_trend   = stocks.good_trend(stock             )
+      stave_up1     = stocks.good_stave(stock,  true,   1 )
+      stave_dn1     = stocks.good_stave(stock,  false,  1 )
+      stave_top     = stocks.good_stave(stock,  true,   2 )
+      stave_bot     = stocks.good_stave(stock,  false,  2 )
+
+      stock_price   = _better(stock_price,  years )
+      stave_trend   = _better(stave_trend,  years )
+      stave_up1     = _better(stave_up1,    years )
+      stave_dn1     = _better(stave_dn1,    years )
+      stave_top     = _better(stave_top,    years )
+      stave_bot     = _better(stave_bot,    years )
+
+      return stock_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot
     end
   
-    def _bolls(stocks, years, stock)
-      stock_price   = _price(stocks, years, stock)
-      stave_boll    = stocks.good_aver(stock, STAVE        )
-      stave_mup     = stocks.good_boll(stock, STAVE, true  )
-      stave_mdn     = stocks.good_boll(stock, STAVE, false )
-      stock_price   = _better(stock_price,  years )
-      stave_boll    = _better(stave_boll,   years )
-      stave_mup     = _better(stave_mup,    years )
-      stave_mdn     = _better(stave_mdn,    years )
-      bolls = [
+    def _bolls_show(stocks, years, stock)
+      stock_price, stave_boll, stave_mup, stave_mdm = _bolls(stocks, years, stock)
+
+      bolls_show = [
         { name: "P", data: stock_price }, 
         { name: "B", data: stave_boll  },
         { name: "U", data: stave_mup   },
         { name: "D", data: stave_mdn   }
-      ]  
-      bolls
+      ]
+
+      bolls_show
+    end
+
+    def _bolls(stocks, years, stock)
+      stock_price   = _price(stocks, years, stock)
+
+      stave_boll    = stocks.good_aver(stock, STAVE        )
+      stave_mup     = stocks.good_boll(stock, STAVE, true  )
+      stave_mdn     = stocks.good_boll(stock, STAVE, false )
+
+      stock_price   = _better(stock_price,  years )
+      stave_boll    = _better(stave_boll,   years )
+      stave_mup     = _better(stave_mup,    years )
+      stave_mdn     = _better(stave_mdn,    years )
+
+      return stock_price, stave_boll, stave_mup, stave_mdm
     end
 
   end
