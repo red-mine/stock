@@ -4,6 +4,7 @@ require "stave/core_ext"
 require "stave/stock"
 require "stave/engine"
 require "stave/stave"
+require "stave/lohas"
 
 module Stave
   STOCK = "sz"
