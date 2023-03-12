@@ -19,15 +19,11 @@ module Stave
         loha_engine  = _engin(SZSTK, LOHAS)
         year_engine  = _engin(SZSTK, YEARS)
 
-        lohas_price, lohas_trend, lohas_up1, lohas_dn1, lohas_top, lohas_bot 
-          = _stave(loha_engine, LOHAS, good_stock)
-        years_price, years_trend, years_up1, years_dn1, years_top, years_bot
-          = _stave(year_engine, YEARS, good_stock)
+        lohas_price, lohas_trend, lohas_up1, lohas_dn1, lohas_top, lohas_bot = _stave(loha_engine, LOHAS, good_stock)
+        years_price, years_trend, years_up1, years_dn1, years_top, years_bot = _stave(year_engine, YEARS, good_stock)
 
-        lohas_price, lohas_bolls, lohas_mup, lohas_mdn 
-          = _bolls(loha_engine, LOHAS, good_stock)
-        years_price, years_bolls, years_mup, years_mdn
-          = _bolls(year_engine, YEARS, good_stock)
+        lohas_price, lohas_bolls, lohas_mup, lohas_mdn = _bolls(loha_engine, LOHAS, good_stock)
+        years_price, years_bolls, years_mup, years_mdn = _bolls(year_engine, YEARS, good_stock)
 
         good_staves(StocksStaveLoha, lohas_price, good_stock, "price" )
         good_staves(StocksStaveLoha, lohas_trend, good_stock, "trend" )
