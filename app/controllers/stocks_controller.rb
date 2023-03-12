@@ -1,7 +1,5 @@
 class StocksController < ApplicationController
 
-  SMOOTH  = 2 * Stave::WEEKS
-
   def index
     stock   = params[:stock]
     commit  = params[:commit]

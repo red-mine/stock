@@ -1,8 +1,6 @@
 module Stave  
   class Stave
 
-    SMOOTH  = 2 * Stave::WEEKS
-
     def good_index(good_stock, good_commit)
       staves_arel   = StocksCoefsStav.arel_table
 
@@ -120,9 +118,9 @@ module Stave
   
     def _price(stocks, years)
       stock         = @stock
-      start         = Stave::STAVE - SMOOTH
+      start         = Stave::STAVE - Stave::SMUTH
       length        = years + 1
-      price         = stocks.good_aver(stock,  SMOOTH).slice(start, length)
+      price         = stocks.good_aver(stock, Stave::SMUTH).slice(start, length)
       price
     end
   

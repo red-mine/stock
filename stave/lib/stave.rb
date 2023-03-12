@@ -11,4 +11,5 @@ module Stave
   YEARS = 250
   STAVE = 20  * WEEKS
   LOHAS = 3   * YEARS + YEARS / 2
+  SMuTH = 2   * WEEKS
 end
