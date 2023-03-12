@@ -11,7 +11,7 @@ module Stave
       StocksStaveYear.delete_all
       StocksBollsLoha.delete_all
       StocksBollsYear.delete_all
-      puts "Stave'in... #{STAVE}"
+      puts "Store'in... #{STAVE}"
       StocksCoefsStav.all.with_progress do |stock_stav|
         good_stock    = stock_stav.stock
         Progress.note = good_stock.upcase
@@ -53,13 +53,13 @@ module Stave
 
     def good_staves(good_table, good_stave, good_stock, good_years)
       good_stave.each do |good_stave_|
-        good_stock      = good_table.new(
+        good_result   = good_table.new(
           stock:        good_stock,
           price:        good_stave_[1],
           date:         good_stave_[0],
           years:        good_years
         )
-        good_stock.save
+        good_result.save
       end
     end
 
