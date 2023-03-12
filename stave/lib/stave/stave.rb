@@ -20,20 +20,18 @@ module Stave
     end
   
     def good_show(good_stock, good_years)
-      good_stave, good_boll, good_years = if !years.nil?
-        years   = good_years.to_i
-        stocks  = _engine(  Stave::STOCK, years)
-        stave   = _stave(   stocks,       years)
-        boll    = _boll(    stocks,       years)
-        return stave, boll, nil
+      if !good_years.nil?
+        good_years  = good_years.to_i
+        good_stocks = _engine(  Stave::STOCK, good_years)
+        good_stave  = _stave(   good_stocks,  good_years)
+        good_boll   = _boll(    good_stocks,  good_years)
       else
-        stocks  = _engine(  Stave::STOCK, Stave::LOHAS)
-        stave   = _stave(   stocks,       Stave::LOHAS)
-        stocks  = _engine(  Stave::STOCK, Stave::YEARS)
-        years   = _stave(   stocks,       Stave::YEARS)
-        return stave, nil, years
+        good_stocks = _engine(  Stave::STOCK, Stave::LOHAS)
+        good_stave  = _stave(   good_stocks,  Stave::LOHAS)
+        good_stocks = _engine(  Stave::STOCK, Stave::YEARS)
+        good_years  = _stave(   good_stocks,  Stave::YEARS)
       end
-      return good_stave, good_boll, good_years, good_stock
+      return good_stave, good_boll, good_years
     end
   
     def initialize(good_area, good_days, good_stock)

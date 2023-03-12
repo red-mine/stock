@@ -15,9 +15,11 @@ class StocksController < ApplicationController
     stock   = params[:stock]
     years   = params[:years]
 
+    @stock  = stock
+
     stave   = Stave::Stave.new(Stave::STOCK, years, stock)
 
-    @stave, @boll, @years, @stock = stave.good_show(stock, years)
+    @stave, @boll, @years = stave.good_show(stock, years)
   end
 
 end
