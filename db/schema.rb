@@ -10,12 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20230312) do
+ActiveRecord::Schema[7.0].define(version: 20230313) do
   create_table "stave_staves", force: :cascade do |t|
     t.string "stock"
     t.float "price"
     t.date "date"
     t.integer "years"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "stock"
+    t.float "price"
+    t.date "date"
   end
 
   create_table "stocks_coefs_lohas", force: :cascade do |t|
