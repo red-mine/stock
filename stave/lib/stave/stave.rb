@@ -26,8 +26,8 @@ module Stave
 
         good_staves(StocksStaveLoha, stave_lohas, good_stock)
         good_staves(StocksStaveYear, stave_years, good_stock)
-        good_staves(StocksBollsLoha, lohas_bolls, good_stock)
-        good_staves(StocksBollsYear, years_bolls, good_stock)
+        good_staves(StocksBollsLoha, bolls_lohas, good_stock)
+        good_staves(StocksBollsYear, bolls_years, good_stock)
       end
     end
 
@@ -39,7 +39,7 @@ module Stave
           stock:        good_stock,
           price:        good_stave_[1],
           date:         good_stave_[0],
-          years:        good_years
+          years:        @good_years
         )
         good_stock.save
       end
@@ -156,7 +156,7 @@ module Stave
     end
   
     def _stave(stocks, years, stock)
-      stock_price   = _price(stocks, years)
+      stock_price   = _price(stocks, years, stock)
       stave_trend   = stocks.good_trend(stock             )
       stave_up1     = stocks.good_stave(stock,  true,   1 )
       stave_dn1     = stocks.good_stave(stock,  false,  1 )
@@ -179,8 +179,8 @@ module Stave
       stave
     end
   
-    def _boll(stocks, years, stock)
-      stock_price   = _price(stocks, years)
+    def _bolls(stocks, years, stock)
+      stock_price   = _price(stocks, years, stock)
       stave_boll    = stocks.good_aver(stock, STAVE        )
       stave_mup     = stocks.good_boll(stock, STAVE, true  )
       stave_mdn     = stocks.good_boll(stock, STAVE, false )
@@ -188,13 +188,13 @@ module Stave
       stave_boll    = _better(stave_boll,   years )
       stave_mup     = _better(stave_mup,    years )
       stave_mdn     = _better(stave_mdn,    years )
-      boll = [
+      bolls = [
         { name: "P", data: stock_price }, 
         { name: "B", data: stave_boll  },
         { name: "U", data: stave_mup   },
         { name: "D", data: stave_mdn   }
       ]  
-      boll
+      bolls
     end
 
   end
