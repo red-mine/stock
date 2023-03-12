@@ -24,11 +24,13 @@ module Stave
         good_stocks = _engine(  STOCK, good_years)
         good_stave  = _stave(   good_stocks,  good_years)
         good_boll   = _boll(    good_stocks,  good_years)
+        good_years  = nil
       else
         good_stocks = _engine(  STOCK, LOHAS)
         good_stave  = _stave(   good_stocks,  LOHAS)
         good_stocks = _engine(  STOCK, YEARS)
         good_years  = _stave(   good_stocks,  YEARS)
+        good_boll   = nil
       end
       return good_stave, good_boll, good_years
     end

@@ -1,5 +1,7 @@
 <h1><%= @stock.upcase %></h1>
 
+<% if !@stave.nil? %>
+
 <h2>Stock Stave</h2>
 
 <%= line_chart @stave.map {
@@ -8,6 +10,8 @@
     data: stave[:data]
   }
 } %>
+
+<% end %>
 
 <% if !@years.nil? %>
 
@@ -20,7 +24,9 @@
   }
 } %>
 
-<% else %>
+<% end %>
+
+<% if !@boll.nil? %>
 
 <h2>Boll'in Bands</h2>
 
