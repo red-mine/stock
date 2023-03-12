@@ -4,7 +4,7 @@ class StocksController < ApplicationController
     stock   = params[:stock]
     commit  = params[:commit]
 
-    stave   = Stave::Lohas.new(Stave::STOCK, nil, stock)
+    stave   = Stave::Stave.new(Stave::STOCK, nil, stock)
 
     @stocks_stavs, @stavs_date = stave.good_index(stock, commit)
   end
@@ -15,7 +15,7 @@ class StocksController < ApplicationController
 
     @stock  = stock
 
-    stave   = Stave::Lohas.new(Stave::STOCK, years, stock)
+    stave   = Stave::Stave.new(Stave::STOCK, years, stock)
 
     @stave, @boll, @years = stave.good_show(stock, years)
   end
