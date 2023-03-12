@@ -4,8 +4,6 @@ class CreateStocks < ActiveRecord::Migration[7.0]
       t.string :stock
       t.float :price
       t.date :date
-
-      t.timestamps
     end
   end
 end
