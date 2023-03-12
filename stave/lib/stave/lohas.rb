@@ -18,6 +18,7 @@ module Stave
     end
   
     def good_show(good_stock, good_years)
+      @stock = good_stock
       if !good_years.nil?
         good_years  = good_years.to_i
         good_stocks = _engine(  STOCK, good_years)
