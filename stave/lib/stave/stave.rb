@@ -19,25 +19,49 @@ module Stave
         loha_engine  = _engin(SZSTK, LOHAS)
         year_engine  = _engin(SZSTK, YEARS)
 
-        stave_lohas  = _stave(loha_engine, LOHAS, good_stock)
-        stave_years  = _stave(year_engine, YEARS, good_stock)
-        bolls_lohas  = _bolls(loha_engine, LOHAS, good_stock)
-        bolls_years  = _bolls(year_engine, YEARS, good_stock)
+        lohas_price, lohas_trend, lohas_up1, lohas_dn1, lohas_top, lohas_bot 
+          = _stave(loha_engine, LOHAS, good_stock)
+        years_price, years_trend, years_up1, years_dn1, years_top, years_bot
+          = _stave(year_engine, YEARS, good_stock)
 
-        good_staves(StocksStaveLoha, stave_lohas, good_stock)
-        good_staves(StocksStaveYear, stave_years, good_stock)
-        good_staves(StocksBollsLoha, bolls_lohas, good_stock)
-        good_staves(StocksBollsYear, bolls_years, good_stock)
+        lohas_price, lohas_bolls, lohas_mup, lohas_mdn 
+          = _bolls(loha_engine, LOHAS, good_stock)
+        years_price, years_bolls, years_mup, years_mdn
+          = _bolls(year_engine, YEARS, good_stock)
+
+        good_staves(StocksStaveLoha, lohas_price, good_stock, "price" )
+        good_staves(StocksStaveLoha, lohas_trend, good_stock, "trend" )
+        good_staves(StocksStaveLoha, lohas_up1,   good_stock, "up1"   )
+        good_staves(StocksStaveLoha, lohas_dn1,   good_stock, "dn1"   )
+        good_staves(StocksStaveLoha, lohas_top,   good_stock, "top"   )
+        good_staves(StocksStaveLoha, lohas_bot,   good_stock, "bot"   )
+
+        good_staves(StocksStaveYear, years_price, good_stock, "price" )
+        good_staves(StocksStaveYear, years_trend, good_stock, "trend" )
+        good_staves(StocksStaveYear, years_up1,   good_stock, "up1"   )
+        good_staves(StocksStaveYear, years_dn1,   good_stock, "dn1"   )
+        good_staves(StocksStaveYear, years_top,   good_stock, "top"   )
+        good_staves(StocksStaveYear, years_bot,   good_stock, "bot"   )
+
+        good_staves(StocksBollsLoha, lohas_price, good_stock, "price" )
+        good_staves(StocksBollsLoha, lohas_bolls, good_stock, "bolls" )
+        good_staves(StocksBollsLoha, lohas_mup,   good_stock, "mup"   )
+        good_staves(StocksBollsLoha, lohas_mdn,   good_stock, "mdn"   )
+
+        good_staves(StocksBollsYear, years_price, good_stock, "price" )
+        good_staves(StocksBollsYear, years_bolls, good_stock, "bolls" )
+        good_staves(StocksBollsYear, years_mup,   good_stock, "mup"   )
+        good_staves(StocksBollsYear, years_mdn,   good_stock, "mdn"   )
       end
     end
 
-    def good_staves(good_table, good_stave, good_stock)
+    def good_staves(good_table, good_stave, good_stock, good_years)
       good_stave.each do |good_stave_|
         good_stock      = good_table.new(
           stock:        good_stock,
           price:        good_stave_[1],
           date:         good_stave_[0],
-          years:        @good_years
+          years:        good_years
         )
         good_stock.save
       end
@@ -212,7 +236,7 @@ module Stave
       stave_mup     = _better(stave_mup,    years )
       stave_mdn     = _better(stave_mdn,    years )
 
-      return stock_price, stave_boll, stave_mup, stave_mdm
+      return stock_price, stave_boll, stave_mup, stave_mdn
     end
 
   end
