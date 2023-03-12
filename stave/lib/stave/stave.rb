@@ -1,6 +1,6 @@
 module Stave
   
-  class Stock
+  class Stave
 
     def initialize(good_area, good_days)
       @good_area    = good_area
