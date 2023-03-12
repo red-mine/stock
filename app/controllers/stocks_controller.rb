@@ -8,7 +8,7 @@ class StocksController < ApplicationController
 
     stave   = Stave::Stave.new(Stave::STOCK, years, stock)
 
-    @stocks_stavs, @stavs_date = stave.good_index
+    @stocks_stavs, @stavs_date = stave.good_index(stock, commit)
   end
 
   def show
@@ -17,7 +17,7 @@ class StocksController < ApplicationController
 
     stave   = Stave::Stave.new(Stave::STOCK, years, stock)
 
-    @stave, @boll, @years, @stock = stave.good_show
+    @stave, @boll, @years, @stock = stave.good_show(stock, years)
   end
 
 end

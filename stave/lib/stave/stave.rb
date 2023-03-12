@@ -4,16 +4,19 @@ module Stave
     SMOOTH  = 2 * Stave::WEEKS
 
     def good_index(good_stock, good_commit)
-      stocks_stavs_arel = StocksCoefsStav.arel_table
-      stocks_stavs      = if good_stock.nil?
-        StocksCoefsStav.where(stocks_stavs_arel[:lohas].not_eq(""))
+      staves_arel   = StocksCoefsStav.arel_table
+
+      stocks_stavs  = if good_stock.nil?
+        StocksCoefsStav.where(staves_arel[:lohas].not_eq(""))
       elsif good_stock.empty?
         StocksCoefsStav.all
       else
-        StocksCoefsStav.where(stocks_stavs_arel[:stock].matches_any(["%" + good_stock + "%"]))
+        StocksCoefsStav.where(staves_arel[:stock].matches_any(["%" + good_stock + "%"]))
       end
-      stavs_date        = stocks_stavs.pluck(stocks_stavs_arel[:date])[-1]
-      stocks_stavs, stavs_date
+
+      stavs_date    = stocks_stavs.pluck(staves_arel[:date])[-1]
+
+      return stocks_stavs, stavs_date
     end
   
     def good_show(good_stock, good_years)
@@ -22,15 +25,15 @@ module Stave
         stocks  = _engine(  Stave::STOCK, years)
         stave   = _stave(   stocks,       years)
         boll    = _boll(    stocks,       years)
-        stave, boll, nil
+        return stave, boll, nil
       else
         stocks  = _engine(  Stave::STOCK, Stave::LOHAS)
         stave   = _stave(   stocks,       Stave::LOHAS)
         stocks  = _engine(  Stave::STOCK, Stave::YEARS)
         years   = _stave(   stocks,       Stave::YEARS)
-        stave, nil, years
+        return stave, nil, years
       end
-      good_stave, good_boll, good_years, good_stock
+      return good_stave, good_boll, good_years, good_stock
     end
   
     def initialize(good_area, good_days, good_stock)
