@@ -18,5 +18,6 @@ end
 
 desc "stave"
 task :stave => :environment do
-  Stave::Stock.good_lohas()
+  Stave::Stock.good_stave()
+  Stave::Stave.good_stave()
 end

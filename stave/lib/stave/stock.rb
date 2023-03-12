@@ -8,9 +8,9 @@ module Stave
       @good_models  = []
     end
 
-    def self.good_lohas
+    def self.good_stave
       StocksCoefsStav.delete_all
-      puts "Lohas'in... #{STAVE}"
+      puts "Stave'in... #{STAVE}"
       StocksCoefsLoha.all.with_progress do |stock_loha|
         Progress.note   = stock_loha.stock.upcase
         StocksCoefsYear.all.each do |stock_year|
