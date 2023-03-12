@@ -6,7 +6,7 @@ require "stave/engine"
 require "stave/stave"
 
 module Stave
-  STOCK = "sz"
+  SZSTK = "sz"
   WEEKS = 5
   YEARS = 250
   STAVE = 20  * WEEKS

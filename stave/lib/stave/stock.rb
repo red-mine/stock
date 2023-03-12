@@ -1,5 +1,4 @@
 module Stave
-  
   class Stock
 
     def initialize(good_area, good_days)
@@ -362,5 +361,4 @@ module Stave
     end
 
   end
-
 end
