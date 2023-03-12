@@ -1,6 +1,6 @@
-class CreateStocksYears < ActiveRecord::Migration[7.0]
+class CreateStocksBollsLohas < ActiveRecord::Migration[7.0]
   def change
-    create_table :stocks_years do |t|
+    create_table :stocks_bolls_lohas do |t|
       t.string  :stock
       t.float   :price
       t.date    :date
