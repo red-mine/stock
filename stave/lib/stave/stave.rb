@@ -7,31 +7,32 @@ module Stave
     end
 
     def good_result
+      StocksStaveLoha.delete_all
+      StocksStaveYear.delete_all
+      StocksBollsLoha.delete_all
+      StocksBollsYear.delete_all
       puts "Stave'in... #{STAVE}"
       StocksCoefsStav.all.with_progress do |stock_stav|
         good_stock    = stock_stav.stock
         Progress.note = good_stock.upcase
-        stave_lohas, stave_years, bolls_lohas, bolls_years = good_show(good_stock)
-        good_staves(StocksStaveLoha, stave_lohas, good_stock, good_years)
-        good_staves(StocksStaveYear, stave_years, good_stock, good_years)
-        good_staves(StocksBollsLoha, lohas_bolls, good_stock, good_years)
-        good_staves(StocksBollsLoha, years_bolls, good_stock, good_years)
+
+        loha_engine  = _engin(SZSTK, LOHAS)
+        year_engine  = _engin(SZSTK, YEARS)
+
+        stave_lohas  = _stave(loha_engine, LOHAS, good_stock)
+        stave_years  = _stave(year_engine, YEARS, good_stock)
+        bolls_lohas  = _bolls(loha_engine, LOHAS, good_stock)
+        bolls_years  = _bolls(year_engine, YEARS, good_stock)
+
+        good_staves(StocksStaveLoha, stave_lohas, good_stock)
+        good_staves(StocksStaveYear, stave_years, good_stock)
+        good_staves(StocksBollsLoha, lohas_bolls, good_stock)
+        good_staves(StocksBollsYear, years_bolls, good_stock)
       end
-    end
-  
-    def good_show(good_stock)
-      loha_engine  = _engin(SZSTK, LOHAS)
-      year_engine  = _engin(SZSTK, YEARS)
-      stave_lohas  = _stave(loha_engine, LOHAS, good_stock)
-      stave_years  = _stave(year_engine, YEARS, good_stock)
-      bolls_lohas  = _bolls(loha_engine, LOHAS, good_stock)
-      bolls_years  = _bolls(year_engine, YEARS, good_stock)
-      return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
 
     def good_staves(good_table, good_stave, good_stock)
-      good_table.delete_all
-      puts "Stave'in... #{good_stock}"
+      puts "Stave'in... #{good_table}"
       good_stave.with_progress do |good_stave_|
         Progress.note   = good_stave_[0]
         good_stock      = good_table.new(
@@ -42,6 +43,18 @@ module Stave
         )
         good_stock.save
       end
+    end
+
+    def good_show(good_stock)
+      loha_engine  = _engin(SZSTK, LOHAS)
+      year_engine  = _engin(SZSTK, YEARS)
+      
+      stave_lohas  = _stave(loha_engine, LOHAS, good_stock)
+      stave_years  = _stave(year_engine, YEARS, good_stock)
+      bolls_lohas  = _bolls(loha_engine, LOHAS, good_stock)
+      bolls_years  = _bolls(year_engine, YEARS, good_stock)
+      
+      return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
 
     def good_index(good_stock, good_commit)

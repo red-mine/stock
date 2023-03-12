@@ -18,8 +18,10 @@ end
 
 desc "stave"
 task :stave, [:area, :days] => :environment do |task, args|
+  area = unless args.area.nil? then args.area else Stave::SZSTK end
+  days = unless args.days.nil? then args.days else Stave::STAVE end
   stock = Stave::Stock.new(area, days)
   stave = Stave::Stave.new(area, days)
-  stock.good_stave()
-  stave.good_stave()
+  stock.good_result()
+  stave.good_result()
 end
