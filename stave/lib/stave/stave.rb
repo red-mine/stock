@@ -56,21 +56,26 @@ module Stave
 
     def good_staves(good_table, good_stave, good_stock, good_years)
       good_stave.each do |good_stave_|
-        good_result   = good_table.new(
-          stock:        good_stock,
-          price:        good_stave_[1].round(2),
-          date:         good_stave_[0],
-          years:        good_years
+        good_result = good_table.new(
+          stock:    good_stock,
+          price:    good_stave_[1].round(2),
+          date:     good_stave_[0],
+          years:    good_years
         )
         good_result.save
       end
     end
 
     def good_show(good_stock)
-      stave_lohas = _stave_show(good_stock, StocksStaveLoha)
-      stave_years = _stave_show(good_stock, StocksStaveYear)
-      bolls_lohas = _bolls_show(good_stock, StocksBollsLoha)
-      bolls_years = _bolls_show(good_stock, StocksBollsYear)
+      good_show   = good_data(good_stock)
+      good_show
+    end
+
+    def good_data(good_stock)
+      stave_lohas = _stave_data(good_stock, StocksStaveLoha)
+      stave_years = _stave_data(good_stock, StocksStaveYear)
+      bolls_lohas = _bolls_data(good_stock, StocksBollsLoha)
+      bolls_years = _bolls_data(good_stock, StocksBollsYear)
 
       return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
@@ -217,7 +222,7 @@ module Stave
       return bolls_file
     end
 
-    def _stave_show(stock, table)
+    def _stave_data(stock, table)
       stave_price = _filter(table,  "price",  stock )
       stave_trend = _filter(table,  "trend",  stock )
       stave_up1   = _filter(table,  "up1",    stock )
@@ -225,7 +230,7 @@ module Stave
       stave_top   = _filter(table,  "top",    stock )
       stave_bot   = _filter(table,  "bot",    stock )
 
-      stave_show = [
+      stave_data = [
         { name: "P", data: stave_price }, 
         { name: "T", data: stave_trend },
         { name: "U", data: stave_up1   },
@@ -234,23 +239,23 @@ module Stave
         { name: "B", data: stave_bot   }
       ]
 
-      return stave_show
+      return stave_data
     end
 
-    def _bolls_show(stock, table)
+    def _bolls_data(stock, table)
       bolls_price = _filter(table,  "price",  stock )
       bolls_bolls = _filter(table,  "bolls",  stock )
       bolls_mup   = _filter(table,  "mup",    stock )
       bolls_mdn   = _filter(table,  "mdn",    stock )
 
-      lohas_show = [
+      lohas_data = [
         { name: "P", data: bolls_price }, 
         { name: "B", data: bolls_bolls },
         { name: "U", data: bolls_mup   },
         { name: "D", data: bolls_mdn   }
       ]
 
-      return bolls_show
+      return bolls_data
     end
 
 
