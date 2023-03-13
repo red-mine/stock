@@ -192,7 +192,13 @@ module Stave
     def _bolls_file(stock, years)
       engine        = _engin(SZSTK, years)
       bolls_price, bolls_bolls, bolls_mup, bolls_mdn = _bolls(engine, years, stock)
-      return bolls_price, bolls_bolls, bolls_mup, bolls_mdn
+      bolls_file = [
+        { name: "P", data: bolls_price }, 
+        { name: "B", data: bolls_bolls },
+        { name: "U", data: bolls_mup   },
+        { name: "D", data: bolls_mdn   }
+      ]
+      return bolls_file
     end
 
     def _stave_show(stock)
