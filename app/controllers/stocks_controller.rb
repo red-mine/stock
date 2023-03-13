@@ -5,23 +5,17 @@ class StocksController < ApplicationController
   def index
     # @stocks = Stock.all
     stock   = params[:stock]
-
     @stock  = stock
-    
     stave   = Stave::Stave.new(Stave::SZSTK, Stave::STAVE)
-    
     @stocks_stavs, @stavs_date = stave.good_index(stock)
   end
 
   # GET /stocks/1 or /stocks/1.json
   def show
     stock   = params[:stock]
-
     @stock  = stock
-    
     stave   = Stave::Stave.new(Stave::SZSTK, Stave::STAVE)
-    
-    @stave_lohas, @stave_years, @bolls_lohas, @bolls_years = stave.good_show(stock)
+    @stave_lohas, @stave_years, @bolls_lohas, @bolls_years = stave.good_file(stock)
   end
 
   # GET /stocks/new

@@ -66,7 +66,14 @@ module Stave
     def good_show(good_stock)
       stave_lohas, stave_years = _stave_show(good_stock)
       bolls_lohas, bolls_years = _bolls_show(good_stock)
+      return stave_lohas, stave_years, bolls_lohas, bolls_years
+    end
 
+    def good_file(good_stock)
+      stave_lohas = _stave_file(good_stock, LOHAS)
+      stave_years = _stave_file(good_stock, YEARS)
+      bolls_lohas = _bolls_file(good_stock, LOHAS)
+      bolls_years = _bolls_file(good_stock, YEARS)
       return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
 
@@ -168,6 +175,26 @@ module Stave
       price
     end
   
+    def _stave_file(stock, years)
+      engine        = _engin(SZSTK, years)
+      stave_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot = _stave(engine, years, stock)
+      stave_file = [
+        { name: "P", data: stave_price }, 
+        { name: "T", data: stave_trend },
+        { name: "U", data: stave_up1   },
+        { name: "D", data: stave_dn1   },
+        { name: "T", data: stave_top   },
+        { name: "B", data: stave_bot   }
+      ]
+      return stave_file
+    end
+
+    def _bolls_file(stock, years)
+      engine        = _engin(SZSTK, years)
+      bolls_price, bolls_bolls, bolls_mup, bolls_mdn = _bolls(engine, years, stock)
+      return bolls_price, bolls_bolls, bolls_mup, bolls_mdn
+    end
+
     def _stave_show(stock)
       lohas_price   = _stave_filter(StocksStaveLoha,  "price" )
       lohas_trend   = _stave_filter(StocksStaveLoha,  "trend" )
@@ -213,7 +240,7 @@ module Stave
     end
 
     def _stave(stocks, years, stock)
-      stock_price   = _price(stocks, years, stock)
+      stave_price   = _price(stocks, years, stock)
 
       stave_trend   = stocks.good_trend(stock             )
       stave_up1     = stocks.good_stave(stock,  true,   1 )
@@ -221,14 +248,14 @@ module Stave
       stave_top     = stocks.good_stave(stock,  true,   2 )
       stave_bot     = stocks.good_stave(stock,  false,  2 )
 
-      stock_price   = _better(stock_price,  years )
+      stave_price   = _better(stave_price,  years )
       stave_trend   = _better(stave_trend,  years )
       stave_up1     = _better(stave_up1,    years )
       stave_dn1     = _better(stave_dn1,    years )
       stave_top     = _better(stave_top,    years )
       stave_bot     = _better(stave_bot,    years )
 
-      return stock_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot
+      return stave_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot
     end
   
     def _bolls_show(stock)
@@ -260,18 +287,18 @@ module Stave
     end
 
     def _bolls(stocks, years, stock)
-      stock_price   = _price(stocks, years, stock)
+      bolls_price   = _price(stocks, years, stock)
 
-      stave_boll    = stocks.good_aver(stock, STAVE        )
-      stave_mup     = stocks.good_boll(stock, STAVE, true  )
-      stave_mdn     = stocks.good_boll(stock, STAVE, false )
+      bolls_bolls   = stocks.good_aver(stock, STAVE         )
+      bolls_mup     = stocks.good_boll(stock, STAVE,  true  )
+      bolls_mdn     = stocks.good_boll(stock, STAVE,  false )
 
-      stock_price   = _better(stock_price,  years )
-      stave_boll    = _better(stave_boll,   years )
-      stave_mup     = _better(stave_mup,    years )
-      stave_mdn     = _better(stave_mdn,    years )
+      bolls_price   = _better(bolls_price,  years )
+      bolls_bolls   = _better(bolls_bolls,  years )
+      bolls_mup     = _better(bolls_mup,    years )
+      bolls_mdn     = _better(bolls_mdn,    years )
 
-      return stock_price, stave_boll, stave_mup, stave_mdn
+      return bolls_price, bolls_bolls, bolls_mup, bolls_mdn
     end
 
   end
