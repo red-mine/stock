@@ -55,7 +55,7 @@ module Stave
       good_stave.each do |good_stave_|
         good_result   = good_table.new(
           stock:        good_stock,
-          price:        good_stave_[1],
+          price:        good_stave_[1].round(2),
           date:         good_stave_[0],
           years:        good_years
         )
