@@ -64,14 +64,9 @@ module Stave
     end
 
     def good_show(good_stock)
-      loha_engine  = _engin(SZSTK, LOHAS)
-      year_engine  = _engin(SZSTK, YEARS)
-      
-      stave_lohas  = _stave_show(loha_engine, LOHAS, good_stock)
-      stave_years  = _stave_show(year_engine, YEARS, good_stock)
-      bolls_lohas  = _bolls_show(loha_engine, LOHAS, good_stock)
-      bolls_years  = _bolls_show(year_engine, YEARS, good_stock)
-      
+      stave_lohas, stave_years = _stave_show(good_stock)
+      bolls_lohas, bolls_years = _bolls_show(good_stock)
+
       return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
 
@@ -173,19 +168,48 @@ module Stave
       price
     end
   
-    def _stave_show(stocks, years, stock)
-      stock_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot = _stave(stocks, years, stock)
+    def _stave_show(stock)
+      lohas_price   = _stave_filter(StocksStaveLoha,  "price" )
+      lohas_trend   = _stave_filter(StocksStaveLoha,  "trend" )
+      lohas_up1     = _stave_filter(StocksStaveLoha,  "up1"   )
+      lohas_dn1     = _stave_filter(StocksStaveLoha,  "dn1"   )
+      lohas_top     = _stave_filter(StocksStaveLoha,  "top"   )
+      lohas_bot     = _stave_filter(StocksStaveLoha,  "bot"   )
 
-      stave_show = [
-        { name: "P", data: stock_price }, 
-        { name: "T", data: stave_trend },
-        { name: "U", data: stave_up1   },
-        { name: "D", data: stave_dn1   },
-        { name: "T", data: stave_top   },
-        { name: "B", data: stave_bot   }
+      lohas_show = [
+        { name: "P", data: lohas_price }, 
+        { name: "T", data: lohas_trend },
+        { name: "U", data: lohas_up1   },
+        { name: "D", data: lohas_dn1   },
+        { name: "T", data: lohas_top   },
+        { name: "B", data: lohas_bot   }
       ]
 
-      stave_show
+      years_price   = _stave_filter(StocksStaveYear,  "price" )
+      years_trend   = _stave_filter(StocksStaveYear,  "trend" )
+      years_up1     = _stave_filter(StocksStaveYear,  "up1"   )
+      years_dn1     = _stave_filter(StocksStaveYear,  "dn1"   )
+      years_top     = _stave_filter(StocksStaveYear,  "top"   )
+      years_bot     = _stave_filter(StocksStaveYear,  "bot"   )
+
+      years_show = [
+        { name: "P", data: years_price }, 
+        { name: "T", data: years_trend },
+        { name: "U", data: years_up1   },
+        { name: "D", data: years_dn1   },
+        { name: "T", data: years_top   },
+        { name: "B", data: years_bot   }
+      ]
+
+      lohas_show, years_show
+    end
+
+    def _stave_filter(good_table, good_filter)
+      good_arel = good_table.arel_table
+      stave_filter = good_table
+        .where(good_arel[:years].eq(good_filter))
+        .pluck(good_arel[:date], good_arel[:price])
+      stave_filter
     end
 
     def _stave(stocks, years, stock)
@@ -207,17 +231,32 @@ module Stave
       return stock_price, stave_trend, stave_up1, stave_dn1, stave_top, stave_bot
     end
   
-    def _bolls_show(stocks, years, stock)
-      stock_price, stave_boll, stave_mup, stave_mdn = _bolls(stocks, years, stock)
+    def _bolls_show(stock)
+      lohas_price   = _stave_filter(StocksBollsLoha,  "price" )
+      lohas_bolls   = _stave_filter(StocksBollsLoha,  "bolls" )
+      lohas_mup     = _stave_filter(StocksBollsLoha,  "mup"   )
+      lohas_mdn     = _stave_filter(StocksBollsLoha,  "mdn"   )
 
-      bolls_show = [
-        { name: "P", data: stock_price }, 
-        { name: "B", data: stave_boll  },
-        { name: "U", data: stave_mup   },
-        { name: "D", data: stave_mdn   }
+      lohas_show = [
+        { name: "P", data: lohas_price }, 
+        { name: "B", data: lohas_bolls },
+        { name: "U", data: lohas_mup   },
+        { name: "D", data: lohas_mdn   }
       ]
 
-      bolls_show
+      years_price   = _stave_filter(StocksBollsYear,  "price" )
+      years_bolls   = _stave_filter(StocksBollsYear,  "bolls" )
+      years_mup     = _stave_filter(StocksBollsYear,  "mup"   )
+      years_mdn     = _stave_filter(StocksBollsYear,  "mdn"   )
+
+      years_show = [
+        { name: "P", data: years_price }, 
+        { name: "B", data: years_bolls },
+        { name: "U", data: years_mup   },
+        { name: "D", data: years_mdn   }
+      ]
+
+      lohas_show, years_show
     end
 
     def _bolls(stocks, years, stock)
