@@ -15,7 +15,7 @@ class StocksController < ApplicationController
     stock   = params[:stock]
     @stock  = stock
     stave   = Stave::Stave.new(Stave::SZSTK, Stave::STAVE)
-    @stave_lohas, @stave_years, @bolls_lohas, @bolls_years = stave.good_file(stock)
+    @stave_lohas, @stave_years, @bolls_lohas, @bolls_years = stave.good_show(stock)
   end
 
   # GET /stocks/new
