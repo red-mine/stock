@@ -201,7 +201,7 @@ module Stave
         { name: "B", data: years_bot   }
       ]
 
-      lohas_show, years_show
+      return lohas_show, years_show
     end
 
     def _stave_filter(good_table, good_filter)
@@ -256,7 +256,7 @@ module Stave
         { name: "D", data: years_mdn   }
       ]
 
-      lohas_show, years_show
+      return lohas_show, years_show
     end
 
     def _bolls(stocks, years, stock)
