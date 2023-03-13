@@ -1,10 +1,10 @@
 <h1><%= @stock.upcase %></h1>
 
-<% if !@stave.nil? %>
+<% if !@stave_lohas.nil? %>
 
-<h2>Stock Stave</h2>
+<h2>Stave Lohas</h2>
 
-<%= line_chart @stave.map {
+<%= line_chart @stave_lohas.map {
   |stave| {
     name: stave[:name], 
     data: stave[:data]
@@ -13,27 +13,40 @@
 
 <% end %>
 
-<% if !@years.nil? %>
+<% if !@stave_years.nil? %>
 
 <h2>Stave Years</h2>
 
-<%= line_chart @years.map {
-  |years| {
-    name: years[:name], 
-    data: years[:data]
+<%= line_chart @stave_years.map {
+  |stave| {
+    name: stave[:name], 
+    data: stave[:data]
   }
 } %>
 
 <% end %>
 
-<% if !@boll.nil? %>
+<% if !@bolls_lohas.nil? %>
 
-<h2>Boll'in Bands</h2>
+<h2>Bolls Lohas</h2>
 
-<%= line_chart @boll.map {
-  |boll| {
-    name: boll[:name], 
-    data: boll[:data]
+<%= line_chart @bolls_lohas.map {
+  |bolls| {
+    name: bolls[:name], 
+    data: bolls[:data]
+  }
+} %>
+
+<% end %>
+
+<% if !@bolls_years.nil? %>
+
+<h2>Bolls Years</h2>
+
+<%= line_chart @bolls_years.map {
+  |bolls| {
+    name: bolls[:name], 
+    data: bolls[:data]
   }
 } %>
 

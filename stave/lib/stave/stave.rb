@@ -75,7 +75,7 @@ module Stave
       return stave_lohas, stave_years, bolls_lohas, bolls_years
     end
 
-    def good_index(good_stock, good_commit)
+    def good_index(good_stock)
       staves_arel   = StocksCoefsStav.arel_table
       stocks_stavs  = if good_stock.nil?
         StocksCoefsStav.where(staves_arel[:lohas].not_eq(""))
@@ -208,7 +208,7 @@ module Stave
     end
   
     def _bolls_show(stocks, years, stock)
-      stock_price, stave_boll, stave_mup, stave_mdm = _bolls(stocks, years, stock)
+      stock_price, stave_boll, stave_mup, stave_mdn = _bolls(stocks, years, stock)
 
       bolls_show = [
         { name: "P", data: stock_price }, 
