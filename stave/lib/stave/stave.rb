@@ -189,7 +189,7 @@ module Stave
 
     def _filter(table, filter, stock)
       arel  = table.arel_table
-      stave = good_table
+      stave = table
         .where(arel[:stock].eq(stock))
         .where(arel[:years].eq(filter))
         .pluck(arel[:date], arel[:price])
@@ -248,7 +248,7 @@ module Stave
       bolls_mup   = _filter(table,  "mup",    stock )
       bolls_mdn   = _filter(table,  "mdn",    stock )
 
-      lohas_data = [
+      bolls_data = [
         { name: "P", data: bolls_price }, 
         { name: "B", data: bolls_bolls },
         { name: "U", data: bolls_mup   },
