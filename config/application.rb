@@ -7,7 +7,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 require "stave"
-require "stock"
+require "../stave/lib/stock.rb"
 
 module StockApp
   class Application < Rails::Application
@@ -31,6 +31,12 @@ module StockApp
     )
 
     config.autoload_paths << Rails.root.join("extras")
+
+    config.autoload_paths += %W(
+      #{config.root}/lib/stock
+      #{config.root}/lib/stave
+    )
+
     config.add_autoload_paths_to_load_path = true
   end
 end
