@@ -6,3 +6,7 @@ Rails.application.routes.draw do
   get   "/stocks/:stock",         to: "stocks#show"
   get   "/stocks/:stock/:years",  to: "stocks#show"
 end
+
+Stave::Engine.routes.draw do
+  resources :staves
+end
