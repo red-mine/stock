@@ -1,6 +1,6 @@
-require "./lib/stock/version"
-require "./lib/stock/engine"
-require "./lib/stock/stock"
+require_relative "stock/version"
+require_relative "stock/engine"
+require_relative "stock/stock"
 
 module Stock
   # Your code goes here...
