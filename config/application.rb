@@ -6,8 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require "stave"
-require "../stave/lib/stock.rb"
+require_relative "../lib/stock"
 
 module StockApp
   class Application < Rails::Application
