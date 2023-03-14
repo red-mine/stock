@@ -25,3 +25,10 @@ task :stave, [:area, :days] => :environment do |task, args|
   stock.good_result()
   stave.good_result()
 end
+
+desc "stock"
+task :stock, [:area, :days] => :environment do |task, args|
+  area = unless args.area.nil? then args.area else Stave::SZSTK end
+  days = unless args.days.nil? then args.days else Stave::STAVE end
+  stock = Stock::Stock.new(area, days)
+end
